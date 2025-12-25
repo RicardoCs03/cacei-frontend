@@ -13,6 +13,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(data: LoginRequest): Observable<LoginResponse> {// Método para iniciar sesión
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, data);
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, data,{headers: { 'Content-Type': 'application/json' }}
+    );
   }
 }

@@ -1,8 +1,8 @@
 export interface LoginRequest{
-    username: string;
+    email: string;
     password: string;
 }
 export interface LoginResponse{
     token: string;
-    role: 'ADMIN' | 'PROFESOR';
+    role: 'ROLE_ADMINISTRADOR' | 'ROLE_PROFESOR';
 }
