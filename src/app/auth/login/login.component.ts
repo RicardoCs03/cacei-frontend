@@ -32,11 +32,11 @@ export class LoginComponent {
         console.log('token:', response.token);
         if(response.role === 'ROLE_ADMINISTRADOR') {
           console.log('Navegando al dashboard de administrador');
-          this.router.navigate(['/admin/dashboard']);
+          this.router.navigate(['/admin']);
         }
         else if(response.role === 'ROLE_PROFESOR') {
-          console.log('Navegando al home de usuario');
-          this.router.navigate(['/user/home']);
+          console.log('Navegando al home de profesor');
+          this.router.navigate(['/profesor']);
         }
       },
       error: (err) => {
