@@ -1,0 +1,17 @@
+ <h3>{{ isEdit ? 'Editar' : 'Nuevo' }} Usuario</h3>
+
+    <input [(ngModel)]="user.nombre" placeholder="Nombre">
+    <input [(ngModel)]="user.email" placeholder="Email">
+
+    <select [(ngModel)]="user.role">
+      <option value="ADMIN">ADMIN</option>
+      <option value="PROFESOR">PROFESOR</option>
+    </select>
+
+    <label>
+      <input type="checkbox" [(ngModel)]="user.active">
+      Activo
+    </label>
+
+    <button (click)="saveUser()">Guardar</button>
+    <button (click)="cancel()">Cancelar</button>

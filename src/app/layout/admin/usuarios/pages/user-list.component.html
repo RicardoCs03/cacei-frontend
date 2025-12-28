@@ -1,0 +1,12 @@
+<h3>Usuarios</h3>
+
+    <button (click)="createUsuario()">Nuevo usuario</button>
+
+    <ul>
+      <li *ngFor="let user of users">
+        {{ user.email }} - {{ user.role }} - {{user.nombre}}
+
+        <button (click)="editUsuario(user.id!)">Editar</button>
+        <button (click)="deleteUsuario(user.id!)">Eliminar</button>
+      </li>
+    </ul>
