@@ -12,10 +12,30 @@ export const routes: Routes = [
             {
                 path: 'admin',
                 canActivate: [roleGuard('ROLE_ADMINISTRADOR')],
+                children: [
+                            {
+                              path: 'users',
+                              loadComponent: () =>
+                                import('./layout/admin/usuarios/pages/user-list.component')
+                                  .then(m => m.UserListComponent)
+                            },
+                            {
+                              path: 'users/new',
+                              loadComponent: () =>
+                                import('./layout/admin/usuarios/pages/user-form.component')
+                                  .then(m => m.UserFormComponent)
+                            },
+                            {
+                              path: 'users/edit/:id',
+                              loadComponent: () =>
+                                import('./layout/admin/usuarios/pages/user-form.component')
+                                  .then(m => m.UserFormComponent)
+                            }
+                        ],
                 loadComponent: () => 
                     import('./layout/admin/admin.component')
-                .then(m => m.AdminComponent)
-    },
+                .then(m => m.AdminComponent), 
+            },
     {
         path: 'profesor',
         canActivate: [roleGuard('ROLE_PROFESOR')],
