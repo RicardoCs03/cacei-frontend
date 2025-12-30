@@ -14,19 +14,19 @@ export const routes: Routes = [
                 canActivate: [roleGuard('ROLE_ADMINISTRADOR')],
                 children: [
                             {
-                              path: 'users',
+                              path: 'usuarios',
                               loadComponent: () =>
                                 import('./layout/admin/usuarios/pages/user-list.component')
                                   .then(m => m.UserListComponent)
                             },
                             {
-                              path: 'users/new',
+                              path: 'usuarios/crear',
                               loadComponent: () =>
                                 import('./layout/admin/usuarios/pages/user-form.component')
                                   .then(m => m.UserFormComponent)
                             },
                             {
-                              path: 'users/edit/:id',
+                              path: 'usuarios/editar/:id',
                               loadComponent: () =>
                                 import('./layout/admin/usuarios/pages/user-form.component')
                                   .then(m => m.UserFormComponent)
