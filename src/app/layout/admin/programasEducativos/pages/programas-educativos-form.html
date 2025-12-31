@@ -1,0 +1,124 @@
+<h3>{{ isEdit ? 'Editar' : 'Nuevo' }} Programa Educativo</h3>
+
+<!-- Nombre -->
+<div>
+  <label>Nombre del programa</label>
+  <input
+    type="text"
+    [(ngModel)]="programaEducativo.nombre"
+    name="nombre"
+    required
+  />
+</div>
+
+<!-- Total de créditos -->
+<div>
+  <label>Total de créditos</label>
+  <input
+    type="number"
+    [(ngModel)]="programaEducativo.totalCreditos"
+    name="totalCreditos"
+    min="0"
+    required
+  />
+</div>
+
+<!-- Tiempo de permanencia mínimo -->
+<div>
+  <label>Tiempo mínimo de permanencia</label>
+  <input
+    type="number"
+    [(ngModel)]="programaEducativo.tPermanenciaMin"
+    name="tPermanenciaMin"
+    min="0"
+    required
+  />
+</div>
+
+<!-- Tiempo de permanencia máximo -->
+<div>
+  <label>Tiempo máximo de permanencia</label>
+  <input
+    type="number"
+    [(ngModel)]="programaEducativo.tPermanenciaMax"
+    name="tPermanenciaMax"
+    min="0"
+    required
+  />
+</div>
+
+<!-- Fecha de creación -->
+<div>
+  <label>Fecha de creación</label>
+  <input
+    type="date"
+    [(ngModel)]="programaEducativo.fechaCreacion"
+    name="fechaCreacion"
+    required
+  />
+</div>
+
+<!-- Contracción -->
+<div>
+  <label>Contracción</label>
+  <input
+    type="text"
+    [(ngModel)]="programaEducativo.contraccion"
+    name="contraccion"
+  />
+</div>
+
+<!-- Nivel de estudio (COMBOBOX) -->
+<div>
+  <label>Nivel de estudio</label>
+  <select
+    [(ngModel)]="programaEducativo.nivelEstudio"
+    name="nivelEstudio"
+    required
+  >
+    <option value="" disabled selected>
+      Seleccione un nivel
+    </option>
+    <option value="LICENCIATURA">Licenciatura</option>
+    <option value="MAESTRIA">Maestría</option>
+    <option value="DOCTORADO">Doctorado</option>
+    <option value="TECNICO SUPERIOR UNIVERSITARIO (TSU)">Técnico Superior Universitario (TSU)</option>
+    <option value="TECNICO E INICIACION">Técnico E Iniciación</option>
+  </select>
+</div>
+
+<!-- Modalidad (COMBOBOX) -->
+<div>
+  <label>Modalidad</label>
+  <select
+    [(ngModel)]="programaEducativo.modalidad"
+    name="modalidad"
+    required
+  >
+    <option value="" disabled selected>
+      Seleccione una modalidad
+    </option>
+    <option value="ABIERTO">Abierto</option>
+    <option value="SABATINO">Sabatino</option>
+    <option value="EN LINEA">En línea</option>
+    <option value="PRESENCIAL">Presencial</option>
+  </select>
+</div>
+
+<!-- Activo -->
+<div>
+  <label>
+    <input
+      type="checkbox"
+      [(ngModel)]="programaEducativo.isActive"
+      name="isActive"
+    />
+    Activo
+  </label>
+</div>
+
+<!-- Botones -->
+<div class="actions">
+  <button type="button" (click)="save()">Guardar</button>
+  <button type="button" (click)="cancel()">Cancelar</button>
+</div>
