@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Usuario } from '../../../../core/models/usuario.model';
 import { UsuarioService } from '../../../../core/services/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-user-form.component',
@@ -13,7 +14,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.css',
 })
-export class UserFormComponent {
+export class UserFormComponent implements OnInit {
 
   user:Usuario = {
     email: '',
@@ -53,6 +54,7 @@ export class UserFormComponent {
         this.router.navigate(['/admin/usuarios']);
       });
     } else {
+      console.log(this.user);
       this.userService.createUsuario(this.user).subscribe(() => {
         this.router.navigate(['/admin/usuarios']);
       });

@@ -16,9 +16,12 @@ export class UserListComponent implements OnInit {
 
   users:Usuario[] = [];
 
-  constructor(private usuarioService: UsuarioService, private router: Router) { }
+  constructor(private usuarioService: UsuarioService, private router: Router) { 
+    console.log('UserListComponent initialized');
+  }
 
   ngOnInit(): void {
+    
     this.loadUsers();
   }
 
@@ -28,6 +31,7 @@ export class UserListComponent implements OnInit {
         this.users = data;
       },
       (error) => {
+        console.log("Error loading users");
         console.error('Error fetching users:', error);
       }
     );
