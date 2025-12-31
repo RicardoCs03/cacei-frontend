@@ -1,0 +1,12 @@
+<h3>Programas de Estudio</h3>
+
+    <button (click)="create()">Nuevo programa</button>
+
+    <ul>
+      <li *ngFor="let programasEducativos of programasEducativos">
+        {{ programasEducativos.nombre }}
+
+        <button (click)="edit(programasEducativos.id!)">Editar</button>
+        <button (click)="remove(programasEducativos.id!)">Eliminar</button>
+      </li>
+    </ul>

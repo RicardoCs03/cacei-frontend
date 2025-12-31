@@ -1,0 +1,81 @@
+<h3>{{ isEdit ? 'Editar' : 'Nuevo' }} Usuario</h3>
+
+<!-- Nombre -->
+<input
+  type="text"
+  [(ngModel)]="user.nombre"
+  placeholder="Nombre"
+/>
+
+<!-- Apellido paterno -->
+<input
+  type="text"
+  [(ngModel)]="user.apepat"
+  placeholder="Apellido paterno"
+/>
+
+<!-- Apellido materno -->
+<input
+  type="text"
+  [(ngModel)]="user.apemat"
+  placeholder="Apellido materno"
+/>
+
+<!-- Email -->
+<input
+  type="email"
+  [(ngModel)]="user.email"
+  placeholder="Correo electrónico"
+/>
+
+<!-- Password (solo visible al crear) -->
+@if (!isEdit) {
+  <input
+    type="password"
+    [(ngModel)]="user.password"
+    placeholder="Contraseña"
+  />
+}
+
+<!-- Fecha de nacimiento -->
+<input
+  type="date"
+  [(ngModel)]="user.fecnac"
+/>
+
+<!-- Género -->
+<select [(ngModel)]="user.genero">
+  <option value="">Seleccione género</option>
+  <option value="M">Masculino</option>
+  <option value="F">Femenino</option>
+  <option value="O">Otro</option>
+</select>
+
+<!-- Celular -->
+<input
+  type="tel"
+  [(ngModel)]="user.celular"
+  placeholder="Número de celular"
+/>
+
+<!-- Rol -->
+<select [(ngModel)]="user.role">
+  <option value="">Seleccione rol</option>
+  <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+  <option value="PROFESOR">PROFESOR</option>
+</select>
+
+<!-- Activo -->
+<label>
+  <input
+    type="checkbox"
+    [(ngModel)]="user.active"
+  />
+  Activo
+</label>
+
+<!-- Acciones -->
+<div class="actions">
+  <button (click)="saveUser()">Guardar</button>
+  <button (click)="cancel()">Cancelar</button>
+</div>

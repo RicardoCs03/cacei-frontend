@@ -12,10 +12,48 @@ export const routes: Routes = [
             {
                 path: 'admin',
                 canActivate: [roleGuard('ROLE_ADMINISTRADOR')],
+                children: [
+                            {
+                              path: 'usuarios',
+                              loadComponent: () =>
+                                import('./layout/admin/usuarios/pages/user-list.component')
+                                  .then(m => m.UserListComponent)
+                            },
+                            {
+                              path: 'usuarios/crear',
+                              loadComponent: () =>
+                                import('./layout/admin/usuarios/pages/user-form.component')
+                                  .then(m => m.UserFormComponent)
+                            },
+                            {
+                              path: 'usuarios/editar/:id',
+                              loadComponent: () =>
+                                import('./layout/admin/usuarios/pages/user-form.component')
+                                  .then(m => m.UserFormComponent)
+                            },
+                            {
+                              path: 'programas-educativos',
+                              loadComponent: () =>
+                                import('./layout/admin/programasEducativos/pages/programas-educativos-list')
+                                  .then(m => m.ProgramaEducativoListComponent)
+                            },
+                            {
+                              path: 'programas-educativos/crear',
+                              loadComponent: () =>
+                                import('./layout/admin/programasEducativos/pages/programas-educativos-form')
+                                  .then(m => m.ProgramaEducativoFormComponent)
+                            },
+                            {
+                              path: 'programas-educativos/editar/:id',
+                              loadComponent: () =>
+                                import('./layout/admin/programasEducativos/pages/programas-educativos-form')
+                                  .then(m => m.ProgramaEducativoFormComponent)
+                            },
+                        ],
                 loadComponent: () => 
                     import('./layout/admin/admin.component')
-                .then(m => m.AdminComponent)
-    },
+                .then(m => m.AdminComponent), 
+            },
     {
         path: 'profesor',
         canActivate: [roleGuard('ROLE_PROFESOR')],

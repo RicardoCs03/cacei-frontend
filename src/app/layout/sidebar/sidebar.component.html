@@ -1,0 +1,28 @@
+<nav>
+  <ul *ngIf="role === 'ROLE_ADMINISTRADOR'">
+    <li>
+      <a routerLink="/admin">Dashboard</a>
+    </li>
+    <li>
+      <a routerLink="/admin/usuarios">Usuarios</a>
+    </li>
+    <li>
+      <a routerLink="/admin/programas-educativos">Programas de estudio</a>
+    </li>
+    <li>
+      <a routerLink="/admin/cursos">Cursos</a>
+    </li>
+    <li>
+      <a routerLink="/admin/acreditaciones">Acreditaciones CACEI</a>
+    </li>
+  </ul>
+
+  <ul *ngIf="role === 'ROLE_PROFESOR'">
+    <li>
+      <a routerLink="/profesor">Mis cursos</a>
+    </li>
+    <li>
+      <a routerLink="/profesor/evidencias">Evidencias CACEI</a>
+    </li>
+  </ul>
+</nav>
