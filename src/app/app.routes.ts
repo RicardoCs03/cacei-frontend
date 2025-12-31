@@ -30,7 +30,25 @@ export const routes: Routes = [
                               loadComponent: () =>
                                 import('./layout/admin/usuarios/pages/user-form.component')
                                   .then(m => m.UserFormComponent)
-                            }
+                            },
+                            {
+                              path: 'programas-educativos',
+                              loadComponent: () =>
+                                import('./layout/admin/programasEducativos/pages/programas-educativos-list')
+                                  .then(m => m.ProgramaEducativoListComponent)
+                            },
+                            {
+                              path: 'programas-educativos/crear',
+                              loadComponent: () =>
+                                import('./layout/admin/programasEducativos/pages/programas-educativos-form')
+                                  .then(m => m.ProgramaEducativoFormComponent)
+                            },
+                            {
+                              path: 'programas-educativos/editar/:id',
+                              loadComponent: () =>
+                                import('./layout/admin/programasEducativos/pages/programas-educativos-form')
+                                  .then(m => m.ProgramaEducativoFormComponent)
+                            },
                         ],
                 loadComponent: () => 
                     import('./layout/admin/admin.component')
