@@ -67,6 +67,24 @@ export const routes: Routes = [
                                 import('./layout/admin/experienciasEducativas/pages/experiencias-educativas-form')
                                   .then(m => m.ExperienciasEducativasForm)
                             },
+                            {
+                              path: 'cursos',
+                              loadComponent: () =>
+                                import('./layout/admin/cursos/pages/cursos-list')
+                                  .then(m => m.CursosList)
+                            },
+                            {
+                              path: 'cursos/crear',
+                              loadComponent: () =>
+                                import('./layout/admin/cursos/pages/cursos-form')
+                                  .then(m => m.CursosForm)
+                            },
+                            {
+                              path: 'cursos/editar/:id',
+                              loadComponent: () =>
+                                import('./layout/admin/cursos/pages/cursos-form')
+                                  .then(m => m.CursosForm)
+                            },
                         ],
                 loadComponent: () => 
                     import('./layout/admin/admin.component')
