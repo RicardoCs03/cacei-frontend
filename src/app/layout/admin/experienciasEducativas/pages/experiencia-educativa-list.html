@@ -1,0 +1,12 @@
+<h3>Experiencias Educativas</h3>
+
+    <button (click)="create()">Nueva experiencia</button>
+
+    <ul>
+      <li *ngFor="let exp of experiencias">
+        {{ exp.nombre }} (Créditos: {{ exp.creditos }}) (Programa de Educativo: {{ exp.programaEducativo }})
+
+        <button (click)="edit(exp.id!)">Editar</button>
+        <button (click)="remove(exp.id!)">Eliminar</button>
+      </li>
+    </ul>

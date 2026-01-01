@@ -1,0 +1,114 @@
+<h3>{{ isEdit ? 'Editar' : 'Nueva' }} Experiencia Educativa</h3>
+
+<!-- Nombre -->
+<input
+  type="text"
+  [(ngModel)]="experiencia.nombre"
+  name="nombre"
+  placeholder="Nombre de la experiencia" />
+
+<!-- NRC -->
+<input
+  type="text"
+  [(ngModel)]="experiencia.nrc"
+  name="nrc"
+  placeholder="NRC" />
+
+<!-- Área de la experiencia -->
+<input
+  type="text"
+  [(ngModel)]="experiencia.areaExperienciaEducativa"
+  name="areaExperienciaEducativa"
+  placeholder="Área de la experiencia educativa" />
+
+<!-- Objetivo general -->
+<textarea
+  [(ngModel)]="experiencia.objetivoGeneral"
+  name="objetivoGeneral"
+  placeholder="Objetivo general">
+</textarea>
+
+<hr />
+
+<h4>Horas por área</h4>
+
+<input
+  type="number"
+  [(ngModel)]="experiencia.horasCienciasBasicas"
+  name="horasCienciasBasicas"
+  placeholder="Horas Ciencias Básicas" />
+
+<input
+  type="number"
+  [(ngModel)]="experiencia.horasCienciasIngenieria"
+  name="horasCienciasIngenieria"
+  placeholder="Horas Ciencias de Ingeniería" />
+
+<input
+  type="number"
+  [(ngModel)]="experiencia.horasDisenoIngenieria"
+  name="horasDisenoIngenieria"
+  placeholder="Horas Diseño de Ingeniería" />
+
+<input
+  type="number"
+  [(ngModel)]="experiencia.horasCSociales"
+  name="horasCSociales"
+  placeholder="Horas Ciencias Sociales" />
+
+<input
+  type="number"
+  [(ngModel)]="experiencia.horasCEconomicas"
+  name="horasCEconomicas"
+  placeholder="Horas Ciencias Económicas" />
+
+<input
+  type="number"
+  [(ngModel)]="experiencia.horasOtros"
+  name="horasOtros"
+  placeholder="Otras horas" />
+
+<hr />
+
+<!-- Créditos -->
+<input
+  type="number"
+  [(ngModel)]="experiencia.creditos"
+  name="creditos"
+  placeholder="Créditos" />
+
+<!-- Programa educativo -->
+<select
+  [(ngModel)]="experiencia.programaEducativo"
+  name="programaEducativo"
+  required>
+
+  <option value="" disabled>
+    Seleccione un programa educativo
+  </option>
+
+  <option
+    *ngFor="let p of programas"
+    [value]="p.nombre">
+    {{ p.nombre }}
+  </option>
+
+</select>
+
+<hr />
+
+
+<!-- Activo -->
+<label>
+  <input
+    type="checkbox"
+    [(ngModel)]="experiencia.isActive"
+    name="isActive" />
+  Activo
+</label>
+
+<hr />
+
+<!-- Botones -->
+<button type="button" (click)="save()">Guardar</button>
+<button type="button" (click)="cancel()">Cancelar</button>

@@ -49,6 +49,42 @@ export const routes: Routes = [
                                 import('./layout/admin/programasEducativos/pages/programas-educativos-form')
                                   .then(m => m.ProgramaEducativoFormComponent)
                             },
+                            {
+                              path: 'experiencias-educativas',
+                              loadComponent: () =>
+                                import('./layout/admin/experienciasEducativas/pages/experiencia-educativa-list')
+                                  .then(m => m.ExperienciaEducativaList)
+                            },
+                            {
+                              path: 'experiencias-educativas/crear',
+                              loadComponent: () =>
+                                import('./layout/admin/experienciasEducativas/pages/experiencias-educativas-form')
+                                  .then(m => m.ExperienciasEducativasForm)
+                            },
+                            {
+                              path: 'experiencias-educativas/editar/:id',
+                              loadComponent: () =>
+                                import('./layout/admin/experienciasEducativas/pages/experiencias-educativas-form')
+                                  .then(m => m.ExperienciasEducativasForm)
+                            },
+                            {
+                              path: 'cursos',
+                              loadComponent: () =>
+                                import('./layout/admin/cursos/pages/cursos-list')
+                                  .then(m => m.CursosList)
+                            },
+                            {
+                              path: 'cursos/crear',
+                              loadComponent: () =>
+                                import('./layout/admin/cursos/pages/cursos-form')
+                                  .then(m => m.CursosForm)
+                            },
+                            {
+                              path: 'cursos/editar/:id',
+                              loadComponent: () =>
+                                import('./layout/admin/cursos/pages/cursos-form')
+                                  .then(m => m.CursosForm)
+                            },
                         ],
                 loadComponent: () => 
                     import('./layout/admin/admin.component')

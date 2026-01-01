@@ -1,0 +1,103 @@
+<h3>{{ isEdit ? 'Editar' : 'Nuevo' }} Curso</h3>
+
+<!-- Experiencia Educativa -->
+<select
+  [(ngModel)]="curso.idEE"
+  name="idEE"
+  required>
+
+  <option [ngValue]="null" disabled>
+    Seleccione experiencia educativa
+  </option>
+
+  <option
+    *ngFor="let e of experiencias"
+    [ngValue]="e.id">
+    {{ e.nombre }}
+  </option>
+</select>
+
+<!-- Profesor -->
+<select
+  [(ngModel)]="curso.idProfesor"
+  name="idProfesor"
+  required>
+
+  <option [ngValue]="null" disabled>
+    Seleccione profesor
+  </option>
+
+  <option
+    *ngFor="let p of profesores"
+    [ngValue]="p.id">
+    {{ p.nombre }}
+  </option>
+</select>
+
+<hr />
+
+<!-- Fechas -->
+<label>Fecha de asignación</label>
+<input
+  type="date"
+  [(ngModel)]="curso.fechaAsignacion"
+  name="fechaAsignacion" />
+
+<label>Fecha inicio</label>
+<input
+  type="date"
+  [(ngModel)]="curso.fechaInicio"
+  name="fechaInicio" />
+
+<label>Fecha fin</label>
+<input
+  type="date"
+  [(ngModel)]="curso.fechaFin"
+  name="fechaFin" />
+
+<hr />
+
+<!-- Periodo -->
+<input
+  type="text"
+  [(ngModel)]="curso.periodo"
+  name="periodo"
+  placeholder="Periodo (ej. 2025-1)" />
+
+<!-- Horas por semana -->
+<input
+  type="number"
+  [(ngModel)]="curso.horasSemana"
+  name="horasSemana"
+  placeholder="Horas por semana" />
+
+<!-- Hora -->
+<input
+  type="text"
+  [(ngModel)]="curso.hora"
+  name="hora"
+  placeholder="Hora (ej. 07:00 - 09:00)" />
+
+<!-- Salón -->
+<input
+  type="text"
+  [(ngModel)]="curso.salon"
+  name="salon"
+  placeholder="Salón" />
+
+<hr />
+
+<!-- Activo -->
+<label>
+  <input
+    type="checkbox"
+    [(ngModel)]="curso.isActive"
+    name="isActive" />
+  Activo
+</label>
+
+<hr />
+
+<!-- Botones -->
+<button type="button" (click)="save()">Guardar</button>
+<button type="button" (click)="cancel()">Cancelar</button>
