@@ -85,6 +85,24 @@ export const routes: Routes = [
                                 import('./layout/admin/cursos/pages/cursos-form')
                                   .then(m => m.CursosForm)
                             },
+                            {
+                              path: 'alumnos',
+                              loadComponent: () =>
+                                import('./layout/admin/alumnos/pages/alumnos-list')
+                                  .then(m => m.AlumnosList)
+                            },
+                            {
+                              path: 'alumnos/crear',
+                              loadComponent: () =>
+                                import('./layout/admin/alumnos/pages/alumnos-form')
+                                  .then(m => m.AlumnosForm)
+                            },
+                            {
+                              path: 'alumnos/editar/:id',
+                              loadComponent: () =>
+                                import('./layout/admin/alumnos/pages/alumnos-form')
+                                  .then(m => m.AlumnosForm)
+                            }
                         ],
                 loadComponent: () => 
                     import('./layout/admin/admin.component')
