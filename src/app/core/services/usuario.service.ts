@@ -29,6 +29,21 @@ export class UsuarioService {
     
   }
 
+  findProfesores(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.API_URL}/profesores`);
+  }
+
+  fin(parametro:string): Observable<Usuario> {
+    //Falta agregar el requestParam donde se envia el parametro
+    if (!isNaN(Number(parametro))) {
+      let id = Number(parametro);
+      console.log("DEBUG: Es un ID");
+      return this.http.get<Usuario>(`${this.API_URL}/buscar`, {params: {id}});
+    }
+    return this.http.get<Usuario>(`${this.API_URL}/buscar`, {params: {email: parametro}});
+    
+  }
+
   createUsuario(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.API_URL}/registrar-usuario`, usuario);
   }
@@ -40,5 +55,7 @@ export class UsuarioService {
   deleteUsuario(id: number): Observable<void> {
     return this.http.delete<void>(`${this.API_URL}/eliminar-usuario/${id}`);
   }
+
+
 
 }
