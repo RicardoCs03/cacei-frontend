@@ -1,0 +1,27 @@
+   <h3>{{ isEdit ? 'Editar' : 'Nuevo' }} Alumno</h3>
+
+    <input [(ngModel)]="alumno.matricula" name="matricula" placeholder="Matrícula">
+
+    <input [(ngModel)]="alumno.nombre" name="nombre" placeholder="Nombre">
+
+    <input [(ngModel)]="alumno.apepat" name="apellidoPaterno" placeholder="Apellido paterno">
+
+    <input [(ngModel)]="alumno.apemat" name="apellidoMaterno" placeholder="Apellido materno">
+
+    <select [(ngModel)]="alumno.programaEducativo" name="programaEducativoId">
+      <option value="">Seleccione programa</option>
+      <option *ngFor="let p of programas" [value]="p.nombre">
+        {{ p.nombre }}
+      </option>
+    </select>
+
+    <label>
+      <input type="checkbox"
+             [(ngModel)]="alumno.isActive"
+             name="isActive">
+      Activo
+    </label>
+
+    <button (click)="save()">Guardar</button>
+    <button (click)="cancel()">Cancelar</button>
+  `
