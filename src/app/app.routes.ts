@@ -102,6 +102,24 @@ export const routes: Routes = [
                               loadComponent: () =>
                                 import('./layout/admin/alumnos/pages/alumnos-form')
                                   .then(m => m.AlumnosForm)
+                            },
+                            {
+                              path: 'inscripciones',
+                              loadComponent: () =>
+                                import('./layout/admin/inscripciones/pages/inscripciones-list')
+                                  .then(m => m.InscripcionesList)
+                            },
+                            {
+                              path: 'inscripciones/crear',
+                              loadComponent: () =>
+                                import('./layout/admin/inscripciones/pages/inscripciones-form')
+                                  .then(m => m.InscripcionesForm)
+                            },
+                            {
+                              path: 'inscripciones/editar/:id',
+                              loadComponent: () =>
+                                import('./layout/admin/inscripciones/pages/inscripciones-form')
+                                  .then(m => m.InscripcionesForm)
                             }
                         ],
                 loadComponent: () => 
