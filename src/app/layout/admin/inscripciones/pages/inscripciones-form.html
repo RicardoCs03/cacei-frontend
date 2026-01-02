@@ -1,0 +1,74 @@
+<h3>{{ isEdit ? 'Editar' : 'Nueva' }} Inscripción</h3>
+
+<!-- Alumno -->
+<select
+  [(ngModel)]="inscripcion.idAlumno"
+  name="idAlumno"
+  required>
+
+  <option [ngValue]="undefined" disabled>
+    Seleccione alumno
+  </option>
+
+  <option
+    *ngFor="let a of alumnos"
+    [ngValue]="a.id">
+    {{ a.matricula }} - {{ a.nombre }}
+  </option>
+</select>
+
+<!-- Curso -->
+<select
+  [(ngModel)]="inscripcion.idCurso"
+  name="idCurso"
+  required>
+
+  <option [ngValue]="undefined" disabled>
+    Seleccione curso
+  </option>
+
+  <option
+    *ngFor="let c of cursos"
+    [ngValue]="c.id">
+    {{ c.salon }}
+  </option>
+</select>
+
+<hr />
+
+<!-- Tipo de inscripción -->
+<input
+  type="text"
+  [(ngModel)]="inscripcion.tipoInscripcion"
+  name="tipoInscripcion"
+  placeholder="Tipo de inscripción (Ordinaria, Repetición, etc.)" />
+
+<!-- Fecha de inscripción -->
+<input
+  type="date"
+  [(ngModel)]="inscripcion.fecInscripcion"
+  name="fecInscripcion" />
+
+<!-- Calificación final -->
+<input
+  type="number"
+  [(ngModel)]="inscripcion.calificacion"
+  name="calificacion"
+  placeholder="Calificación final" />
+
+<hr />
+
+<!-- Activa -->
+<label>
+  <input
+    type="checkbox"
+    [(ngModel)]="inscripcion.isActive"
+    name="isActive" />
+  Activa
+</label>
+
+<hr />
+
+<!-- Botones -->
+<button type="button" (click)="save()">Guardar</button>
+<button type="button" (click)="cancel()">Cancelar</button>

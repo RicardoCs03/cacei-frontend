@@ -1,0 +1,22 @@
+<h3>Inscripciones</h3>
+
+    <button (click)="create()">Nueva inscripción</button>
+
+    <table>
+      <tr>
+        <th>Alumno</th>
+        <th>Curso</th>
+        <th>Calificación Final</th>
+        <th>Acciones</th>
+      </tr>
+
+      <tr *ngFor="let i of inscripciones">
+        <td>{{ i.idAlumno }}</td>
+        <td>{{ i.idCurso }}</td>
+        <td>{{ i.calificacion ?? '-' }}</td>
+        <td>
+          <button (click)="edit(i.id!)">Editar</button>
+          <button (click)="remove(i.id!)">Eliminar</button>
+        </td>
+      </tr>
+    </table>
