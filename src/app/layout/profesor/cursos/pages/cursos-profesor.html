@@ -1,0 +1,12 @@
+<h3>Mis Cursos</h3>
+
+    <div *ngFor="let curso of cursos">
+      <div class="card">
+        <h4>{{ curso.salon }}</h4>
+        <p>{{ curso.periodo }}</p>
+
+        <button [routerLink]="[`detalles/${curso.id}`]">
+          Ver alumnos
+        </button>
+      </div>
+    </div>
