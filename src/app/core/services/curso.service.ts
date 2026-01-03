@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Curso } from '../models/cursos.model';
+import { CursoInscripcionesDTO } from '../models/curso.inscripciones.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,16 @@ export class CursoService {
   findById(id: number): Observable<Curso> {
     return this.http.get<Curso>(`${this.API_URL}/${id}`);
   }
+
+  findByProfesor(): Observable<Curso[]> {
+    return this.http.get<Curso[]>(`${this.API_URL}/profesor`);
+  }
+
+  getDetalleCurso(cursoId: number) {
+  return this.http.get<CursoInscripcionesDTO>(
+    `${this.API_URL}/cursos/${cursoId}/detalle-inscripciones`
+  );
+}
 
   create(data: Curso): Observable<Curso> {
     return this.http.post<Curso>(this.API_URL, data);
