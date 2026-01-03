@@ -1,0 +1,24 @@
+<h3>Curso: {{ cursoIns?.curso?.nombre }}</h3>
+
+    <p>Programa: {{ cursoIns?.curso?.programaEducativo }}</p>
+
+    <h4>Alumnos inscritos</h4>
+
+    <table>
+      <tr>
+        <th>Matrícula</th>
+        <th>Alumno</th>
+        <th>calificacion</th>
+      </tr>
+
+      <tr *ngFor="let i of cursoIns?.inscripciones">
+        <td>{{ i.alumno.matricula }}</td>
+        <td>{{ i.alumno.nombre }}</td>
+        <td>{{ i.calificacion }}</td>
+      </tr>
+    </table>
+
+    <button (click)="exportarPdf()">
+      Generar Evidencia CACEI (PDF)
+    </button>
+  `

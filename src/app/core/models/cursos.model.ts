@@ -11,3 +11,11 @@ export interface Curso {
   salon: string;
   isActive?: boolean;
 }
+export interface CursoDetalleDTO {
+  id: number;
+  nombre: string;
+  programaEducativo: string;
+  periodo: string;
+  fechaInicio: string;
+  fechaFin: string;
+}

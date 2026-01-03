@@ -129,9 +129,23 @@ export const routes: Routes = [
     {
         path: 'profesor',
         canActivate: [roleGuard('ROLE_PROFESOR')],
+        children:[
+          {
+            path: 'cursos',
+            loadComponent: () => 
+                import('./layout/profesor/cursos/pages/cursos-profesor')
+            .then(m => m.CursosProfesor)
+          },
+          {
+            path: 'cursos/detalles/:id',
+            loadComponent: () => 
+                import('./layout/profesor/cursos/pages/curso-profesor-detalles')
+            .then(m => m.CursoProfesorDetalles)
+          }
+        ],
         loadComponent: () => 
             import('./layout/profesor/profesor.component')
-        .then(m => m.ProfesorComponent)
+        .then(m => m.ProfesorComponent)   
     }
         ]
     },  
