@@ -1,19 +1,55 @@
-<div class="login-container">
-  <h2>Iniciar sesión</h2>
+<div class="min-h-screen flex items-center justify-center bg-slate-100 px-4">
+  <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-6">
 
-  <input
-    type="text"
-    placeholder="Usuario"
-    [(ngModel)]="email"
-  />
+    <!-- Título -->
+    <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">
+      Iniciar sesión
+    </h2>
 
-  <input
-    type="password"
-    placeholder="Contraseña"
-    [(ngModel)]="password"
-  />
+    <!-- Usuario -->
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-600 mb-1">
+        Usuario
+      </label>
+      <input
+        type="text"
+        [(ngModel)]="email"
+        placeholder="correo@uv.mx"
+        class="w-full px-4 py-2 border border-gray-300 rounded-md
+               focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      />
+    </div>
 
-  <button (click)="login()">Entrar</button>
+    <!-- Contraseña -->
+    <div class="mb-6">
+      <label class="block text-sm font-medium text-gray-600 mb-1">
+        Contraseña
+      </label>
+      <input
+        type="password"
+        [(ngModel)]="password"
+        placeholder="••••••••"
+        class="w-full px-4 py-2 border border-gray-300 rounded-md
+               focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      />
+    </div>
 
-  <p class="error" *ngIf="error">{{ error }}</p>
+    <!-- Botón -->
+    <button
+      (click)="login()"
+      class="w-full bg-indigo-600 text-white py-2 rounded-md
+             hover:bg-indigo-700 transition duration-200"
+    >
+      Entrar
+    </button>
+
+    <!-- Error -->
+    <p
+      *ngIf="error"
+      class="mt-4 text-sm text-red-600 text-center"
+    >
+      {{ error }}
+    </p>
+
+  </div>
 </div>

@@ -1,12 +1,54 @@
-<h3>Usuarios</h3>
+<section class="space-y-6">
 
-    <button (click)="createUsuario()">Nuevo usuario</button>
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <h3 class="text-xl font-semibold text-slate-800">
+      Usuarios
+    </h3>
 
-    <ul>
-      <li *ngFor="let user of users">
-        {{ user.email }} - {{ user.role }} - {{user.nombre}}
+    <button (click)="createUsuario()" class="btn-primary">
+      + Nuevo usuario
+    </button>
+  </div>
 
-        <button (click)="editUsuario(user.id!)">Editar</button>
-        <button (click)="deleteUsuario(user.id!)">Eliminar</button>
-      </li>
-    </ul>
+  <!-- Tabla -->
+  <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
+    <table class="min-w-full divide-y divide-slate-200">
+      <thead class="bg-slate-50">
+        <tr>
+          <th class="table-th">Correo</th>
+          <th class="table-th">Nombre</th>
+          <th class="table-th">Rol</th>
+          <th class="table-th text-right">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-slate-100">
+        <tr *ngFor="let user of users" class="hover:bg-slate-50">
+          <td class="table-td">{{ user.email }}</td>
+          <td class="table-td">{{ user.nombre }}</td>
+          <td class="table-td">
+            <span class="px-2 py-1 rounded-full text-xs font-medium" [ngClass]="{
+                'bg-indigo-100 text-indigo-700': user.role === 'ROLE_ADMINISTRADOR',
+                'bg-emerald-100 text-emerald-700': user.role === 'ROLE_PROFESOR'
+              }">
+              {{ user.role }}
+            </span>
+          </td>
+
+          <td class="table-td text-right space-x-2">
+
+            <button (click)="editUsuario(user.id!)" class="action-edit" title="Editar">
+              ✏️
+            </button>
+
+            <button (click)="deleteUsuario(user.id!)" class="action-delete" title="Eliminar">
+              🗑️
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>

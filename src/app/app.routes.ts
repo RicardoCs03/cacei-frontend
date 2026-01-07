@@ -68,6 +68,12 @@ export const routes: Routes = [
                                   .then(m => m.ExperienciasEducativasForm)
                             },
                             {
+                              path: 'experiencias-educativas/editar/:id/atributos-egreso',
+                              loadComponent: () =>
+                                import('./layout/admin/atributos-egreso/pages/atributos-egreso-check')
+                                  .then(m => m.AtributosEgresoCheck)
+                            },
+                            {
                               path: 'cursos',
                               loadComponent: () =>
                                 import('./layout/admin/cursos/pages/cursos-list')

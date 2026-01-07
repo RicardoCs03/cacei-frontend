@@ -1,14 +1,27 @@
-<header>
-  <span>CACEI</span>
+<!-- HEADER -->
+<header class="h-14 bg-indigo-600 text-white flex items-center justify-between px-6 shadow-md">
+  <span class="text-lg font-semibold tracking-wide">
+    CACEI
+  </span>
 
-  <button (click)="logout()">Cerrar sesión</button>
+  <button
+    (click)="logout()"
+    class="bg-indigo-500 hover:bg-indigo-700 px-4 py-1.5 rounded-md
+           text-sm font-medium transition"
+  >
+    Cerrar sesión
+  </button>
 </header>
 
-<div class="layout">
-  <app-sidebar></app-sidebar>
+<!-- LAYOUT -->
+<div class="flex min-h-[calc(100vh-3.5rem)] bg-slate-100">
 
+  <!-- SIDEBAR -->
+  <app-sidebar class="hidden md:block"></app-sidebar>
 
-<main>
-  <router-outlet></router-outlet>
-</main>
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 p-4 md:p-6 overflow-auto">
+    <router-outlet></router-outlet>
+  </main>
+
 </div>

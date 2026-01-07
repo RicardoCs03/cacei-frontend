@@ -1,4 +1,36 @@
-<h2>Panel Administrador</h2>
-<p>Bienvenido administrador</p>
+<section class="space-y-6">
 
-<router-outlet></router-outlet>
+  <!-- Título -->
+  <div>
+    <h2 class="text-2xl font-semibold text-slate-800">
+      Panel de Administración
+    </h2>
+    <p class="text-slate-500 mt-1">
+      Bienvenido al sistema de gestión académica CACEI
+    </p>
+  </div>
+
+  <!-- Card de bienvenida -->
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+    <h3 class="text-lg font-medium text-slate-700 mb-2">
+      👋 ¡Hola, Administrador!
+    </h3>
+
+    <p class="text-slate-600">
+      Desde este panel puedes administrar programas educativos, experiencias educativas,
+      cursos, alumnos, inscripciones y acreditaciones CACEI.
+    </p>
+
+    <div class="mt-4 flex flex-wrap gap-3">
+      <span class="badge">Programas</span>
+      <span class="badge">Experiencias</span>
+      <span class="badge">Cursos</span>
+      <span class="badge">Alumnos</span>
+      <span class="badge">CACEI</span>
+    </div>
+  </div>
+
+  <!-- Contenido hijo -->
+  <router-outlet></router-outlet>
+
+</section>

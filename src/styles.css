@@ -5,3 +5,36 @@
 html, body{
     @apply bg-slate-100 text-slate-800;
 }
+
+.action-edit {
+  @apply inline-flex items-center justify-center
+         h-9 w-9 rounded-lg
+         bg-indigo-50 text-indigo-600
+         hover:bg-indigo-100 hover:text-indigo-700
+         transition;
+}
+
+.action-delete {
+  @apply inline-flex items-center justify-center
+         h-9 w-9 rounded-lg
+         bg-red-50 text-red-600
+         hover:bg-red-100 hover:text-red-700
+         transition;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-slate-700 mb-1;
+}
+
+.form-input {
+  @apply w-full rounded-lg border border-slate-300
+         px-3 py-2 text-sm
+         focus:outline-none focus:ring-2 focus:ring-indigo-500
+         focus:border-indigo-500;
+}
+
+.btn-outline {
+  @apply rounded-lg border border-slate-300
+         px-4 py-2 text-sm font-medium
+         text-slate-700 hover:bg-slate-100 transition;
+}

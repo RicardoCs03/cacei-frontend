@@ -1,124 +1,161 @@
-<h3>{{ isEdit ? 'Editar' : 'Nuevo' }} Programa Educativo</h3>
+<section class="max-w-4xl space-y-6">
 
-<!-- Nombre -->
-<div>
-  <label>Nombre del programa</label>
-  <input
-    type="text"
-    [(ngModel)]="programaEducativo.nombre"
-    name="nombre"
-    required
-  />
-</div>
+  <!-- Título -->
+  <div>
+    <h3 class="text-xl font-semibold text-slate-800">
+      {{ isEdit ? 'Editar' : 'Nuevo' }} Programa Educativo
+    </h3>
+    <p class="text-sm text-slate-500 mt-1">
+      Información general del programa de estudio
+    </p>
+  </div>
 
-<!-- Total de créditos -->
-<div>
-  <label>Total de créditos</label>
-  <input
-    type="number"
-    [(ngModel)]="programaEducativo.totalCreditos"
-    name="totalCreditos"
-    min="0"
-    required
-  />
-</div>
+  <!-- Card -->
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
 
-<!-- Tiempo de permanencia mínimo -->
-<div>
-  <label>Tiempo mínimo de permanencia</label>
-  <input
-    type="number"
-    [(ngModel)]="programaEducativo.tPermanenciaMin"
-    name="tPermanenciaMin"
-    min="0"
-    required
-  />
-</div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-<!-- Tiempo de permanencia máximo -->
-<div>
-  <label>Tiempo máximo de permanencia</label>
-  <input
-    type="number"
-    [(ngModel)]="programaEducativo.tPermanenciaMax"
-    name="tPermanenciaMax"
-    min="0"
-    required
-  />
-</div>
+      <!-- Nombre -->
+      <div>
+        <label class="form-label">Nombre del programa</label>
+        <input
+          type="text"
+          [(ngModel)]="programaEducativo.nombre"
+          name="nombre"
+          class="form-input"
+          required
+        />
+      </div>
 
-<!-- Fecha de creación -->
-<div>
-  <label>Fecha de creación</label>
-  <input
-    type="date"
-    [(ngModel)]="programaEducativo.fechaCreacion"
-    name="fechaCreacion"
-    required
-  />
-</div>
+      <!-- Contracción -->
+      <div>
+        <label class="form-label">Contracción</label>
+        <input
+          type="text"
+          [(ngModel)]="programaEducativo.contraccion"
+          name="contraccion"
+          class="form-input"
+        />
+      </div>
 
-<!-- Contracción -->
-<div>
-  <label>Contracción</label>
-  <input
-    type="text"
-    [(ngModel)]="programaEducativo.contraccion"
-    name="contraccion"
-  />
-</div>
+      <!-- Total de créditos -->
+      <div>
+        <label class="form-label">Total de créditos</label>
+        <input
+          type="number"
+          [(ngModel)]="programaEducativo.totalCreditos"
+          name="totalCreditos"
+          min="0"
+          class="form-input"
+          required
+        />
+      </div>
 
-<!-- Nivel de estudio (COMBOBOX) -->
-<div>
-  <label>Nivel de estudio</label>
-  <select
-    [(ngModel)]="programaEducativo.nivelEstudio"
-    name="nivelEstudio"
-    required
-  >
-    <option value="" disabled selected>
-      Seleccione un nivel
-    </option>
-    <option value="LICENCIATURA">Licenciatura</option>
-    <option value="MAESTRIA">Maestría</option>
-    <option value="DOCTORADO">Doctorado</option>
-    <option value="TECNICO SUPERIOR UNIVERSITARIO (TSU)">Técnico Superior Universitario (TSU)</option>
-    <option value="TECNICO E INICIACION">Técnico E Iniciación</option>
-  </select>
-</div>
+      <!-- Fecha de creación -->
+      <div>
+        <label class="form-label">Fecha de creación</label>
+        <input
+          type="date"
+          [(ngModel)]="programaEducativo.fechaCreacion"
+          name="fechaCreacion"
+          class="form-input"
+          required
+        />
+      </div>
 
-<!-- Modalidad (COMBOBOX) -->
-<div>
-  <label>Modalidad</label>
-  <select
-    [(ngModel)]="programaEducativo.modalidad"
-    name="modalidad"
-    required
-  >
-    <option value="" disabled selected>
-      Seleccione una modalidad
-    </option>
-    <option value="ABIERTO">Abierto</option>
-    <option value="SABATINO">Sabatino</option>
-    <option value="EN LINEA">En línea</option>
-    <option value="PRESENCIAL">Presencial</option>
-  </select>
-</div>
+      <!-- Permanencia mínima -->
+      <div>
+        <label class="form-label">Tiempo mínimo de permanencia</label>
+        <input
+          type="number"
+          [(ngModel)]="programaEducativo.tPermanenciaMin"
+          name="tPermanenciaMin"
+          min="0"
+          class="form-input"
+          required
+        />
+      </div>
 
-<!-- Activo -->
-<div>
-  <label>
-    <input
-      type="checkbox"
-      [(ngModel)]="programaEducativo.isActive"
-      name="isActive"
-    />
-    Activo
-  </label>
-</div>
+      <!-- Permanencia máxima -->
+      <div>
+        <label class="form-label">Tiempo máximo de permanencia</label>
+        <input
+          type="number"
+          [(ngModel)]="programaEducativo.tPermanenciaMax"
+          name="tPermanenciaMax"
+          min="0"
+          class="form-input"
+          required
+        />
+      </div>
 
-<!-- Botones -->
-<div class="actions">
-  <button type="button" (click)="save()">Guardar</button>
-  <button type="button" (click)="cancel()">Cancelar</button>
-</div>
+      <!-- Nivel de estudio -->
+      <div>
+        <label class="form-label">Nivel de estudio</label>
+        <select
+          [(ngModel)]="programaEducativo.nivelEstudio"
+          name="nivelEstudio"
+          class="form-input"
+          required
+        >
+          <option value="">Seleccione un nivel</option>
+          <option value="LICENCIATURA">Licenciatura</option>
+          <option value="MAESTRIA">Maestría</option>
+          <option value="DOCTORADO">Doctorado</option>
+          <option value="TECNICO SUPERIOR UNIVERSITARIO (TSU)">Técnico Superior Universitario (TSU)</option>
+          <option value="TECNICO E INICIACION">Técnico e Iniciación</option>
+        </select>
+      </div>
+
+      <!-- Modalidad -->
+      <div>
+        <label class="form-label">Modalidad</label>
+        <select
+          [(ngModel)]="programaEducativo.modalidad"
+          name="modalidad"
+          class="form-input"
+          required
+        >
+          <option value="">Seleccione una modalidad</option>
+          <option value="ABIERTO">Abierto</option>
+          <option value="SABATINO">Sabatino</option>
+          <option value="EN LINEA">En línea</option>
+          <option value="PRESENCIAL">Presencial</option>
+        </select>
+      </div>
+
+      <!-- Activo -->
+      <div class="flex items-center gap-2 mt-6">
+        <input
+          type="checkbox"
+          [(ngModel)]="programaEducativo.isActive"
+          name="isActive"
+          class="h-4 w-4 text-indigo-600"
+        />
+        <span class="text-sm text-slate-700">Activo</span>
+      </div>
+
+    </div>
+
+    <!-- Acciones -->
+    <div class="mt-6 flex justify-end gap-3">
+      <button
+        type="button"
+        (click)="cancel()"
+        class="btn-outline"
+      >
+        Cancelar
+      </button>
+
+      <button
+        type="button"
+        (click)="save()"
+        class="btn-primary"
+      >
+        Guardar
+      </button>
+    </div>
+
+  </div>
+
+</section>
