@@ -1,114 +1,106 @@
-<h3>{{ isEdit ? 'Editar' : 'Nueva' }} Experiencia Educativa</h3>
+<section class="max-w-4xl mx-auto bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
 
-<!-- Nombre -->
-<input
-  type="text"
-  [(ngModel)]="experiencia.nombre"
-  name="nombre"
-  placeholder="Nombre de la experiencia" />
+  <h3 class="text-xl font-semibold text-slate-800">
+    {{ isEdit ? 'Editar' : 'Nueva' }} Experiencia Educativa
+  </h3>
 
-<!-- NRC -->
-<input
-  type="text"
-  [(ngModel)]="experiencia.nrc"
-  name="nrc"
-  placeholder="NRC" />
+  <!-- Datos generales -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-<!-- Área de la experiencia -->
-<input
-  type="text"
-  [(ngModel)]="experiencia.areaExperienciaEducativa"
-  name="areaExperienciaEducativa"
-  placeholder="Área de la experiencia educativa" />
+    <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
+             focus:outline-none focus:ring-2 focus:ring-indigo-500" type="text" [(ngModel)]="experiencia.nombre"
+      name="nombre" placeholder="Nombre de la experiencia" />
 
-<!-- Objetivo general -->
-<textarea
-  [(ngModel)]="experiencia.objetivoGeneral"
-  name="objetivoGeneral"
-  placeholder="Objetivo general">
-</textarea>
+    <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
+             focus:outline-none focus:ring-2 focus:ring-indigo-500" type="text" [(ngModel)]="experiencia.nrc"
+      name="nrc" placeholder="NRC" />
 
-<hr />
+    <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm md:col-span-2
+             focus:outline-none focus:ring-2 focus:ring-indigo-500" type="text"
+      [(ngModel)]="experiencia.areaExperienciaEducativa" name="areaExperienciaEducativa"
+      placeholder="Área de la experiencia educativa" />
 
-<h4>Horas por área</h4>
+  </div>
 
-<input
-  type="number"
-  [(ngModel)]="experiencia.horasCienciasBasicas"
-  name="horasCienciasBasicas"
-  placeholder="Horas Ciencias Básicas" />
+  <textarea class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm min-h-[100px]
+           focus:outline-none focus:ring-2 focus:ring-indigo-500" [(ngModel)]="experiencia.objetivoGeneral"
+    name="objetivoGeneral" placeholder="Objetivo general">
+  </textarea>
 
-<input
-  type="number"
-  [(ngModel)]="experiencia.horasCienciasIngenieria"
-  name="horasCienciasIngenieria"
-  placeholder="Horas Ciencias de Ingeniería" />
+  <!-- Horas por área -->
+  <div class="space-y-4">
+    <h4 class="font-medium text-slate-700">
+      Horas por área
+    </h4>
 
-<input
-  type="number"
-  [(ngModel)]="experiencia.horasDisenoIngenieria"
-  name="horasDisenoIngenieria"
-  placeholder="Horas Diseño de Ingeniería" />
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-<input
-  type="number"
-  [(ngModel)]="experiencia.horasCSociales"
-  name="horasCSociales"
-  placeholder="Horas Ciencias Sociales" />
+      <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm" type="number"
+        [(ngModel)]="experiencia.horasCienciasBasicas" placeholder="Ciencias Básicas" />
 
-<input
-  type="number"
-  [(ngModel)]="experiencia.horasCEconomicas"
-  name="horasCEconomicas"
-  placeholder="Horas Ciencias Económicas" />
+      <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm" type="number"
+        [(ngModel)]="experiencia.horasCienciasIngenieria" placeholder="Ciencias de Ingeniería" />
 
-<input
-  type="number"
-  [(ngModel)]="experiencia.horasOtros"
-  name="horasOtros"
-  placeholder="Otras horas" />
+      <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm" type="number"
+        [(ngModel)]="experiencia.horasDisenoIngenieria" placeholder="Diseño de Ingeniería" />
 
-<hr />
+      <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm" type="number"
+        [(ngModel)]="experiencia.horasCSociales" placeholder="Ciencias Sociales" />
 
-<!-- Créditos -->
-<input
-  type="number"
-  [(ngModel)]="experiencia.creditos"
-  name="creditos"
-  placeholder="Créditos" />
+      <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm" type="number"
+        [(ngModel)]="experiencia.horasCEconomicas" placeholder="Ciencias Económicas" />
 
-<!-- Programa educativo -->
-<select
-  [(ngModel)]="experiencia.programaEducativo"
-  name="programaEducativo"
-  required>
+      <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm" type="number"
+        [(ngModel)]="experiencia.horasOtros" placeholder="Otras horas" />
 
-  <option value="" disabled>
-    Seleccione un programa educativo
-  </option>
+    </div>
+  </div>
 
-  <option
-    *ngFor="let p of programas"
-    [value]="p.nombre">
-    {{ p.nombre }}
-  </option>
+  <!-- Créditos y programa -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-</select>
+    <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm" type="number"
+      [(ngModel)]="experiencia.creditos" placeholder="Créditos" />
 
-<hr />
+    <select class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm bg-white"
+      [(ngModel)]="experiencia.programaEducativo" required>
 
+      <option value="" disabled>
+        Seleccione un programa educativo
+      </option>
 
-<!-- Activo -->
-<label>
-  <input
-    type="checkbox"
-    [(ngModel)]="experiencia.isActive"
-    name="isActive" />
-  Activo
-</label>
+      <option *ngFor="let p of programas" [value]="p.nombre">
+        {{ p.nombre }}
+      </option>
 
-<hr />
+    </select>
 
-<!-- Botones -->
-<button type="button" (click)="save()">Guardar</button>
-<button type="button" (click)="cancel()">Cancelar</button>
+  </div>
+
+  <!-- Activo -->
+  <label class="flex items-center gap-2 text-sm text-slate-700">
+    <input type="checkbox" [(ngModel)]="experiencia.isActive" class="accent-indigo-600" />
+    Activo
+  </label>
+
+  <!-- Botones -->
+  <div class="flex justify-end gap-3 pt-4">
+
+    <button type="button" (click)="cancel()" class="px-4 py-2 rounded-lg text-sm font-medium
+             bg-slate-100 text-slate-700 hover:bg-slate-200">
+      Cancelar
+    </button>
+
+    <button *ngIf="isEdit" type="button" [routerLink]="['atributos-egreso']" class="px-4 py-2 rounded-lg text-sm font-medium
+         border border-indigo-600 text-indigo-600 hover:bg-indigo-50">
+      Atributos de Egreso
+    </button>
+
+    <button type="button" (click)="save()" class="px-4 py-2 rounded-lg text-sm font-medium
+             bg-indigo-600 text-white hover:bg-indigo-700">
+      Guardar
+    </button>
+
+  </div>
+
+</section>

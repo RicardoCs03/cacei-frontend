@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ExperienciaEducativa } from '../../../../core/models/experienciaEducativa.model';
 import { ProgramaEducativo } from '../../../../core/models/programaEducativo.model';
 import { ExperienciaEducativaService } from '../../../../core/services/experiencia-educativa-service';
@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-experiencias-educativas-form',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './experiencias-educativas-form.html',
   styleUrl: './experiencias-educativas-form.css',
 })

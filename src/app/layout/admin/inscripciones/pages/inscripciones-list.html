@@ -1,22 +1,72 @@
-<h3>Inscripciones</h3>
+<section class="space-y-6">
 
-    <button (click)="create()">Nueva inscripción</button>
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <h3 class="text-xl font-semibold text-slate-800">
+      Inscripciones
+    </h3>
 
-    <table>
-      <tr>
-        <th>Alumno</th>
-        <th>Curso</th>
-        <th>Calificación Final</th>
-        <th>Acciones</th>
-      </tr>
+    <button
+      (click)="create()"
+      class="btn-primary"
+    >
+      + Nueva inscripción
+    </button>
+  </div>
 
-      <tr *ngFor="let i of inscripciones">
-        <td>{{ i.idAlumno }}</td>
-        <td>{{ i.idCurso }}</td>
-        <td>{{ i.calificacion ?? '-' }}</td>
-        <td>
-          <button (click)="edit(i.id!)">Editar</button>
-          <button (click)="remove(i.id!)">Eliminar</button>
-        </td>
-      </tr>
+  <!-- Tabla -->
+  <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
+    <table class="min-w-full divide-y divide-slate-200">
+
+      <thead class="bg-slate-50">
+        <tr>
+          <th class="table-th">Alumno</th>
+          <th class="table-th">Curso</th>
+          <th class="table-th text-center">Calificación final</th>
+          <th class="table-th text-right">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-slate-100">
+        <tr
+          *ngFor="let i of inscripciones"
+          class="hover:bg-slate-50"
+        >
+
+          <!-- Alumno -->
+          <td class="table-td">
+            {{ i.idAlumno }}
+          </td>
+
+          <!-- Curso -->
+          <td class="table-td">
+            {{ i.idCurso }}
+          </td>
+
+          <!-- Calificación -->
+          <td class="table-td text-center">
+            {{ i.calificacion ?? '-' }}
+          </td>
+
+          <!-- Acciones -->
+          <td class="table-td text-right whitespace-nowrap space-x-2">
+            <button
+              (click)="edit(i.id!)"
+              class="action-edit">
+              Editar
+            </button>
+
+            <button
+              (click)="remove(i.id!)"
+              class="action-delete">
+              Eliminar
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+
     </table>
+  </div>
+
+</section>

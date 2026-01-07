@@ -1,12 +1,62 @@
-<h3>Programas de Estudio</h3>
+<section class="space-y-6">
 
-    <button (click)="create()">Nuevo programa</button>
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <h3 class="text-xl font-semibold text-slate-800">
+      Programas de Estudio
+    </h3>
 
-    <ul>
-      <li *ngFor="let programasEducativos of programasEducativos">
-        {{ programasEducativos.nombre }}
+    <button
+      (click)="create()"
+      class="btn-primary"
+    >
+      + Nuevo programa
+    </button>
+  </div>
 
-        <button (click)="edit(programasEducativos.id!)">Editar</button>
-        <button (click)="remove(programasEducativos.id!)">Eliminar</button>
-      </li>
-    </ul>
+  <!-- Tabla -->
+  <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
+    <table class="min-w-full divide-y divide-slate-200">
+      <thead class="bg-slate-50">
+        <tr>
+          <th class="table-th">Nombre del programa</th>
+          <th class="table-th text-right">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-slate-100">
+        <tr
+          *ngFor="let programa of programasEducativos"
+          class="hover:bg-slate-50 transition"
+        >
+          <td class="table-td">
+            {{ programa.nombre }}
+          </td>
+
+          <td class="table-td text-right">
+            <div class="inline-flex items-center gap-2">
+
+              <button
+                (click)="edit(programa.id!)"
+                class="action-edit"
+                title="Editar"
+              >
+                ✏️
+              </button>
+
+              <button
+                (click)="remove(programa.id!)"
+                class="action-delete"
+                title="Eliminar"
+              >
+                🗑️
+              </button>
+
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>

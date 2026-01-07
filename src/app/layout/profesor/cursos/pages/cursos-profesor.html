@@ -1,12 +1,55 @@
-<h3>Mis Cursos</h3>
+<section class="space-y-6">
 
-    <div *ngFor="let curso of cursos">
-      <div class="card">
-        <h4>{{ curso.salon }}</h4>
-        <p>{{ curso.periodo }}</p>
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <h3 class="text-xl font-semibold text-slate-800">
+      Mis Cursos
+    </h3>
+  </div>
 
-        <button [routerLink]="[`detalles/${curso.id}`]">
+  <!-- Grid de cursos -->
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+  >
+    <div
+      *ngFor="let curso of cursos"
+      class="bg-white border border-slate-200 rounded-xl shadow-sm
+             p-5 flex flex-col justify-between
+             hover:shadow-md transition-shadow"
+    >
+
+      <!-- Info -->
+      <div class="space-y-2">
+        <h4 class="text-lg font-semibold text-slate-800">
+          Curso {{ curso.salon }}
+        </h4>
+
+        <p class="text-sm text-slate-600">
+          Periodo: {{ curso.periodo }}
+        </p>
+      </div>
+
+      <!-- Acción -->
+      <div class="pt-4">
+        <button
+          [routerLink]="['detalles', curso.id]"
+          class="w-full px-4 py-2 rounded-lg text-sm font-medium
+                 bg-indigo-600 text-white hover:bg-indigo-700
+                 transition-colors"
+        >
           Ver alumnos
         </button>
       </div>
+
     </div>
+  </div>
+
+  <!-- Estado vacío -->
+  <div
+    *ngIf="cursos.length === 0"
+    class="text-center py-12 text-slate-500 text-sm"
+  >
+    No tienes cursos asignados por el momento.
+  </div>
+
+</section>

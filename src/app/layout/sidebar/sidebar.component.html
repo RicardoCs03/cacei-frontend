@@ -1,37 +1,123 @@
-<nav>
-  <ul *ngIf="role === 'ROLE_ADMINISTRADOR'">
-    <li>
-      <a routerLink="/admin">Dashboard</a>
+<nav class="w-64 bg-white border-r border-slate-200 min-h-full">
+
+  <!-- ADMIN -->
+  <ul
+    *ngIf="role === 'ROLE_ADMINISTRADOR'"
+    class="p-4 space-y-1 text-sm"
+  >
+    <li class="text-xs text-slate-400 uppercase tracking-wide mb-2">
+      Administración
     </li>
+
     <li>
-      <a routerLink="/admin/usuarios">Usuarios</a>
+      <a
+        routerLink="/admin"
+        routerLinkActive="bg-indigo-50 text-indigo-700"
+        class="sidebar-link"
+      >
+        Dashboard
+      </a>
     </li>
+
     <li>
-      <a routerLink="/admin/programas-educativos">Programas de estudio</a>
+      <a
+        routerLink="/admin/usuarios"
+        routerLinkActive="bg-indigo-50 text-indigo-700"
+        class="sidebar-link"
+      >
+        Usuarios
+      </a>
     </li>
+
     <li>
-      <a routerLink="/admin/experiencias-educativas">Experiencias Educativas</a>
+      <a
+        routerLink="/admin/programas-educativos"
+        routerLinkActive="bg-indigo-50 text-indigo-700"
+        class="sidebar-link"
+      >
+        Programas de estudio
+      </a>
     </li>
+
     <li>
-      <a routerLink="/admin/cursos">Cursos</a>
+      <a
+        routerLink="/admin/experiencias-educativas"
+        routerLinkActive="bg-indigo-50 text-indigo-700"
+        class="sidebar-link"
+      >
+        Experiencias Educativas
+      </a>
     </li>
+
     <li>
-      <a routerLink="/admin/alumnos">Alumnos</a>
+      <a
+        routerLink="/admin/cursos"
+        routerLinkActive="bg-indigo-50 text-indigo-700"
+        class="sidebar-link"
+      >
+        Cursos
+      </a>
     </li>
+
     <li>
-      <a routerLink="/admin/inscripciones">Inscripciones</a>
+      <a
+        routerLink="/admin/alumnos"
+        routerLinkActive="bg-indigo-50 text-indigo-700"
+        class="sidebar-link"
+      >
+        Alumnos
+      </a>
     </li>
+
     <li>
-      <a routerLink="/admin/acreditaciones">Acreditaciones CACEI</a>
+      <a
+        routerLink="/admin/inscripciones"
+        routerLinkActive="bg-indigo-50 text-indigo-700"
+        class="sidebar-link"
+      >
+        Inscripciones
+      </a>
+    </li>
+
+    <li>
+      <a
+        routerLink="/admin/acreditaciones"
+        routerLinkActive="bg-indigo-50 text-indigo-700"
+        class="sidebar-link"
+      >
+        Acreditaciones CACEI
+      </a>
     </li>
   </ul>
 
-  <ul *ngIf="role === 'ROLE_PROFESOR'">
-    <li>
-      <a routerLink="/profesor/cursos">Mis cursos</a>
+  <!-- PROFESOR -->
+  <ul
+    *ngIf="role === 'ROLE_PROFESOR'"
+    class="p-4 space-y-1 text-sm"
+  >
+    <li class="text-xs text-slate-400 uppercase tracking-wide mb-2">
+      Profesor
     </li>
+
     <li>
-      <a routerLink="/profesor/evidencias">Evidencias CACEI</a>
+      <a
+        routerLink="/profesor/cursos"
+        routerLinkActive="bg-indigo-50 text-indigo-700"
+        class="sidebar-link"
+      >
+        Mis cursos
+      </a>
+    </li>
+
+    <li>
+      <a
+        routerLink="/profesor/evidencias"
+        routerLinkActive="bg-indigo-50 text-indigo-700"
+        class="sidebar-link"
+      >
+        Evidencias CACEI
+      </a>
     </li>
   </ul>
+
 </nav>

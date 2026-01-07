@@ -1,27 +1,80 @@
-   <h3>{{ isEdit ? 'Editar' : 'Nuevo' }} Alumno</h3>
+<section class="max-w-3xl mx-auto bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
 
-    <input [(ngModel)]="alumno.matricula" name="matricula" placeholder="Matrícula">
+  <!-- Header -->
+  <h3 class="text-xl font-semibold text-slate-800">
+    {{ isEdit ? 'Editar' : 'Nuevo' }} Alumno
+  </h3>
 
-    <input [(ngModel)]="alumno.nombre" name="nombre" placeholder="Nombre">
+  <!-- Datos del alumno -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-    <input [(ngModel)]="alumno.apepat" name="apellidoPaterno" placeholder="Apellido paterno">
+    <input
+      class="input"
+      [(ngModel)]="alumno.matricula"
+      name="matricula"
+      placeholder="Matrícula" />
 
-    <input [(ngModel)]="alumno.apemat" name="apellidoMaterno" placeholder="Apellido materno">
+    <input
+      class="input"
+      [(ngModel)]="alumno.nombre"
+      name="nombre"
+      placeholder="Nombre" />
 
-    <select [(ngModel)]="alumno.programaEducativo" name="programaEducativoId">
-      <option value="">Seleccione programa</option>
+    <input
+      class="input"
+      [(ngModel)]="alumno.apepat"
+      name="apellidoPaterno"
+      placeholder="Apellido paterno" />
+
+    <input
+      class="input"
+      [(ngModel)]="alumno.apemat"
+      name="apellidoMaterno"
+      placeholder="Apellido materno" />
+
+    <select
+      class="input md:col-span-2"
+      [(ngModel)]="alumno.programaEducativo"
+      name="programaEducativoId">
+
+      <option value="" disabled>
+        Seleccione programa educativo
+      </option>
+
       <option *ngFor="let p of programas" [value]="p.nombre">
         {{ p.nombre }}
       </option>
     </select>
 
-    <label>
-      <input type="checkbox"
-             [(ngModel)]="alumno.isActive"
-             name="isActive">
-      Activo
-    </label>
+  </div>
 
-    <button (click)="save()">Guardar</button>
-    <button (click)="cancel()">Cancelar</button>
-  `
+  <!-- Activo -->
+  <label class="flex items-center gap-2 text-sm text-slate-700">
+    <input
+      type="checkbox"
+      [(ngModel)]="alumno.isActive"
+      name="isActive"
+      class="accent-indigo-600" />
+    Activo
+  </label>
+
+  <!-- Botones -->
+  <div class="flex justify-end gap-3 pt-4">
+
+    <button
+      type="button"
+      (click)="cancel()"
+      class="btn-secondary">
+      Cancelar
+    </button>
+
+    <button
+      type="button"
+      (click)="save()"
+      class="btn-primary">
+      Guardar
+    </button>
+
+  </div>
+
+</section>

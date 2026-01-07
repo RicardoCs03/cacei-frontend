@@ -38,4 +38,7 @@ export class ExperienciaEducativaService {
     return this.http.delete<void>(`${this.API_URL}/eliminar-experiencia-educativa/${id}`);
   }
 
+  actualizarAtributosEgreso(payload: {experienciaEducativaId: number;atributosEgresoExperienciaDTOList: {atributoEgresoId: number;gradoAportacion: 'I' | 'M' | 'A';}[];}): Observable<void> {
+    return this.http.put<void>(`${this.API_URL}/actualizar-atributos-egreso`,payload);
+  }
 }

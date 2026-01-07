@@ -1,103 +1,169 @@
-<h3>{{ isEdit ? 'Editar' : 'Nuevo' }} Curso</h3>
+<section class="max-w-4xl mx-auto bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
 
-<!-- Experiencia Educativa -->
-<select
-  [(ngModel)]="curso.idEE"
-  name="idEE"
-  required>
+  <h3 class="text-xl font-semibold text-slate-800">
+    {{ isEdit ? 'Editar' : 'Nuevo' }} Curso
+  </h3>
 
-  <option [ngValue]="null" disabled>
-    Seleccione experiencia educativa
-  </option>
+  <!-- Experiencia Educativa y Profesor -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-  <option
-    *ngFor="let e of experiencias"
-    [ngValue]="e.id">
-    {{ e.nombre }}
-  </option>
-</select>
+    <select
+      class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm bg-white
+             focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      [(ngModel)]="curso.idEE"
+      name="idEE"
+      required
+    >
+      <option [ngValue]="null" disabled>
+        Seleccione experiencia educativa
+      </option>
 
-<!-- Profesor -->
-<select
-  [(ngModel)]="curso.idProfesor"
-  name="idProfesor"
-  required>
+      <option
+        *ngFor="let e of experiencias"
+        [ngValue]="e.id"
+      >
+        {{ e.nombre }}
+      </option>
+    </select>
 
-  <option [ngValue]="null" disabled>
-    Seleccione profesor
-  </option>
+    <select
+      class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm bg-white
+             focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      [(ngModel)]="curso.idProfesor"
+      name="idProfesor"
+      required
+    >
+      <option [ngValue]="null" disabled>
+        Seleccione profesor
+      </option>
 
-  <option
-    *ngFor="let p of profesores"
-    [ngValue]="p.id">
-    {{ p.nombre }}
-  </option>
-</select>
+      <option
+        *ngFor="let p of profesores"
+        [ngValue]="p.id"
+      >
+        {{ p.nombre }}
+      </option>
+    </select>
 
-<hr />
+  </div>
 
-<!-- Fechas -->
-<label>Fecha de asignación</label>
-<input
-  type="date"
-  [(ngModel)]="curso.fechaAsignacion"
-  name="fechaAsignacion" />
+  <!-- Fechas -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-<label>Fecha inicio</label>
-<input
-  type="date"
-  [(ngModel)]="curso.fechaInicio"
-  name="fechaInicio" />
+    <div>
+      <label class="block text-xs font-medium text-slate-600 mb-1">
+        Fecha de asignación
+      </label>
+      <input
+        type="date"
+        [(ngModel)]="curso.fechaAsignacion"
+        name="fechaAsignacion"
+        class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
+               focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      />
+    </div>
 
-<label>Fecha fin</label>
-<input
-  type="date"
-  [(ngModel)]="curso.fechaFin"
-  name="fechaFin" />
+    <div>
+      <label class="block text-xs font-medium text-slate-600 mb-1">
+        Fecha inicio
+      </label>
+      <input
+        type="date"
+        [(ngModel)]="curso.fechaInicio"
+        name="fechaInicio"
+        class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
+               focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      />
+    </div>
 
-<hr />
+    <div>
+      <label class="block text-xs font-medium text-slate-600 mb-1">
+        Fecha fin
+      </label>
+      <input
+        type="date"
+        [(ngModel)]="curso.fechaFin"
+        name="fechaFin"
+        class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
+               focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      />
+    </div>
 
-<!-- Periodo -->
-<input
-  type="text"
-  [(ngModel)]="curso.periodo"
-  name="periodo"
-  placeholder="Periodo (ej. 2025-1)" />
+  </div>
 
-<!-- Horas por semana -->
-<input
-  type="number"
-  [(ngModel)]="curso.horasSemana"
-  name="horasSemana"
-  placeholder="Horas por semana" />
+  <!-- Datos del curso -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-<!-- Hora -->
-<input
-  type="text"
-  [(ngModel)]="curso.hora"
-  name="hora"
-  placeholder="Hora (ej. 07:00 - 09:00)" />
+    <input
+      class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
+             focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      type="text"
+      [(ngModel)]="curso.periodo"
+      name="periodo"
+      placeholder="Periodo (ej. 2025-1)"
+    />
 
-<!-- Salón -->
-<input
-  type="text"
-  [(ngModel)]="curso.salon"
-  name="salon"
-  placeholder="Salón" />
+    <input
+      class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
+             focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      type="number"
+      [(ngModel)]="curso.horasSemana"
+      name="horasSemana"
+      placeholder="Horas por semana"
+    />
 
-<hr />
+    <input
+      class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
+             focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      type="text"
+      [(ngModel)]="curso.hora"
+      name="hora"
+      placeholder="Horario (ej. 07:00 - 09:00)"
+    />
 
-<!-- Activo -->
-<label>
-  <input
-    type="checkbox"
-    [(ngModel)]="curso.isActive"
-    name="isActive" />
-  Activo
-</label>
+    <input
+      class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
+             focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      type="text"
+      [(ngModel)]="curso.salon"
+      name="salon"
+      placeholder="Salón"
+    />
 
-<hr />
+  </div>
 
-<!-- Botones -->
-<button type="button" (click)="save()">Guardar</button>
-<button type="button" (click)="cancel()">Cancelar</button>
+  <!-- Activo -->
+  <label class="flex items-center gap-2 text-sm text-slate-700">
+    <input
+      type="checkbox"
+      [(ngModel)]="curso.isActive"
+      name="isActive"
+      class="accent-indigo-600"
+    />
+    Activo
+  </label>
+
+  <!-- Botones -->
+  <div class="flex justify-end gap-3 pt-4">
+
+    <button
+      type="button"
+      (click)="cancel()"
+      class="px-4 py-2 rounded-lg text-sm font-medium
+             bg-slate-100 text-slate-700 hover:bg-slate-200"
+    >
+      Cancelar
+    </button>
+
+    <button
+      type="button"
+      (click)="save()"
+      class="px-4 py-2 rounded-lg text-sm font-medium
+             bg-indigo-600 text-white hover:bg-indigo-700"
+    >
+      Guardar
+    </button>
+
+  </div>
+
+</section>

@@ -1,12 +1,70 @@
-<h3>Experiencias Educativas</h3>
+<section class="space-y-6">
 
-    <button (click)="create()">Nueva experiencia</button>
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <h3 class="text-xl font-semibold text-slate-800">
+      Experiencias Educativas
+    </h3>
 
-    <ul>
-      <li *ngFor="let exp of experiencias">
-        {{ exp.nombre }} (Créditos: {{ exp.creditos }}) (Programa de Educativo: {{ exp.programaEducativo }})
+    <button
+      (click)="create()"
+      class="btn-primary"
+    >
+      + Nueva experiencia
+    </button>
+  </div>
 
-        <button (click)="edit(exp.id!)">Editar</button>
-        <button (click)="remove(exp.id!)">Eliminar</button>
-      </li>
-    </ul>
+  <!-- Tabla -->
+  <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
+    <table class="min-w-full divide-y divide-slate-200">
+      <thead class="bg-slate-50">
+        <tr>
+          <th class="table-th">Nombre</th>
+          <th class="table-th">Créditos</th>
+          <th class="table-th">Programa Educativo</th>
+          <th class="table-th text-right">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-slate-100">
+        <tr
+          *ngFor="let exp of experiencias"
+          class="hover:bg-slate-50"
+        >
+          <!-- Nombre -->
+          <td class="table-td">
+            {{ exp.nombre }}
+          </td>
+
+          <!-- Créditos -->
+          <td class="table-td text-center">
+            {{ exp.creditos }}
+          </td>
+
+          <!-- Programa -->
+          <td class="table-td">
+            {{ exp.programaEducativo }}
+          </td>
+
+          <!-- Acciones -->
+          <td class="table-td text-right whitespace-nowrap space-x-2">
+            <button
+              (click)="edit(exp.id!)"
+              class="action-edit"
+            >
+              Editar
+            </button>
+
+            <button
+              (click)="remove(exp.id!)"
+              class="action-delete"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>

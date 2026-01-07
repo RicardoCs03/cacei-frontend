@@ -1,81 +1,141 @@
-<h3>{{ isEdit ? 'Editar' : 'Nuevo' }} Usuario</h3>
+<section class="max-w-3xl space-y-6">
 
-<!-- Nombre -->
-<input
-  type="text"
-  [(ngModel)]="user.nombre"
-  placeholder="Nombre"
-/>
+  <!-- Título -->
+  <div>
+    <h3 class="text-xl font-semibold text-slate-800">
+      {{ isEdit ? 'Editar' : 'Nuevo' }} Usuario
+    </h3>
+    <p class="text-sm text-slate-500 mt-1">
+      Completa la información del usuario
+    </p>
+  </div>
 
-<!-- Apellido paterno -->
-<input
-  type="text"
-  [(ngModel)]="user.apepat"
-  placeholder="Apellido paterno"
-/>
+  <!-- Formulario -->
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-<!-- Apellido materno -->
-<input
-  type="text"
-  [(ngModel)]="user.apemat"
-  placeholder="Apellido materno"
-/>
+      <!-- Nombre -->
+      <div>
+        <label class="form-label">Nombre</label>
+        <input
+          type="text"
+          [(ngModel)]="user.nombre"
+          class="form-input"
+        />
+      </div>
 
-<!-- Email -->
-<input
-  type="email"
-  [(ngModel)]="user.email"
-  placeholder="Correo electrónico"
-/>
+      <!-- Apellido paterno -->
+      <div>
+        <label class="form-label">Apellido paterno</label>
+        <input
+          type="text"
+          [(ngModel)]="user.apepat"
+          class="form-input"
+        />
+      </div>
 
-<!-- Password (solo visible al crear) -->
-@if (!isEdit) {
-  <input
-    type="password"
-    [(ngModel)]="user.password"
-    placeholder="Contraseña"
-  />
-}
+      <!-- Apellido materno -->
+      <div>
+        <label class="form-label">Apellido materno</label>
+        <input
+          type="text"
+          [(ngModel)]="user.apemat"
+          class="form-input"
+        />
+      </div>
 
-<!-- Fecha de nacimiento -->
-<input
-  type="date"
-  [(ngModel)]="user.fecnac"
-/>
+      <!-- Email -->
+      <div>
+        <label class="form-label">Correo electrónico</label>
+        <input
+          type="email"
+          [(ngModel)]="user.email"
+          class="form-input"
+        />
+      </div>
 
-<!-- Género -->
-<select [(ngModel)]="user.genero">
-  <option value="">Seleccione género</option>
-  <option value="M">Masculino</option>
-  <option value="F">Femenino</option>
-  <option value="O">Otro</option>
-</select>
+      <!-- Password -->
+      @if (!isEdit) {
+        <div>
+          <label class="form-label">Contraseña</label>
+          <input
+            type="password"
+            [(ngModel)]="user.password"
+            class="form-input"
+          />
+        </div>
+      }
 
-<!-- Celular -->
-<input
-  type="tel"
-  [(ngModel)]="user.celular"
-  placeholder="Número de celular"
-/>
+      <!-- Fecha de nacimiento -->
+      <div>
+        <label class="form-label">Fecha de nacimiento</label>
+        <input
+          type="date"
+          [(ngModel)]="user.fecnac"
+          class="form-input"
+        />
+      </div>
 
-<!-- Rol -->
-<select [(ngModel)]="user.role">
-  <option value="">Seleccione rol</option>
-  <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-  <option value="PROFESOR">PROFESOR</option>
-</select>
+      <!-- Género -->
+      <div>
+        <label class="form-label">Género</label>
+        <select [(ngModel)]="user.genero" class="form-input">
+          <option value="">Seleccione género</option>
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
+          <option value="O">Otro</option>
+        </select>
+      </div>
 
-<!-- Activo -->
-<label>
-  <input
-    type="checkbox"
-    [(ngModel)]="user.active"
-  />
-  Activo
-</label>
+      <!-- Celular -->
+      <div>
+        <label class="form-label">Celular</label>
+        <input
+          type="tel"
+          [(ngModel)]="user.celular"
+          class="form-input"
+        />
+      </div>
 
-<!-- Acciones -->
-<div class="actions">
-  <button (click)="saveUser()">Guardar</button>
-  <button (click)="cancel()">Cancelar</button>
-</div>
+      <!-- Rol -->
+      <div>
+        <label class="form-label">Rol</label>
+        <select [(ngModel)]="user.role" class="form-input">
+          <option value="">Seleccione rol</option>
+          <option value="ADMINISTRADOR">Administrador</option>
+          <option value="PROFESOR">Profesor</option>
+        </select>
+      </div>
+
+      <!-- Activo -->
+      <div class="flex items-center gap-2 mt-6">
+        <input
+          type="checkbox"
+          [(ngModel)]="user.active"
+          class="h-4 w-4 text-indigo-600"
+        />
+        <span class="text-sm text-slate-700">Activo</span>
+      </div>
+
+    </div>
+
+    <!-- Acciones -->
+    <div class="mt-6 flex justify-end gap-3">
+      <button
+        (click)="cancel()"
+        class="btn-outline"
+      >
+        Cancelar
+      </button>
+
+      <button
+        (click)="saveUser()"
+        class="btn-primary"
+      >
+        Guardar
+      </button>
+    </div>
+
+  </div>
+
+</section>

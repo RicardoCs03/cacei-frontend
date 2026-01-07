@@ -1,24 +1,73 @@
-<h3>Curso: {{ cursoIns?.curso?.nombre }}</h3>
+<section class="space-y-6">
 
-    <p>Programa: {{ cursoIns?.curso?.programaEducativo }}</p>
+  <!-- Header -->
+  <div class="space-y-1">
+    <h3 class="text-xl font-semibold text-slate-800">
+      Curso: {{ cursoIns?.curso?.nombre }}
+    </h3>
 
-    <h4>Alumnos inscritos</h4>
+    <p class="text-sm text-slate-600">
+      Programa educativo: {{ cursoIns?.curso?.programaEducativo }}
+    </p>
+  </div>
 
-    <table>
-      <tr>
-        <th>Matrícula</th>
-        <th>Alumno</th>
-        <th>calificacion</th>
-      </tr>
+  <!-- Tabla de alumnos -->
+  <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
 
-      <tr *ngFor="let i of cursoIns?.inscripciones">
-        <td>{{ i.alumno.matricula }}</td>
-        <td>{{ i.alumno.nombre }}</td>
-        <td>{{ i.calificacion }}</td>
-      </tr>
+    <table class="min-w-full divide-y divide-slate-200">
+      <thead class="bg-slate-50">
+        <tr>
+          <th class="table-th">
+            Matrícula
+          </th>
+          <th class="table-th">
+            Alumno
+          </th>
+          <th class="table-th text-center">
+            Calificación
+          </th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-slate-100">
+        <tr
+          *ngFor="let i of cursoIns?.inscripciones"
+          class="hover:bg-slate-50"
+        >
+
+          <td class="table-td">
+            {{ i.alumno.matricula }}
+          </td>
+
+          <td class="table-td">
+            {{ i.alumno.nombre }}
+          </td>
+
+          <td class="table-td text-center">
+            <span
+              class="px-2 py-1 rounded-full text-xs font-medium
+                     bg-slate-100 text-slate-700"
+            >
+              {{ i.calificacion ?? '-' }}
+            </span>
+          </td>
+
+        </tr>
+      </tbody>
     </table>
 
-    <button (click)="exportarPdf()">
+  </div>
+
+  <!-- Acciones -->
+  <div class="flex justify-end pt-4">
+    <button
+      (click)="exportarPdf()"
+      class="px-4 py-2 rounded-lg text-sm font-medium
+             bg-indigo-600 text-white hover:bg-indigo-700
+             transition-colors"
+    >
       Generar Evidencia CACEI (PDF)
     </button>
-  `
+  </div>
+
+</section>

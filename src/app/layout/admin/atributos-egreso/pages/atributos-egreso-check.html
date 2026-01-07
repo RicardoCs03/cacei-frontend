@@ -1,0 +1,37 @@
+<div class="card">
+  <h3>Atributos de Egreso del Programa</h3>
+
+  <form *ngIf="atributoEgreso.length > 0">
+    <div *ngFor="let atributo of atributoEgreso" class="checkbox-item">
+
+      <!-- Checkbox -->
+      <label>
+        <input
+          type="checkbox"
+          [checked]="isAtributoSeleccionado(atributo.id)"
+          (change)="onToggleAtributo(atributo.id, $event)"
+        />
+        <strong>{{ atributo.identificadorAE }}</strong>
+        – {{ atributo.descripcion }}
+      </label>
+
+      <!-- Combo grado de aportación -->
+      <select
+        *ngIf="isAtributoSeleccionado(atributo.id)"
+        [ngModel]="atributosSeleccionados[atributo.id]"
+        (ngModelChange)="onGradoChange(atributo.id, $event)"
+        [name]="'grado_' + atributo.id"
+        class="grado-select"
+      >
+        <option value="I">Introductorio (I)</option>
+        <option value="M">Medio (M)</option>
+        <option value="A">Avanzado (A)</option>
+      </select>
+
+    </div>
+
+    <button type="button" (click)="guardarAtributos()">
+      Guardar atributos
+    </button>
+  </form>
+</div>
