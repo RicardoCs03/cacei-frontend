@@ -3,67 +3,60 @@
   <!-- Header -->
   <div class="flex items-center justify-between">
     <h3 class="text-xl font-semibold text-slate-800">
-      Experiencias Educativas
+      Documentos de Validación
     </h3>
-
-    <button
-      (click)="create()"
-      class="btn-primary"
-    >
-      + Nueva experiencia
-    </button>
   </div>
 
   <!-- Tabla -->
   <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
     <table class="min-w-full divide-y divide-slate-200">
+
       <thead class="bg-slate-50">
         <tr>
-          <th class="table-th">Nombre</th>
-          <th class="table-th">Créditos</th>
-          <th class="table-th">Programa Educativo</th>
+          <th class="table-th">Generado por</th>
+          <th class="table-th">Proceso de Acreditación</th>
+          <th class="table-th">Coordinador CACEI</th>
+          <th class="table-th text-center">Fecha de generación</th>
           <th class="table-th text-right">Acciones</th>
         </tr>
       </thead>
 
       <tbody class="divide-y divide-slate-100">
         <tr
-          *ngFor="let exp of experiencias"
+          *ngFor="let d of documentos"
           class="hover:bg-slate-50"
         >
-          <!-- Nombre -->
+
+          <!-- Generado por -->
           <td class="table-td">
-            {{ exp.nombre }}
+            {{ d.nombreGenerador }}
           </td>
 
-          <!-- Créditos -->
+          <!-- Proceso de acreditación -->
+          <td class="table-td">
+            {{ d.nombreProceso }}
+          </td>
+
+          <!-- Coordinador CACEI -->
+          <td class="table-td">
+            {{ d.nombreCoordinador }}
+          </td>
+
+          <!-- Fecha de generación -->
           <td class="table-td text-center">
-            {{ exp.creditos }}
-          </td>
-
-          <!-- Programa -->
-          <td class="table-td">
-            {{ exp.programaEducativo }}
+            {{ d.fechaGeneracion }}
           </td>
 
           <!-- Acciones -->
           <td class="table-td text-right whitespace-nowrap space-x-2">
-            <button
-              (click)="edit(exp.id!)"
-              class="btn-edit"
-            >
-              Editar
-            </button>
-
-            <button
-              (click)="remove(exp.id!, exp.nombre)"
-              class="btn-delete"
-            >
-              Eliminar
+            <button (click)="verDocumento(d.cursoId)" class="btn-edit">
+              Ver documento
             </button>
           </td>
+
         </tr>
       </tbody>
+
     </table>
   </div>
 

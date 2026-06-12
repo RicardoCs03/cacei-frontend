@@ -2,6 +2,8 @@ export interface Curso {
   id?: number;
   idProfesor?: number;
   idEE?: number;
+  nombreEE?: string;
+  nrc?: string;
   fechaAsignacion: string;
   fechaInicio: string;
   fechaFin: string;

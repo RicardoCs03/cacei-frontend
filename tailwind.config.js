@@ -6,9 +6,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#1E40AF',
-        secondary: '#F59E0B',
-        accent: '#10B981'
+        primary: '#18529D',   // Azul institucional UV (24, 82, 157)
+        secondary: '#28AD56', // Verde institucional UV (40, 173, 86)
+        accent: '#FFFFFF'     // Blanco institucional UV
       }
     }
   },

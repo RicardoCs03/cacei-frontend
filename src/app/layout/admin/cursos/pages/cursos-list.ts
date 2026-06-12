@@ -37,8 +37,10 @@ export class CursosList implements OnInit {
     this.router.navigate([`/admin/cursos/editar/${id}`]);
   }
 
-  remove(id: number): void {
-    this.service.delete(id).subscribe(() => this.load());
+  remove(id: number, nombre: string): void {
+    if (confirm(`¿Estás seguro de que deseas eliminar el curso "${nombre}"?`)) {
+      this.service.delete(id).subscribe(() => this.load());
+    }
   }
 
 }

@@ -30,8 +30,10 @@ export class AlumnosList {
   edit(id: number): void {
     this.router.navigate([`/admin/alumnos/editar/${id}`]);
   } 
-  remove(id: number): void {
-    this.service.delete(id).subscribe(() => this.load());
+  remove(id: number, nombre: string): void {
+    if (confirm(`¿Estás seguro de que deseas eliminar al alumno "${nombre}"?`)) {
+      this.service.delete(id).subscribe(() => this.load());
+    }
   }
 
 }

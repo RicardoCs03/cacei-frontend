@@ -37,7 +37,7 @@ export class AtributosEgresoCheck implements OnInit {
     atributosEgresoExperiencias: [],
   };
 
-  // 🔥 atributoId -> grado (I | M | A)
+  // atributoId -> grado (I | M | A)
   atributosSeleccionados: Record<number, 'I' | 'M' | 'A'> = {};
 
   atributoEgreso: AtributoEgreso[] = [];

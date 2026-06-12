@@ -15,7 +15,7 @@ export class ProgramaEducativoListComponent implements OnInit {
 
   programasEducativos: ProgramaEducativo[] = [];
 
-  constructor(private programaEducativoService: ProgramaEducativoService,private router: Router) {
+  constructor(private programaEducativoService: ProgramaEducativoService, private router: Router) {
     console.log('ProgramaEducativoListComponent initialized');
   }
 
@@ -37,9 +37,11 @@ export class ProgramaEducativoListComponent implements OnInit {
     this.router.navigate([`/admin/programas-educativos/editar/${id}`]);
   }
 
-  remove(id: number): void {
-    this.programaEducativoService.delete(id).subscribe(() => {
-      this.loadPrograms();
-    });
+  remove(id: number, nombre: string): void {
+    if (confirm(`¿Estás seguro de que deseas eliminar el programa educativo "${nombre}"?`)) {
+      this.programaEducativoService.delete(id).subscribe(() => {
+        this.loadPrograms();
+      });
+    }
   }
 }

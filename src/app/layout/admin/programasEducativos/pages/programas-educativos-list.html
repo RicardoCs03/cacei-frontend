@@ -38,18 +38,16 @@
 
               <button
                 (click)="edit(programa.id!)"
-                class="action-edit"
-                title="Editar"
+                class="btn-edit"
               >
-                ✏️
+                Editar
               </button>
 
               <button
-                (click)="remove(programa.id!)"
-                class="action-delete"
-                title="Eliminar"
+                (click)="remove(programa.id!, programa.nombre)"
+                class="btn-delete"
               >
-                🗑️
+                Eliminar
               </button>
 
             </div>

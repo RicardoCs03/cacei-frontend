@@ -3,67 +3,77 @@
   <!-- Header -->
   <div class="flex items-center justify-between">
     <h3 class="text-xl font-semibold text-slate-800">
-      Experiencias Educativas
+      Acreditaciones CACEI
     </h3>
 
     <button
       (click)="create()"
       class="btn-primary"
     >
-      + Nueva experiencia
+      + Nuevo proceso
     </button>
   </div>
 
   <!-- Tabla -->
   <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
     <table class="min-w-full divide-y divide-slate-200">
+
       <thead class="bg-slate-50">
         <tr>
-          <th class="table-th">Nombre</th>
-          <th class="table-th">Créditos</th>
           <th class="table-th">Programa Educativo</th>
+          <th class="table-th">Ciclo de evaluación</th>
+          <th class="table-th text-center">Fecha de inicio</th>
+          <th class="table-th text-center">Fecha del proceso</th>
+          <th class="table-th text-center">Estado</th>
           <th class="table-th text-right">Acciones</th>
         </tr>
       </thead>
 
       <tbody class="divide-y divide-slate-100">
         <tr
-          *ngFor="let exp of experiencias"
+          *ngFor="let p of procesos"
           class="hover:bg-slate-50"
         >
-          <!-- Nombre -->
+
+          <!-- Programa educativo -->
           <td class="table-td">
-            {{ exp.nombre }}
+            {{ p.programaEducativoNombre }}
           </td>
 
-          <!-- Créditos -->
+          <!-- Ciclo de evaluación -->
+          <td class="table-td">
+            {{ p.cicloEvaluacion }}
+          </td>
+
+          <!-- Fecha de inicio -->
           <td class="table-td text-center">
-            {{ exp.creditos }}
+            {{ p.fechaInicio }}
           </td>
 
-          <!-- Programa -->
-          <td class="table-td">
-            {{ exp.programaEducativo }}
+          <!-- Fecha del proceso (fin) -->
+          <td class="table-td text-center">
+            {{ p.fechaFin ?? '-' }}
+          </td>
+
+          <!-- Estado -->
+          <td class="table-td text-center">
+            {{ estadoLabel(p.estado) }}
           </td>
 
           <!-- Acciones -->
           <td class="table-td text-right whitespace-nowrap space-x-2">
-            <button
-              (click)="edit(exp.id!)"
-              class="btn-edit"
-            >
+            <button (click)="edit(p.id!)" class="btn-edit">
               Editar
             </button>
 
-            <button
-              (click)="remove(exp.id!, exp.nombre)"
-              class="btn-delete"
-            >
+            <button (click)="remove(p.id!, p.programaEducativoNombre + ' - ' + p.cicloEvaluacion)" class="btn-delete">
               Eliminar
             </button>
           </td>
+
         </tr>
       </tbody>
+
     </table>
   </div>
 

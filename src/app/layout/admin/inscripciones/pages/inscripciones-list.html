@@ -35,12 +35,12 @@
 
           <!-- Alumno -->
           <td class="table-td">
-            {{ i.idAlumno }}
+            {{ i.nombreCompletoAlumno }}
           </td>
 
           <!-- Curso -->
           <td class="table-td">
-            {{ i.idCurso }}
+            {{ i.nombreEE }} - {{ i.nrcCurso }}
           </td>
 
           <!-- Calificación -->
@@ -52,13 +52,13 @@
           <td class="table-td text-right whitespace-nowrap space-x-2">
             <button
               (click)="edit(i.id!)"
-              class="action-edit">
+              class="btn-edit">
               Editar
             </button>
 
             <button
-              (click)="remove(i.id!)"
-              class="action-delete">
+              (click)="remove(i.id!, i.nombreCompletoAlumno)"
+              class="btn-delete">
               Eliminar
             </button>
           </td>

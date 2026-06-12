@@ -44,10 +44,7 @@
           </td>
 
           <td class="table-td text-center">
-            <span
-              class="px-2 py-1 rounded-full text-xs font-medium
-                     bg-slate-100 text-slate-700"
-            >
+            <span class="badge">
               {{ i.calificacion ?? '-' }}
             </span>
           </td>
@@ -62,9 +59,7 @@
   <div class="flex justify-end pt-4">
     <button
       (click)="exportarPdf()"
-      class="px-4 py-2 rounded-lg text-sm font-medium
-             bg-indigo-600 text-white hover:bg-indigo-700
-             transition-colors"
+      class="btn-primary"
     >
       Generar Evidencia CACEI (PDF)
     </button>

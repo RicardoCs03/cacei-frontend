@@ -14,6 +14,13 @@ export const routes: Routes = [
                 canActivate: [roleGuard('ROLE_ADMINISTRADOR')],
                 children: [
                             {
+                              path: '',
+                              pathMatch: 'full',
+                              loadComponent: () =>
+                                import('./layout/admin/dashboard/pages/admin-dashboard')
+                                  .then(m => m.AdminDashboard)
+                            },
+                            {
                               path: 'usuarios',
                               loadComponent: () =>
                                 import('./layout/admin/usuarios/pages/user-list.component')
@@ -126,6 +133,30 @@ export const routes: Routes = [
                               loadComponent: () =>
                                 import('./layout/admin/inscripciones/pages/inscripciones-form')
                                   .then(m => m.InscripcionesForm)
+                            },
+                            {
+                              path: 'acreditaciones',
+                              loadComponent: () =>
+                                import('./layout/admin/acreditaciones/pages/acreditaciones-list')
+                                  .then(m => m.AcreditacionesList)
+                            },
+                            {
+                              path: 'acreditaciones/crear',
+                              loadComponent: () =>
+                                import('./layout/admin/acreditaciones/pages/acreditaciones-form')
+                                  .then(m => m.AcreditacionesForm)
+                            },
+                            {
+                              path: 'acreditaciones/editar/:id',
+                              loadComponent: () =>
+                                import('./layout/admin/acreditaciones/pages/acreditaciones-form')
+                                  .then(m => m.AcreditacionesForm)
+                            },
+                            {
+                              path: 'documentos-generados',
+                              loadComponent: () =>
+                                import('./layout/admin/documentos-generados/pages/documentos-generados-list')
+                                  .then(m => m.DocumentosGeneradosList)
                             }
                         ],
                 loadComponent: () => 
@@ -136,6 +167,13 @@ export const routes: Routes = [
         path: 'profesor',
         canActivate: [roleGuard('ROLE_PROFESOR')],
         children:[
+          {
+            path: '',
+            pathMatch: 'full',
+            loadComponent: () =>
+                import('./layout/profesor/dashboard/pages/profesor-dashboard')
+            .then(m => m.ProfesorDashboard)
+          },
           {
             path: 'cursos',
             loadComponent: () => 

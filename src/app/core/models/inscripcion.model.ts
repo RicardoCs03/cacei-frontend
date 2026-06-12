@@ -9,6 +9,20 @@ export interface Inscripcion {
   calificacion?: number | null;
   isActive: boolean;
 }
+
+export interface InscripcionResponse {
+  id: number;
+  idAlumno: number;
+  idCurso: number;
+  nombreCompletoAlumno: string;
+  nombreEE: string;
+  nrcCurso: string;
+  tipoInscripcion: string;
+  fecInscripcion: string;
+  calificacion: number | null;
+  isActive: boolean;
+  mensaje?: string;
+}
 export interface InscripcionDetalleDTO {
   id: number;
   calificacion: number | null;

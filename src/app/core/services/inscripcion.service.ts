@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Inscripcion } from '../models/inscripcion.model';
+import { Inscripcion, InscripcionResponse } from '../models/inscripcion.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +13,8 @@ export class InscripcionService {
   constructor(private http: HttpClient) {}
 
   // ADMIN
-  findAll(): Observable<Inscripcion[]> {
-    return this.http.get<Inscripcion[]>(`${this.API_URL}`);
+  findAll(): Observable<InscripcionResponse[]> {
+    return this.http.get<InscripcionResponse[]>(`${this.API_URL}`);
   }
 
   findById(id: number): Observable<Inscripcion> {

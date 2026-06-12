@@ -45,8 +45,8 @@ export class UserListComponent implements OnInit {
     this.router.navigate([`/admin/usuarios/editar/${id}`]);
   }
 
-  deleteUsuario(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+  deleteUsuario(id: number, nombre: string): void {
+    if (confirm(`¿Estás seguro de que deseas eliminar al usuario "${nombre}"?`)) {
       this.usuarioService.deleteUsuario(id).subscribe(
         () => {
           this.users = this.users.filter(user => user.id !== id);

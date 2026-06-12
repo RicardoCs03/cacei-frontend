@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { Inscripcion } from '../../../../core/models/inscripcion.model';
+import { InscripcionResponse } from '../../../../core/models/inscripcion.model';
 import { InscripcionService } from '../../../../core/services/inscripcion.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { InscripcionService } from '../../../../core/services/inscripcion.servic
 })
 export class InscripcionesList implements OnInit {
 
-  inscripciones: Inscripcion[] = [];
+  inscripciones: InscripcionResponse[] = [];
 
   constructor(
     private service: InscripcionService,
@@ -31,8 +31,10 @@ export class InscripcionesList implements OnInit {
     this.router.navigate([`/admin/inscripciones/editar/${id}`]);
   }
 
-  remove(id: number): void {
-    this.service.delete(id).subscribe(() => this.ngOnInit());
+  remove(id: number, nombreAlumno: string): void {
+    if (confirm(`¿Estás seguro de que deseas eliminar la inscripción de "${nombreAlumno}"?`)) {
+      this.service.delete(id).subscribe(() => this.ngOnInit());
+    }
   }
 
 }

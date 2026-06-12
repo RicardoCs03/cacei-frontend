@@ -35,7 +35,9 @@ export class ExperienciaEducativaList {
     this.router.navigate([`/admin/experiencias-educativas/editar/${id}`]);
   }
 
-  remove(id: number): void {
-    this.service.delete(id).subscribe(() => this.load());
+  remove(id: number, nombre: string): void {
+    if (confirm(`¿Estás seguro de que deseas eliminar la experiencia educativa "${nombre}"?`)) {
+      this.service.delete(id).subscribe(() => this.load());
+    }
   }
 }

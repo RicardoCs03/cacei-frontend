@@ -1,0 +1,120 @@
+<section class="max-w-3xl mx-auto bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
+
+  <!-- Header -->
+  <h3 class="text-xl font-semibold text-slate-800">
+    {{ isEdit ? 'Editar' : 'Nuevo' }} Proceso de Acreditación
+  </h3>
+
+  <!-- Datos identificativos (solo lectura al editar) -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4" *ngIf="isEdit && proceso">
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Programa Educativo</label>
+      <p class="text-sm text-slate-800">{{ proceso.programaEducativoNombre }}</p>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Coordinador CACEI</label>
+      <p class="text-sm text-slate-800">
+        {{ proceso.coordinadorCaceiNombre }} {{ proceso.coordinadorCaceiApepallidoPaterno }} {{ proceso.coordinadorCaceiApepallidoMaterno }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Selección de programa y coordinador (solo al crear) -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4" *ngIf="!isEdit">
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Programa Educativo</label>
+      <select
+        class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm bg-white
+               focus:outline-none focus:ring-2 focus:ring-primary"
+        [(ngModel)]="data.programaEducativofk"
+        required>
+        <option [ngValue]="undefined" disabled>Seleccione programa educativo</option>
+        <option *ngFor="let p of programas" [ngValue]="p.id">{{ p.nombre }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Coordinador CACEI</label>
+      <select
+        class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm bg-white
+               focus:outline-none focus:ring-2 focus:ring-primary"
+        [(ngModel)]="data.coordinadorCaceifk"
+        required>
+        <option [ngValue]="undefined" disabled>Seleccione coordinador CACEI</option>
+        <option *ngFor="let c of coordinadores" [ngValue]="c.id">
+          {{ c.coordinadorCaceiNombre }} {{ c.coordinadorCaceiApellidoPaterno }} {{ c.coordinadorCaceiApellidoMaterno }} - {{ c.programaEducativoNombre }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Ciclo de evaluación y estado -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Ciclo de evaluación</label>
+      <input
+        class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
+               focus:outline-none focus:ring-2 focus:ring-primary"
+        type="text"
+        [(ngModel)]="data.cicloEvaluacion"
+        placeholder="Ej. 2025-2026" />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Estado</label>
+      <select
+        class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm bg-white
+               focus:outline-none focus:ring-2 focus:ring-primary"
+        [(ngModel)]="data.estado">
+        <option *ngFor="let e of estados" [ngValue]="e">{{ e }}</option>
+      </select>
+    </div>
+
+  </div>
+
+  <!-- Fechas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Fecha de inicio</label>
+      <input
+        class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
+               focus:outline-none focus:ring-2 focus:ring-primary"
+        type="date"
+        [(ngModel)]="data.fechaInicio" />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Fecha del proceso (fin)</label>
+      <input
+        class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
+               focus:outline-none focus:ring-2 focus:ring-primary"
+        type="date"
+        [(ngModel)]="data.fechaFin" />
+    </div>
+
+  </div>
+
+  <!-- Botones -->
+  <div class="flex justify-end gap-3 pt-4">
+
+    <button
+      type="button"
+      (click)="cancel()"
+      class="px-4 py-2 rounded-lg text-sm font-medium
+             bg-slate-100 text-slate-700 hover:bg-slate-200">
+      Cancelar
+    </button>
+
+    <button
+      type="button"
+      (click)="save()"
+      class="btn-primary">
+      Guardar
+    </button>
+
+  </div>
+
+</section>
