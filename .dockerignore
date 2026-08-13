@@ -1,0 +1,13 @@
+# No copiar al contexto de build lo que no hace falta para compilar el bundle.
+node_modules/
+dist/
+.angular/
+.git/
+.gitignore
+.idea/
+.vscode/
+Dockerfile
+.dockerignore
+.env
+.env.*
+README.md

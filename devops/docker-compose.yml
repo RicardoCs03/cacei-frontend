@@ -1,0 +1,26 @@
+# docker-compose.yml — Entorno LOCAL (cacei-frontend)
+# Uso (desde la raíz del repo cacei-frontend):
+#   docker compose -f devops/docker-compose.yml up --build
+#
+# Sirve el SPA de Angular con Nginx en http://localhost:4200.
+#
+# El backend vive en su propio repo (cacei-api) y publica el puerto 9090 en el
+# host. Por eso el proxy /api apunta a host.docker.internal:9090 (la máquina
+# anfitriona), no a un servicio de este compose. Levanta primero el backend:
+#   (en cacei-api)  docker compose -f devops/docker-compose.yml up --build
+
+services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: cacei_frontend_local
+    environment:
+      - BACKEND_URL=http://host.docker.internal:9090
+    extra_hosts:
+      # Necesario en Linux para resolver host.docker.internal (en Docker Desktop
+      # ya existe, pero dejarlo no molesta).
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "4200:80"
+    restart: unless-stopped

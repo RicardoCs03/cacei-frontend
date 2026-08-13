@@ -1,0 +1,26 @@
+# docker-compose.prod.yml — Entorno de PRODUCCIÓN (cacei-frontend)
+# Uso: docker compose -f devops/docker-compose.prod.yml up -d --build
+#
+# Sirve el SPA en el puerto 80 del host. El destino del proxy /api se define con
+# BACKEND_URL: apúntalo a la URL pública del backend desplegado (o a
+# host.docker.internal:9090 si el back corre en la misma máquina).
+#
+# .env.prod es OPCIONAL (en la raíz del repo cacei-frontend): útil para fijar
+# BACKEND_URL sin editar este archivo.
+
+services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: cacei_frontend_prod
+    environment:
+      - BACKEND_URL=${BACKEND_URL:-http://host.docker.internal:9090}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - path: ../.env.prod
+        required: false
+    ports:
+      - "80:80"
+    restart: always

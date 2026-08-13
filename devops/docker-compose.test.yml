@@ -1,0 +1,15 @@
+# docker-compose.test.yml — Entorno de PRUEBAS (cacei-frontend)
+# Uso: docker compose -f devops/docker-compose.test.yml up --build --abort-on-container-exit --exit-code-from frontend_test
+#
+# Corre los tests unitarios (vitest) en la etapa "build" del Dockerfile, que ya
+# tiene Node y node_modules instalados. Sale con código != 0 si algún test falla.
+
+services:
+  frontend_test:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: build
+    container_name: cacei_frontend_test
+    command: npx vitest run
+    restart: "no"
