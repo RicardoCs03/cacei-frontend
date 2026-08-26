@@ -1,26 +1,32 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
 import { InscripcionResponse } from '../../../../core/models/inscripcion.model';
 import { InscripcionService } from '../../../../core/services/inscripcion.service';
+import { ListaBase } from '../../../../shared/lista-base';
+import { EstadoPanelComponent } from '../../../../shared/estado-panel/estado-panel.component';
 
 @Component({
   selector: 'app-inscripciones-list',
-  imports: [CommonModule, RouterModule],
+  standalone: true,
+  imports: [RouterModule, EstadoPanelComponent],
   templateUrl: './inscripciones-list.html',
   styleUrl: './inscripciones-list.css',
 })
-export class InscripcionesList implements OnInit {
+export class InscripcionesList extends ListaBase<InscripcionResponse> implements OnInit {
+  private readonly service = inject(InscripcionService);
+  private readonly router = inject(Router);
 
-  inscripciones: InscripcionResponse[] = [];
+  protected override get entidad(): string {
+    return 'inscripciones';
+  }
 
-  constructor(
-    private service: InscripcionService,
-    private router: Router
-  ) {}
+  protected override consultar(): Observable<InscripcionResponse[]> {
+    return this.service.findAll();
+  }
 
   ngOnInit(): void {
-    this.service.findAll().subscribe(data => this.inscripciones = data);
+    this.cargar();
   }
 
   create(): void {
@@ -31,10 +37,7 @@ export class InscripcionesList implements OnInit {
     this.router.navigate([`/admin/inscripciones/editar/${id}`]);
   }
 
-  remove(id: number, nombreAlumno: string): void {
-    if (confirm(`¿Estás seguro de que deseas eliminar la inscripción de "${nombreAlumno}"?`)) {
-      this.service.delete(id).subscribe(() => this.ngOnInit());
-    }
+  remove(id: number, descripcion: string): void {
+    this.eliminar(`la inscripción de "${descripcion}"`, this.service.delete(id));
   }
-
 }

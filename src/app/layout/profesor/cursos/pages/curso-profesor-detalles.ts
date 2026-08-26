@@ -1,57 +1,86 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Curso } from '../../../../core/models/cursos.model';
-import { Inscripcion } from '../../../../core/models/inscripcion.model';
 import { CursoService } from '../../../../core/services/curso.service';
-import { InscripcionService } from '../../../../core/services/inscripcion.service';
 import { EvidenciaCatedraService } from '../../../../core/services/evidencia-catedra.service';
-import { CommonModule } from '@angular/common';
 import { CursoInscripcionesDTO } from '../../../../core/models/curso.inscripciones.model';
+import { EstadoPanelComponent } from '../../../../shared/estado-panel/estado-panel.component';
+import { mensajeDeError } from '../../../../core/interceptors/error-interceptor';
 
 @Component({
   selector: 'app-curso-profesor-detalles',
   standalone: true,
-  imports: [CommonModule],
+  imports: [EstadoPanelComponent],
   templateUrl: './curso-profesor-detalles.html',
   styleUrl: './curso-profesor-detalles.css',
 })
 export class CursoProfesorDetalles implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly cursoService = inject(CursoService);
+  private readonly evidenciaCatedraService = inject(EvidenciaCatedraService);
 
-  cursoIns?: CursoInscripcionesDTO;
-  curso?: Curso;
-  cursoId!: number;
+  readonly detalle = signal<CursoInscripcionesDTO | null>(null);
+  readonly cargando = signal(true);
+  readonly error = signal<string | null>(null);
 
-  constructor(
-    private route: ActivatedRoute,
-    private cursoService: CursoService,
-    private evidenciaCatedraService: EvidenciaCatedraService,
+  /** Estado del botón de generación de la cédula. */
+  readonly generando = signal(false);
+  readonly errorPdf = signal<string | null>(null);
 
-  ) {
-    console.log('CursoProfesorDetalles component loaded');
-  }
+  private cursoId!: number;
 
   ngOnInit(): void {
     this.cursoId = Number(this.route.snapshot.paramMap.get('id'));
-
-    this.cursoService.findById(this.cursoId)
-      .subscribe(c => this.curso = c);
-
-    this.cursoService.getDetalleCurso(this.cursoId)
-      .subscribe(d => this.cursoIns = d);
+    this.cargar();
   }
 
-  exportarPdf(): void {
-    this.evidenciaCatedraService.descargarPdf(this.cursoId).subscribe({
-      next: (pdf) => {
-        const url = window.URL.createObjectURL(
-          new Blob([pdf], { type: 'application/pdf' })
-        );
-        window.open(url, '_blank');
+  cargar(): void {
+    this.cargando.set(true);
+    this.error.set(null);
+
+    this.cursoService.getDetalleCurso(this.cursoId).subscribe({
+      next: (detalle) => {
+        this.detalle.set(detalle);
+        this.cargando.set(false);
       },
       error: (err) => {
-        console.error('Error al generar la evidencia CACEI', err);
+        this.error.set(mensajeDeError(err));
+        this.cargando.set(false);
       },
     });
   }
 
+  get sinContenido(): boolean {
+    return this.cargando() || !!this.error() || !this.detalle();
+  }
+
+  /** Descarga la Cédula 3.3.2 del curso y la abre en una pestaña nueva. */
+  generarCedula(): void {
+    if (this.generando()) {
+      return;
+    }
+
+    this.generando.set(true);
+    this.errorPdf.set(null);
+
+    this.evidenciaCatedraService.descargarPdf(this.cursoId).subscribe({
+      next: (pdf) => {
+        this.generando.set(false);
+        const url = URL.createObjectURL(new Blob([pdf], { type: 'application/pdf' }));
+        const abierta = window.open(url, '_blank');
+
+        if (!abierta) {
+          this.errorPdf.set(
+            'El navegador bloqueó la ventana emergente. Permita las ventanas emergentes de este sitio para ver la cédula.',
+          );
+        }
+
+        // El objeto queda en memoria hasta que se libera; la pestaña ya lo cargó.
+        setTimeout(() => URL.revokeObjectURL(url), 60_000);
+      },
+      error: (err) => {
+        this.generando.set(false);
+        this.errorPdf.set(mensajeDeError(err));
+      },
+    });
+  }
 }

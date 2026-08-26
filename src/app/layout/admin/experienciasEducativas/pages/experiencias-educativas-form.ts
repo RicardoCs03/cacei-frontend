@@ -37,7 +37,6 @@ export class ExperienciasEducativasForm {
   isEdit = false;
 
   constructor(private service: ExperienciaEducativaService,private programaService: ProgramaEducativoService,private route: ActivatedRoute,private router: Router) {
-    console.log('ExperienciasEducativasForm component initialized');
   }
 
   ngOnInit(): void {

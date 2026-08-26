@@ -26,7 +26,7 @@ export class UserFormComponent implements OnInit {
     celular: '',
     fecnac: '',
     genero: '',
-    role:''
+    rol: ''
   };
 
   isEdit = false;
@@ -54,7 +54,6 @@ export class UserFormComponent implements OnInit {
         this.router.navigate(['/admin/usuarios']);
       });
     } else {
-      console.log(this.user);
       this.userService.createUsuario(this.user).subscribe(() => {
         this.router.navigate(['/admin/usuarios']);
       });

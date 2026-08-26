@@ -1,68 +1,69 @@
 <section class="space-y-6">
+  @if (sinContenido) {
+    <app-estado-panel
+      [cargando]="cargando()"
+      [error]="error()"
+      mensajeVacio="No se encontró la información de este curso."
+      (reintentar)="cargar()"
+    />
+  } @else if (detalle(); as detalle) {
+    <!-- Encabezado -->
+    <div class="space-y-1">
+      <h1 class="text-xl font-semibold text-slate-800">{{ detalle.curso.nombre }}</h1>
+      <p class="text-sm text-slate-600">
+        Programa educativo: {{ detalle.curso.programaEducativo }}
+      </p>
+      <p class="text-sm text-slate-600">Periodo: {{ detalle.curso.periodo }}</p>
+    </div>
 
-  <!-- Header -->
-  <div class="space-y-1">
-    <h3 class="text-xl font-semibold text-slate-800">
-      Curso: {{ cursoIns?.curso?.nombre }}
-    </h3>
+    <!-- Alumnos inscritos -->
+    @if (detalle.inscripciones.length === 0) {
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm px-6 py-12 text-center">
+        <p class="text-sm text-slate-500">Este curso todavía no tiene alumnos inscritos.</p>
+      </div>
+    } @else {
+      <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
+        <table class="min-w-full divide-y divide-slate-200">
+          <caption class="sr-only">Alumnos inscritos en el curso</caption>
+          <thead class="bg-slate-50">
+            <tr>
+              <th scope="col" class="table-th">Matrícula</th>
+              <th scope="col" class="table-th">Alumno</th>
+              <th scope="col" class="table-th text-center">Calificación</th>
+            </tr>
+          </thead>
 
-    <p class="text-sm text-slate-600">
-      Programa educativo: {{ cursoIns?.curso?.programaEducativo }}
-    </p>
-  </div>
+          <tbody class="divide-y divide-slate-100">
+            @for (inscripcion of detalle.inscripciones; track inscripcion.alumno.matricula) {
+              <tr class="hover:bg-slate-50">
+                <td class="table-td tabular-nums">{{ inscripcion.alumno.matricula }}</td>
+                <td class="table-td">{{ inscripcion.alumno.nombre }}</td>
+                <td class="table-td text-center">
+                  <span class="badge tabular-nums">{{ inscripcion.calificacion ?? '—' }}</span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
 
-  <!-- Tabla de alumnos -->
-  <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
+    <!-- Generación de la cédula -->
+    <div class="flex flex-col items-end gap-2 pt-2">
+      <button
+        type="button"
+        (click)="generarCedula()"
+        class="btn-primary disabled:opacity-60 disabled:cursor-not-allowed"
+        [disabled]="generando()"
+      >
+        {{ generando() ? 'Generando…' : 'Generar Cédula 3.3.2 (PDF)' }}
+      </button>
 
-    <table class="min-w-full divide-y divide-slate-200">
-      <thead class="bg-slate-50">
-        <tr>
-          <th class="table-th">
-            Matrícula
-          </th>
-          <th class="table-th">
-            Alumno
-          </th>
-          <th class="table-th text-center">
-            Calificación
-          </th>
-        </tr>
-      </thead>
-
-      <tbody class="divide-y divide-slate-100">
-        <tr
-          *ngFor="let i of cursoIns?.inscripciones"
-          class="hover:bg-slate-50"
-        >
-
-          <td class="table-td">
-            {{ i.alumno.matricula }}
-          </td>
-
-          <td class="table-td">
-            {{ i.alumno.nombre }}
-          </td>
-
-          <td class="table-td text-center">
-            <span class="badge">
-              {{ i.calificacion ?? '-' }}
-            </span>
-          </td>
-
-        </tr>
-      </tbody>
-    </table>
-
-  </div>
-
-  <!-- Acciones -->
-  <div class="flex justify-end pt-4">
-    <button
-      (click)="exportarPdf()"
-      class="btn-primary"
-    >
-      Generar Evidencia CACEI (PDF)
-    </button>
-  </div>
-
+      @if (errorPdf()) {
+        <p class="text-sm text-red-600 text-right max-w-md" role="alert">
+          {{ errorPdf() }}
+        </p>
+      }
+    </div>
+  }
 </section>

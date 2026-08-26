@@ -1,49 +1,65 @@
 <section class="space-y-6">
+  <!-- Encabezado -->
+  <div class="flex items-center justify-between gap-4 flex-wrap">
+    <h1 class="text-xl font-semibold text-slate-800">Usuarios</h1>
 
-  <!-- Header -->
-  <div class="flex items-center justify-between">
-    <h3 class="text-xl font-semibold text-slate-800">
-      Usuarios
-    </h3>
-
-    <button (click)="createUsuario()" class="btn-primary">
+    <button type="button" (click)="createUsuario()" class="btn-primary">
       + Nuevo usuario
     </button>
   </div>
 
-  <!-- Tabla -->
-  <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
-    <table class="min-w-full divide-y divide-slate-200">
-      <thead class="bg-slate-50">
-        <tr>
-          <th class="table-th text-center">Correo</th>
-          <th class="table-th text-center">Nombre</th>
-          <th class="table-th text-center">Rol</th>
-          <th class="table-th text-right">Acciones</th>
-        </tr>
-      </thead>
+  @if (sinContenido) {
+    <app-estado-panel
+      [cargando]="cargando()"
+      [error]="error()"
+      [mensajeVacio]="mensajeVacio"
+      accionVacio="Registrar el primer usuario"
+      (reintentar)="cargar()"
+      (accion)="createUsuario()"
+    />
+  } @else {
+    <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
+      <table class="min-w-full divide-y divide-slate-200">
+        <caption class="sr-only">Usuarios registrados en el sistema</caption>
+        <thead class="bg-slate-50">
+          <tr>
+            <th scope="col" class="table-th">Correo</th>
+            <th scope="col" class="table-th">Nombre</th>
+            <th scope="col" class="table-th">Rol</th>
+            <th scope="col" class="table-th text-right">Acciones</th>
+          </tr>
+        </thead>
 
-      <tbody class="divide-y divide-slate-100">
-        <tr *ngFor="let user of users" class="hover:bg-slate-50">
-          <td class="table-td text-center">{{ user.email }}</td>
-          <td class="table-td text-center">{{ user.nombre }}</td>
-          <td class="table-td text-center">
-            {{ user.role === 'ROLE_ADMINISTRADOR' ? 'Administrador' : (user.role === 'ROLE_PROFESOR' ? 'Profesor' : '-') }}
-          </td>
+        <tbody class="divide-y divide-slate-100">
+          @for (usuario of datos(); track usuario.id) {
+            <tr class="hover:bg-slate-50">
+              <td class="table-td">{{ usuario.email }}</td>
+              <td class="table-td">{{ usuario.nombre }} {{ usuario.apepat }} {{ usuario.apemat }}</td>
+              <td class="table-td">{{ etiquetaRol(usuario.rol) }}</td>
 
-          <td class="table-td text-right space-x-2">
+              <td class="table-td text-right space-x-2 whitespace-nowrap">
+                <button
+                  type="button"
+                  (click)="editUsuario(usuario.id!)"
+                  class="btn-edit"
+                  [attr.aria-label]="'Editar a ' + usuario.nombre"
+                >
+                  Editar
+                </button>
 
-            <button (click)="editUsuario(user.id!)" class="btn-edit">
-              Editar
-            </button>
-
-            <button (click)="deleteUsuario(user.id!, user.nombre + ' ' + user.apepat + ' ' + user.apemat)" class="btn-delete">
-              Eliminar
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
+                <button
+                  type="button"
+                  (click)="deleteUsuario(usuario)"
+                  class="btn-delete"
+                  [attr.aria-label]="'Eliminar a ' + usuario.nombre"
+                >
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </section>

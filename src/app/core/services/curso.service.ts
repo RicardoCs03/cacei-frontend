@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Curso } from '../models/cursos.model';
 import { CursoInscripcionesDTO } from '../models/curso.inscripciones.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CursoService {
   
-  private API_URL = 'http://localhost:9090/api/cursos';
+  private API_URL = `${environment.apiUrl}/cursos`;
 
   constructor(private http: HttpClient) {}
 
@@ -27,7 +28,7 @@ export class CursoService {
 
   getDetalleCurso(cursoId: number) {
   return this.http.get<CursoInscripcionesDTO>(
-    `${this.API_URL}/cursos/${cursoId}/detalle-inscripciones`
+    `${this.API_URL}/${cursoId}/detalle-inscripciones`
   );
 }
 

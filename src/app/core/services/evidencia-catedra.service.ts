@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EvidenciaCatedraService {
 
-  private API_URL = 'http://localhost:9090/api/exportar-pdf';
+  private API_URL = `${environment.apiUrl}/exportar-pdf`;
 
   constructor(private http: HttpClient) {}
 

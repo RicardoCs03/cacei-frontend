@@ -1,53 +1,45 @@
 <section class="space-y-6">
-
-  <!-- Header -->
+  <!-- Encabezado -->
   <div class="flex items-center justify-between">
-    <h3 class="text-xl font-semibold text-slate-800">
-      Mis Cursos
-    </h3>
+    <h1 class="text-xl font-semibold text-slate-800">Mis cursos</h1>
   </div>
 
-  <!-- Grid de cursos -->
-  <div
-    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-  >
-    <div
-      *ngFor="let curso of cursos"
-      class="bg-white border border-slate-200 rounded-xl shadow-sm
-             p-5 flex flex-col justify-between
-             hover:shadow-md transition-shadow"
-    >
-
-      <!-- Info -->
-      <div class="space-y-2">
-        <h4 class="text-lg font-semibold text-slate-800">
-          Curso {{ curso.salon }}
-        </h4>
-
-        <p class="text-sm text-slate-600">
-          Periodo: {{ curso.periodo }}
-        </p>
-      </div>
-
-      <!-- Acción -->
-      <div class="pt-4">
-        <button
-          [routerLink]="['detalles', curso.id]"
-          class="btn-primary w-full"
+  @if (sinContenido) {
+    <app-estado-panel
+      [cargando]="cargando()"
+      [error]="error()"
+      [mensajeVacio]="mensajeVacio"
+      (reintentar)="cargar()"
+    />
+  } @else {
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (curso of datos(); track curso.id) {
+        <article
+          class="bg-white border border-slate-200 rounded-xl shadow-sm
+                 p-5 flex flex-col justify-between
+                 hover:shadow-md transition-shadow"
         >
-          Ver alumnos
-        </button>
-      </div>
+          <div class="space-y-2">
+            <h2 class="text-lg font-semibold text-slate-800">
+              {{ curso.nombreEE }}
+            </h2>
 
+            <p class="text-sm text-slate-600">NRC: {{ curso.nrc }}</p>
+            <p class="text-sm text-slate-600">Periodo: {{ curso.periodo }}</p>
+            <p class="text-sm text-slate-600">Salón: {{ curso.salon }}</p>
+          </div>
+
+          <div class="pt-4">
+            <a
+              [routerLink]="['detalles', curso.id]"
+              class="btn-primary w-full"
+              [attr.aria-label]="'Ver alumnos de ' + curso.nombreEE"
+            >
+              Ver alumnos
+            </a>
+          </div>
+        </article>
+      }
     </div>
-  </div>
-
-  <!-- Estado vacío -->
-  <div
-    *ngIf="cursos.length === 0"
-    class="text-center py-12 text-slate-500 text-sm"
-  >
-    No tienes cursos asignados por el momento.
-  </div>
-
+  }
 </section>

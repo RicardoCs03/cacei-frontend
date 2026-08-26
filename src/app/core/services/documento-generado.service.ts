@@ -2,10 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DocumentoGeneradoResponse } from '../models/documentoGenerado.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class DocumentoGeneradoService {
-  API_URL = 'http://localhost:9090/api/documentos-generados';
+  API_URL = `${environment.apiUrl}/documentos-generados`;
 
   constructor(private http: HttpClient) {}
 

@@ -1,32 +1,32 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Curso } from '../../../../core/models/cursos.model';
 import { CursoService } from '../../../../core/services/curso.service';
+import { ListaBase } from '../../../../shared/lista-base';
+import { EstadoPanelComponent } from '../../../../shared/estado-panel/estado-panel.component';
 
 @Component({
   selector: 'app-cursos-list',
-  imports: [CommonModule, RouterModule],
+  standalone: true,
+  imports: [RouterModule, EstadoPanelComponent],
   templateUrl: './cursos-list.html',
   styleUrl: './cursos-list.css',
 })
-export class CursosList implements OnInit {
+export class CursosList extends ListaBase<Curso> implements OnInit {
+  private readonly service = inject(CursoService);
+  private readonly router = inject(Router);
 
- cursos: Curso[] = [];
-
-  constructor(
-    private service: CursoService,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.load();
+  protected override get entidad(): string {
+    return 'cursos';
   }
 
-  load(): void {
-    this.service.findAll().subscribe(data => {
-      this.cursos = data;
-    });
+  protected override consultar(): Observable<Curso[]> {
+    return this.service.findAll();
+  }
+
+  ngOnInit(): void {
+    this.cargar();
   }
 
   create(): void {
@@ -37,10 +37,7 @@ export class CursosList implements OnInit {
     this.router.navigate([`/admin/cursos/editar/${id}`]);
   }
 
-  remove(id: number, nombre: string): void {
-    if (confirm(`¿Estás seguro de que deseas eliminar el curso "${nombre}"?`)) {
-      this.service.delete(id).subscribe(() => this.load());
-    }
+  remove(id: number, descripcion: string): void {
+    this.eliminar(`el curso "${descripcion}"`, this.service.delete(id));
   }
-
 }

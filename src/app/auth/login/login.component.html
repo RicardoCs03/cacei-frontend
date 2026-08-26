@@ -1,55 +1,70 @@
 <div class="min-h-screen flex items-center justify-center bg-slate-100 px-4">
-  <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-6">
-
+  <form
+    class="w-full max-w-md bg-white rounded-xl shadow-lg p-6"
+    (ngSubmit)="login()"
+    #formulario="ngForm"
+    novalidate
+  >
     <!-- Título -->
-    <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">
-      Iniciar sesión
-    </h2>
+    <h1 class="text-2xl font-semibold text-center text-slate-800 mb-1">Iniciar sesión</h1>
+    <p class="text-sm text-center text-slate-500 mb-6">
+      Sistema de autoevaluación CACEI
+    </p>
 
-    <!-- Usuario -->
+    <!-- Correo -->
     <div class="mb-4">
-      <label class="block text-sm font-medium text-gray-600 mb-1">
-        Usuario
-      </label>
+      <label for="email" class="form-label">Correo institucional</label>
       <input
-        type="text"
+        id="email"
+        name="email"
+        type="email"
+        autocomplete="username"
+        required
         [(ngModel)]="email"
+        #campoEmail="ngModel"
         placeholder="correo@uv.mx"
-        class="w-full px-4 py-2 border border-gray-300 rounded-md
-               focus:outline-none focus:ring-2 focus:ring-primary"
+        class="form-input"
+        [attr.aria-invalid]="campoEmail.invalid && campoEmail.touched"
       />
+      @if (campoEmail.invalid && campoEmail.touched) {
+        <p class="mt-1 text-xs text-red-600">Escriba un correo válido.</p>
+      }
     </div>
 
     <!-- Contraseña -->
     <div class="mb-6">
-      <label class="block text-sm font-medium text-gray-600 mb-1">
-        Contraseña
-      </label>
+      <label for="password" class="form-label">Contraseña</label>
       <input
+        id="password"
+        name="password"
         type="password"
+        autocomplete="current-password"
+        required
         [(ngModel)]="password"
+        #campoPassword="ngModel"
         placeholder="••••••••"
-        class="w-full px-4 py-2 border border-gray-300 rounded-md
-               focus:outline-none focus:ring-2 focus:ring-primary"
+        class="form-input"
+        [attr.aria-invalid]="campoPassword.invalid && campoPassword.touched"
       />
+      @if (campoPassword.invalid && campoPassword.touched) {
+        <p class="mt-1 text-xs text-red-600">La contraseña es obligatoria.</p>
+      }
     </div>
 
     <!-- Botón -->
     <button
-      (click)="login()"
-      class="w-full bg-primary text-white py-2 rounded-md
-             hover:bg-primary/90 transition duration-200"
+      type="submit"
+      class="btn-primary w-full disabled:opacity-60 disabled:cursor-not-allowed"
+      [disabled]="formulario.invalid || enviando()"
     >
-      Entrar
+      {{ enviando() ? 'Entrando…' : 'Entrar' }}
     </button>
 
     <!-- Error -->
-    <p
-      *ngIf="error"
-      class="mt-4 text-sm text-red-600 text-center"
-    >
-      {{ error }}
-    </p>
-
-  </div>
+    @if (error()) {
+      <p class="mt-4 text-sm text-red-600 text-center" role="alert">
+        {{ error() }}
+      </p>
+    }
+  </form>
 </div>

@@ -1,40 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
 import { UsuarioService } from '../../../../core/services/usuario.service';
 import { Usuario } from '../../../../core/models/usuario.model';
-import { Router, RouterModule } from '@angular/router';
-import { OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ListaBase } from '../../../../shared/lista-base';
+import { EstadoPanelComponent } from '../../../../shared/estado-panel/estado-panel.component';
 
 @Component({
-  selector: 'app-user-list.component',
+  selector: 'app-user-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule, EstadoPanelComponent],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css',
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent extends ListaBase<Usuario> implements OnInit {
+  private readonly usuarioService = inject(UsuarioService);
+  private readonly router = inject(Router);
 
-  users:Usuario[] = [];
+  protected override get entidad(): string {
+    return 'usuarios';
+  }
 
-  constructor(private usuarioService: UsuarioService, private router: Router) { 
-    console.log('UserListComponent initialized');
+  protected override consultar(): Observable<Usuario[]> {
+    return this.usuarioService.findAll();
   }
 
   ngOnInit(): void {
-    
-    this.loadUsers();
-  }
-
-  loadUsers(): void {
-    this.usuarioService.findAll().subscribe(
-      (data: Usuario[]) => {
-        this.users = data;
-      },
-      (error) => {
-        console.log("Error loading users");
-        console.error('Error fetching users:', error);
-      }
-    );
+    this.cargar();
   }
 
   createUsuario(): void {
@@ -45,18 +37,14 @@ export class UserListComponent implements OnInit {
     this.router.navigate([`/admin/usuarios/editar/${id}`]);
   }
 
-  deleteUsuario(id: number, nombre: string): void {
-    if (confirm(`¿Estás seguro de que deseas eliminar al usuario "${nombre}"?`)) {
-      this.usuarioService.deleteUsuario(id).subscribe(
-        () => {
-          this.users = this.users.filter(user => user.id !== id);
-          this.loadUsers();
-        },
-        (error) => {
-          console.error('Error deleting user:', error);
-        }
-      );
-    }
+  deleteUsuario(usuario: Usuario): void {
+    const nombre = [usuario.nombre, usuario.apepat, usuario.apemat].filter(Boolean).join(' ');
+    this.eliminar(`al usuario "${nombre}"`, this.usuarioService.deleteUsuario(usuario.id!));
   }
 
+  etiquetaRol(rol: string | undefined): string {
+    if (rol === 'ADMINISTRADOR') return 'Administrador';
+    if (rol === 'PROFESOR') return 'Profesor';
+    return '—';
+  }
 }

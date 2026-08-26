@@ -2,11 +2,12 @@
 
   <!-- Header -->
   <div class="flex items-center justify-between">
-    <h3 class="text-xl font-semibold text-slate-800">
+    <h1 class="text-xl font-semibold text-slate-800">
       Acreditaciones CACEI
-    </h3>
+    </h1>
 
     <button
+      type="button"
       (click)="create()"
       class="btn-primary"
     >
@@ -14,67 +15,77 @@
     </button>
   </div>
 
-  <!-- Tabla -->
+    @if (sinContenido) {
+    <app-estado-panel
+      [cargando]="cargando()"
+      [error]="error()"
+      [mensajeVacio]="mensajeVacio"
+      accionVacio="Registrar el primer proceso"
+      (reintentar)="cargar()"
+      (accion)="create()"
+    />
+  } @else {
   <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
-    <table class="min-w-full divide-y divide-slate-200">
+      <table class="min-w-full divide-y divide-slate-200">
 
-      <thead class="bg-slate-50">
-        <tr>
-          <th class="table-th">Programa Educativo</th>
-          <th class="table-th">Ciclo de evaluación</th>
-          <th class="table-th text-center">Fecha de inicio</th>
-          <th class="table-th text-center">Fecha del proceso</th>
-          <th class="table-th text-center">Estado</th>
-          <th class="table-th text-right">Acciones</th>
-        </tr>
-      </thead>
+        <thead class="bg-slate-50">
+          <tr>
+            <th scope="col" class="table-th">Programa Educativo</th>
+            <th scope="col" class="table-th">Ciclo de evaluación</th>
+            <th scope="col" class="table-th text-center">Fecha de inicio</th>
+            <th scope="col" class="table-th text-center">Fecha del proceso</th>
+            <th scope="col" class="table-th text-center">Estado</th>
+            <th scope="col" class="table-th text-right">Acciones</th>
+          </tr>
+        </thead>
 
-      <tbody class="divide-y divide-slate-100">
-        <tr
-          *ngFor="let p of procesos"
-          class="hover:bg-slate-50"
-        >
+        <tbody class="divide-y divide-slate-100">
+          @for (p of datos(); track p.id) {
 
-          <!-- Programa educativo -->
-          <td class="table-td">
-            {{ p.programaEducativoNombre }}
-          </td>
+            <tr class="hover:bg-slate-50">
 
-          <!-- Ciclo de evaluación -->
-          <td class="table-td">
-            {{ p.cicloEvaluacion }}
-          </td>
+            <!-- Programa educativo -->
+            <td class="table-td">
+              {{ p.programaEducativoNombre }}
+            </td>
 
-          <!-- Fecha de inicio -->
-          <td class="table-td text-center">
-            {{ p.fechaInicio }}
-          </td>
+            <!-- Ciclo de evaluación -->
+            <td class="table-td">
+              {{ p.cicloEvaluacion }}
+            </td>
 
-          <!-- Fecha del proceso (fin) -->
-          <td class="table-td text-center">
-            {{ p.fechaFin ?? '-' }}
-          </td>
+            <!-- Fecha de inicio -->
+            <td class="table-td text-center">
+              {{ p.fechaInicio }}
+            </td>
 
-          <!-- Estado -->
-          <td class="table-td text-center">
-            {{ estadoLabel(p.estado) }}
-          </td>
+            <!-- Fecha del proceso (fin) -->
+            <td class="table-td text-center">
+              {{ p.fechaFin ?? '-' }}
+            </td>
 
-          <!-- Acciones -->
-          <td class="table-td text-right whitespace-nowrap space-x-2">
-            <button (click)="edit(p.id!)" class="btn-edit">
-              Editar
-            </button>
+            <!-- Estado -->
+            <td class="table-td text-center">
+              {{ etiquetaEstado(p.estado) }}
+            </td>
 
-            <button (click)="remove(p.id!, p.programaEducativoNombre + ' - ' + p.cicloEvaluacion)" class="btn-delete">
-              Eliminar
-            </button>
-          </td>
+            <!-- Acciones -->
+            <td class="table-td text-right whitespace-nowrap space-x-2">
+              <button type="button" (click)="edit(p.id!)" class="btn-edit">
+                Editar
+              </button>
 
-        </tr>
-      </tbody>
+              <button type="button" (click)="remove(p.id!, p.programaEducativoNombre + ' - ' + p.cicloEvaluacion)" class="btn-delete">
+                Eliminar
+              </button>
+            </td>
 
-    </table>
-  </div>
+          </tr>
+        }
+        </tbody>
+
+      </table>
+    </div>
+  }
 
 </section>

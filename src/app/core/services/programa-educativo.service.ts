@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ProgramaEducativo } from '../models/programaEducativo.model';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class ProgramaEducativoService {
   
-  private API_URL = 'http://localhost:9090/api/programas-educativos';
+  private API_URL = `${environment.apiUrl}/programas-educativos`;
 
   constructor(private http: HttpClient) {}
 

@@ -97,6 +97,11 @@
 
   </div>
 
+  <!-- Error del guardado -->
+  @if (error()) {
+    <p class="text-sm text-red-600 text-right" role="alert">{{ error() }}</p>
+  }
+
   <!-- Botones -->
   <div class="flex justify-end gap-3 pt-4">
 
@@ -111,8 +116,9 @@
     <button
       type="button"
       (click)="save()"
-      class="btn-primary">
-      Guardar
+      class="btn-primary disabled:opacity-60 disabled:cursor-not-allowed"
+      [disabled]="guardando()">
+      {{ guardando() ? 'Guardando…' : 'Guardar' }}
     </button>
 
   </div>

@@ -2,11 +2,12 @@
 
   <!-- Header -->
   <div class="flex items-center justify-between">
-    <h3 class="text-xl font-semibold text-slate-800">
+    <h1 class="text-xl font-semibold text-slate-800">
       Inscripciones
-    </h3>
+    </h1>
 
     <button
+      type="button"
       (click)="create()"
       class="btn-primary"
     >
@@ -14,59 +15,71 @@
     </button>
   </div>
 
-  <!-- Tabla -->
+    @if (sinContenido) {
+    <app-estado-panel
+      [cargando]="cargando()"
+      [error]="error()"
+      [mensajeVacio]="mensajeVacio"
+      accionVacio="Registrar la primera inscripción"
+      (reintentar)="cargar()"
+      (accion)="create()"
+    />
+  } @else {
   <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
-    <table class="min-w-full divide-y divide-slate-200">
+      <table class="min-w-full divide-y divide-slate-200">
 
-      <thead class="bg-slate-50">
-        <tr>
-          <th class="table-th">Alumno</th>
-          <th class="table-th">Curso</th>
-          <th class="table-th text-center">Calificación final</th>
-          <th class="table-th text-right">Acciones</th>
-        </tr>
-      </thead>
+        <thead class="bg-slate-50">
+          <tr>
+            <th scope="col" class="table-th">Alumno</th>
+            <th scope="col" class="table-th">Curso</th>
+            <th scope="col" class="table-th text-center">Calificación final</th>
+            <th scope="col" class="table-th text-right">Acciones</th>
+          </tr>
+        </thead>
 
-      <tbody class="divide-y divide-slate-100">
-        <tr
-          *ngFor="let i of inscripciones"
-          class="hover:bg-slate-50"
-        >
+        <tbody class="divide-y divide-slate-100">
+          @for (i of datos(); track i.id) {
 
-          <!-- Alumno -->
-          <td class="table-td">
-            {{ i.nombreCompletoAlumno }}
-          </td>
+            <tr class="hover:bg-slate-50">
 
-          <!-- Curso -->
-          <td class="table-td">
-            {{ i.nombreEE }} - {{ i.nrcCurso }}
-          </td>
+            <!-- Alumno -->
+            <td class="table-td">
+              {{ i.nombreCompletoAlumno }}
+            </td>
 
-          <!-- Calificación -->
-          <td class="table-td text-center">
-            {{ i.calificacion ?? '-' }}
-          </td>
+            <!-- Curso -->
+            <td class="table-td">
+              {{ i.nombreEE }} - {{ i.nrcCurso }}
+            </td>
 
-          <!-- Acciones -->
-          <td class="table-td text-right whitespace-nowrap space-x-2">
-            <button
-              (click)="edit(i.id!)"
-              class="btn-edit">
-              Editar
-            </button>
+            <!-- Calificación -->
+            <td class="table-td text-center">
+              {{ i.calificacion ?? '-' }}
+            </td>
 
-            <button
-              (click)="remove(i.id!, i.nombreCompletoAlumno)"
-              class="btn-delete">
-              Eliminar
-            </button>
-          </td>
+            <!-- Acciones -->
+            <td class="table-td text-right whitespace-nowrap space-x-2">
+              <button
+                type="button"
+                (click)="edit(i.id!)"
+                class="btn-edit">
+                Editar
+              </button>
 
-        </tr>
-      </tbody>
+              <button
+                type="button"
+                (click)="remove(i.id!, i.nombreCompletoAlumno)"
+                class="btn-delete">
+                Eliminar
+              </button>
+            </td>
 
-    </table>
-  </div>
+          </tr>
+        }
+        </tbody>
+
+      </table>
+    </div>
+  }
 
 </section>

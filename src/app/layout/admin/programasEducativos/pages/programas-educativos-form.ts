@@ -41,7 +41,6 @@ export class ProgramaEducativoFormComponent implements OnInit {
       this.isEdit = true;
       this.programaEducativoService.findById(+id).subscribe(programaEducativo => {
         this.programaEducativo = programaEducativo;
-        console.log(this.programaEducativo);
       });
     }
   }

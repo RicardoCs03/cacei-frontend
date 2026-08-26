@@ -1,129 +1,22 @@
-<nav class="w-64 bg-slate-900 text-slate-200 min-h-full shadow-lg">
-
+<nav class="w-64 h-full bg-slate-900 text-slate-200 shadow-lg" aria-label="Menú principal">
   <!-- Encabezado del menú -->
   <div class="px-4 py-5 border-b border-white/10">
     <p class="text-xs text-slate-400 uppercase tracking-widest">Menú</p>
-    <p class="text-sm font-semibold text-white">Opciones disponibles</p>
+    <p class="text-sm font-semibold text-white">{{ titulo }}</p>
   </div>
 
-  <!-- ADMIN -->
-  <ul
-    *ngIf="role === 'ROLE_ADMINISTRADOR'"
-    class="p-4 space-y-1 text-sm"
-  >
-    <li class="sidebar-section-title">
-      Administración
-    </li>
-
-    <li>
-      <a
-        routerLink="/admin/usuarios"
-        routerLinkActive="sidebar-link-active"
-        class="sidebar-link"
-      >
-        Usuarios
-      </a>
-    </li>
-
-    <li>
-      <a
-        routerLink="/admin/programas-educativos"
-        routerLinkActive="sidebar-link-active"
-        class="sidebar-link"
-      >
-        Programas de estudio
-      </a>
-    </li>
-
-    <li>
-      <a
-        routerLink="/admin/experiencias-educativas"
-        routerLinkActive="sidebar-link-active"
-        class="sidebar-link"
-      >
-        Experiencias Educativas
-      </a>
-    </li>
-
-    <li>
-      <a
-        routerLink="/admin/cursos"
-        routerLinkActive="sidebar-link-active"
-        class="sidebar-link"
-      >
-        Cursos
-      </a>
-    </li>
-
-    <li>
-      <a
-        routerLink="/admin/alumnos"
-        routerLinkActive="sidebar-link-active"
-        class="sidebar-link"
-      >
-        Alumnos
-      </a>
-    </li>
-
-    <li>
-      <a
-        routerLink="/admin/inscripciones"
-        routerLinkActive="sidebar-link-active"
-        class="sidebar-link"
-      >
-        Inscripciones
-      </a>
-    </li>
-
-    <li>
-      <a
-        routerLink="/admin/acreditaciones"
-        routerLinkActive="sidebar-link-active"
-        class="sidebar-link"
-      >
-        Acreditaciones CACEI
-      </a>
-    </li>
-
-    <li>
-      <a
-        routerLink="/admin/documentos-generados"
-        routerLinkActive="sidebar-link-active"
-        class="sidebar-link"
-      >
-        Documentos de Validación
-      </a>
-    </li>
+  <ul class="p-4 space-y-1 text-sm">
+    @for (opcion of opciones; track opcion.ruta) {
+      <li>
+        <a
+          [routerLink]="opcion.ruta"
+          routerLinkActive="sidebar-link-active"
+          [routerLinkActiveOptions]="{ exact: !!opcion.exacta }"
+          class="sidebar-link"
+        >
+          {{ opcion.etiqueta }}
+        </a>
+      </li>
+    }
   </ul>
-
-  <!-- PROFESOR -->
-  <ul
-    *ngIf="role === 'ROLE_PROFESOR'"
-    class="p-4 space-y-1 text-sm"
-  >
-    <li class="sidebar-section-title">
-      Profesor
-    </li>
-
-    <li>
-      <a
-        routerLink="/profesor/cursos"
-        routerLinkActive="sidebar-link-active"
-        class="sidebar-link"
-      >
-        Mis cursos
-      </a>
-    </li>
-
-    <li>
-      <a
-        routerLink="/profesor/evidencias"
-        routerLinkActive="sidebar-link-active"
-        class="sidebar-link"
-      >
-        Evidencias CACEI
-      </a>
-    </li>
-  </ul>
-
 </nav>

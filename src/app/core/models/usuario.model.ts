@@ -1,3 +1,5 @@
+import { Rol } from './auth.model';
+
 export interface Usuario{
     id?: number;
     email: string;
@@ -8,7 +10,7 @@ export interface Usuario{
     nombre: string;
     apepat: string;
     apemat: string;
-    role: 'ROLE_ADMINISTRADOR' | 'ROLE_PROFESOR' | '';
+    rol: Rol | '';
     active: boolean;
 
 }

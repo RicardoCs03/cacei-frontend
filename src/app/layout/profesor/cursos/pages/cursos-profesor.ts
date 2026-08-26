@@ -1,28 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Curso } from '../../../../core/models/cursos.model';
 import { CursoService } from '../../../../core/services/curso.service';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { ListaBase } from '../../../../shared/lista-base';
+import { EstadoPanelComponent } from '../../../../shared/estado-panel/estado-panel.component';
 
 @Component({
   selector: 'app-cursos-profesor',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, EstadoPanelComponent],
   templateUrl: './cursos-profesor.html',
   styleUrl: './cursos-profesor.css',
 })
-export class CursosProfesor implements OnInit {
+export class CursosProfesor extends ListaBase<Curso> implements OnInit {
+  private readonly cursoService = inject(CursoService);
 
-  cursos: Curso[] = [];
+  protected override get entidad(): string {
+    return 'cursos';
+  }
 
-  constructor(private cursoService: CursoService) {
-    console.log('CursosProfesor component loaded');
+  protected override consultar(): Observable<Curso[]> {
+    return this.cursoService.findByProfesor();
+  }
+
+  override get mensajeVacio(): string {
+    return 'No tiene cursos asignados por el momento.';
   }
 
   ngOnInit(): void {
-    this.cursoService.findByProfesor().subscribe(data => {
-      this.cursos = data;
-    });
+    this.cargar();
   }
-
 }

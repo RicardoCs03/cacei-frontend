@@ -11,7 +11,7 @@ export const routes: Routes = [
         children: [
             {
                 path: 'admin',
-                canActivate: [roleGuard('ROLE_ADMINISTRADOR')],
+                canActivate: [roleGuard('ADMINISTRADOR')],
                 children: [
                             {
                               path: '',
@@ -151,13 +151,9 @@ export const routes: Routes = [
                               loadComponent: () =>
                                 import('./layout/admin/acreditaciones/pages/acreditaciones-form')
                                   .then(m => m.AcreditacionesForm)
-                            },
-                            {
-                              path: 'documentos-generados',
-                              loadComponent: () =>
-                                import('./layout/admin/documentos-generados/pages/documentos-generados-list')
-                                  .then(m => m.DocumentosGeneradosList)
                             }
+                            // Pendiente: 'documentos-generados' se activará cuando la API
+                            // exponga /api/documentos-generados (el componente ya existe).
                         ],
                 loadComponent: () => 
                     import('./layout/admin/admin.component')
@@ -165,7 +161,7 @@ export const routes: Routes = [
             },
     {
         path: 'profesor',
-        canActivate: [roleGuard('ROLE_PROFESOR')],
+        canActivate: [roleGuard('PROFESOR')],
         children:[
           {
             path: '',

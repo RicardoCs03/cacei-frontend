@@ -11,6 +11,7 @@ export interface ExperienciaEducativa {
     horasOtros: number;
     creditos: number;
     programaEducativo: string;
+    programaEducativofk?: { nombre: string };
     areaExperienciaEducativa: string;
     objetivoGeneral: string;
     isActive: boolean;

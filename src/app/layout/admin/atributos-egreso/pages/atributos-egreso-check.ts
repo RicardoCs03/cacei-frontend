@@ -114,11 +114,9 @@ export class AtributosEgresoCheck implements OnInit {
       )
     };
 
-    console.log('Payload enviado:', payload);
 
     this.experienciaService.actualizarAtributosEgreso(payload)
       .subscribe(() => {
-        console.log('Atributos de egreso guardados correctamente');
       });
   }
 }

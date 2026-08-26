@@ -44,7 +44,6 @@ export class AlumnosForm implements OnInit{
       this.isEdit = true;
       this.alumnoService.findById(+id).subscribe(data => {
         this.alumno = data;
-        console.log("Datos del alumno a editar:"+this.alumno.nombre);
       });
     }
   }

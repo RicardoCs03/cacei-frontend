@@ -6,6 +6,33 @@ html, body{
     @apply bg-slate-100 text-slate-800;
 }
 
+/* Foco visible y consistente para quien navega con teclado. */
+:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-white rounded-sm;
+}
+
+/* Texto solo para lectores de pantalla (títulos de tabla, etiquetas). */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Quien haya pedido menos animación no ve transiciones. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
 @layer components {
   .btn-primary {
     @apply inline-flex items-center justify-center

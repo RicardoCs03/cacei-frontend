@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProcesoAcreditacionRequest, ProcesoAcreditacionResponse } from '../models/procesoAcreditacion.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProcesoAcreditacionService {
 
-  API_URL = 'http://localhost:9090/api/proceso-acreditacion';
+  API_URL = `${environment.apiUrl}/proceso-acreditacion`;
 
   constructor(private http: HttpClient) {}
 

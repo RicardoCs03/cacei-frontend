@@ -17,7 +17,8 @@ export interface ProcesoAcreditacionResponse {
   coordinadorCaceiApepallidoPaterno: string;
   coordinadorCaceiApepallidoMaterno: string;
   fechaInicio: string;
-  fechaFin: string;
+  // Un proceso abierto todavía no tiene fecha de cierre.
+  fechaFin: string | null;
   estado: ProcesoEstado;
   mensaje?: string;
 }

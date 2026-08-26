@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';  
 import { Usuario } from '../models/usuario.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsuarioService {
   
-  private API_URL = 'http://localhost:9090/api/usuarios';
+  private API_URL = `${environment.apiUrl}/usuarios`;
 
   constructor(private http: HttpClient) {
 
@@ -22,7 +23,6 @@ export class UsuarioService {
     //Falta agregar el requestParam donde se envia el parametro
     if (!isNaN(Number(parametro))) {
       let id = Number(parametro);
-      console.log("DEBUG: Es un ID");
       return this.http.get<Usuario>(`${this.API_URL}/buscar`, {params: {id}});
     }
     return this.http.get<Usuario>(`${this.API_URL}/buscar`, {params: {email: parametro}});
@@ -37,7 +37,6 @@ export class UsuarioService {
     //Falta agregar el requestParam donde se envia el parametro
     if (!isNaN(Number(parametro))) {
       let id = Number(parametro);
-      console.log("DEBUG: Es un ID");
       return this.http.get<Usuario>(`${this.API_URL}/buscar`, {params: {id}});
     }
     return this.http.get<Usuario>(`${this.API_URL}/buscar`, {params: {email: parametro}});

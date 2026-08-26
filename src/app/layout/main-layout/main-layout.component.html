@@ -1,27 +1,62 @@
 <!-- HEADER -->
-<header class="h-14 bg-primary text-white flex items-center justify-between px-6 shadow-md">
-  <span class="text-lg font-semibold tracking-wide">
-    CACEI
-  </span>
+<header class="h-14 bg-primary text-white flex items-center justify-between px-4 md:px-6 shadow-md">
+  <div class="flex items-center gap-3">
+    <!-- Botón del menú: solo aparece cuando la barra lateral está oculta -->
+    <button
+      type="button"
+      class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-md hover:bg-white/10 transition"
+      (click)="alternarMenu()"
+      [attr.aria-expanded]="menuAbierto()"
+      aria-controls="menu-lateral"
+      aria-label="Abrir menú de navegación"
+    >
+      <!-- Icono de tres líneas -->
+      <span aria-hidden="true" class="relative block w-5 h-[2px] bg-current
+             before:absolute before:inset-x-0 before:-top-[6px] before:h-[2px] before:bg-current before:content-['']
+             after:absolute after:inset-x-0 after:top-[6px] after:h-[2px] after:bg-current after:content-['']"></span>
+    </button>
 
-  <button
-    (click)="logout()"
-    class="bg-white/10 hover:bg-secondary px-4 py-1.5 rounded-md
-           text-sm font-medium transition"
-  >
-    Cerrar sesión
-  </button>
+    <span class="text-lg font-semibold tracking-wide">CACEI</span>
+  </div>
+
+  <div class="flex items-center gap-4">
+    @if (nombre) {
+      <span class="hidden sm:inline text-sm text-white/80">{{ nombre }}</span>
+    }
+    <button
+      type="button"
+      (click)="logout()"
+      class="bg-white/10 hover:bg-secondary px-4 py-1.5 rounded-md text-sm font-medium transition"
+    >
+      Cerrar sesión
+    </button>
+  </div>
 </header>
 
 <!-- LAYOUT -->
 <div class="flex min-h-[calc(100vh-3.5rem)] bg-slate-100">
+  <!-- Fondo oscuro que cierra el menú al tocarlo (solo en móvil) -->
+  @if (menuAbierto()) {
+    <div
+      class="fixed inset-0 top-14 z-20 bg-slate-900/50 md:hidden"
+      (click)="cerrarMenu()"
+      aria-hidden="true"
+    ></div>
+  }
 
-  <!-- SIDEBAR -->
-  <app-sidebar class="hidden md:block"></app-sidebar>
+  <!-- SIDEBAR: fija en escritorio, deslizante en móvil -->
+  <aside
+    id="menu-lateral"
+    class="fixed inset-y-0 top-14 left-0 z-30 transition-transform duration-200 ease-out
+           md:static md:top-0 md:z-auto md:translate-x-0"
+    [class.translate-x-0]="menuAbierto()"
+    [class.-translate-x-full]="!menuAbierto()"
+  >
+    <app-sidebar></app-sidebar>
+  </aside>
 
-  <!-- MAIN CONTENT -->
-  <main class="flex-1 p-4 md:p-6 overflow-auto">
+  <!-- CONTENIDO -->
+  <main class="flex-1 p-4 md:p-6 overflow-auto min-w-0">
     <router-outlet></router-outlet>
   </main>
-
 </div>

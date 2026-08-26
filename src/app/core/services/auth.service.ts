@@ -1,19 +1,36 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { LoginRequest, LoginResponse } from '../models/auth.model';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { LoginRequest, LoginResponse, Rol } from '../models/auth.model';
+import { TokenService } from './token.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:9090/api/auth';//URL base de la API de autenticación
+  private readonly apiUrl = `${environment.apiUrl}/auth`;
 
-  //Constructor de la clase
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
+  private readonly tokenService = inject(TokenService);
+  private readonly router = inject(Router);
 
-  login(data: LoginRequest): Observable<LoginResponse> {// Método para iniciar sesión
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, data,{headers: { 'Content-Type': 'application/json' }}
-    );
+  /** Autentica al usuario y deja la sesión guardada. */
+  login(data: LoginRequest): Observable<LoginResponse> {
+    return this.http
+      .post<LoginResponse>(`${this.apiUrl}/login`, data)
+      .pipe(tap((respuesta) => this.tokenService.save(respuesta.token, respuesta.role, respuesta.nombre)));
+  }
+
+  /** Cierra la sesión y devuelve al formulario de acceso. */
+  logout(returnUrl?: string): void {
+    this.tokenService.clear();
+    this.router.navigate(['/login'], returnUrl ? { queryParams: { returnUrl } } : {});
+  }
+
+  /** Ruta de inicio que corresponde a cada rol. */
+  rutaInicio(rol: Rol): string {
+    return rol === 'ADMINISTRADOR' ? '/admin' : '/profesor';
   }
 }

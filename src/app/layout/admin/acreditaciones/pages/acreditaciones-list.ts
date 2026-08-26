@@ -1,26 +1,32 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ProcesoAcreditacionResponse } from '../../../../core/models/procesoAcreditacion.model';
 import { ProcesoAcreditacionService } from '../../../../core/services/proceso-acreditacion.service';
+import { ListaBase } from '../../../../shared/lista-base';
+import { EstadoPanelComponent } from '../../../../shared/estado-panel/estado-panel.component';
 
 @Component({
   selector: 'app-acreditaciones-list',
-  imports: [CommonModule, RouterModule],
+  standalone: true,
+  imports: [RouterModule, EstadoPanelComponent],
   templateUrl: './acreditaciones-list.html',
   styleUrl: './acreditaciones-list.css',
 })
-export class AcreditacionesList implements OnInit {
+export class AcreditacionesList extends ListaBase<ProcesoAcreditacionResponse> implements OnInit {
+  private readonly service = inject(ProcesoAcreditacionService);
+  private readonly router = inject(Router);
 
-  procesos: ProcesoAcreditacionResponse[] = [];
+  protected override get entidad(): string {
+    return 'procesos de acreditación';
+  }
 
-  constructor(
-    private service: ProcesoAcreditacionService,
-    private router: Router
-  ) {}
+  protected override consultar(): Observable<ProcesoAcreditacionResponse[]> {
+    return this.service.findAll();
+  }
 
   ngOnInit(): void {
-    this.service.findAll().subscribe(data => this.procesos = data);
+    this.cargar();
   }
 
   create(): void {
@@ -31,13 +37,11 @@ export class AcreditacionesList implements OnInit {
     this.router.navigate([`/admin/acreditaciones/editar/${id}`]);
   }
 
-  remove(id: number, nombreProceso: string): void {
-    if (confirm(`¿Estás seguro de que deseas eliminar el proceso de acreditación "${nombreProceso}"?`)) {
-      this.service.delete(id).subscribe(() => this.ngOnInit());
-    }
+  remove(id: number, descripcion: string): void {
+    this.eliminar(`el proceso de acreditación "${descripcion}"`, this.service.delete(id));
   }
 
-  estadoLabel(estado: string): string {
+  etiquetaEstado(estado: string): string {
     switch (estado) {
       case 'INICIADO': return 'Iniciado';
       case 'EN_PROGRESO': return 'En progreso';

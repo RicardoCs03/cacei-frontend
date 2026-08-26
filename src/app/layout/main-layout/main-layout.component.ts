@@ -1,30 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs';
 import { TokenService } from '../../core/services/token.service';
-import { Router,RouterOutlet } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
-  selector: 'app-main-layout.component',
+  selector: 'app-main-layout',
   standalone: true,
   imports: [CommonModule, RouterOutlet, SidebarComponent],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css',
 })
 export class MainLayoutComponent {
+  private readonly tokenService = inject(TokenService);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
-  role: string | null = '';
-  
+  readonly nombre = this.tokenService.getNombre();
+  readonly rol = this.tokenService.getRole();
 
-  constructor(private tokenService: TokenService,private router: Router){
-    this.role = this.tokenService.getRole();
+  /** En pantallas angostas el menú se muestra como panel deslizante. */
+  readonly menuAbierto = signal(false);
+
+  constructor() {
+    // Al navegar, el panel se cierra: en móvil taparía el contenido recién abierto.
+    this.router.events
+      .pipe(filter((evento) => evento instanceof NavigationEnd))
+      .subscribe(() => this.menuAbierto.set(false));
+  }
+
+  alternarMenu(): void {
+    this.menuAbierto.update((abierto) => !abierto);
+  }
+
+  cerrarMenu(): void {
+    this.menuAbierto.set(false);
   }
 
   logout(): void {
-    this.tokenService.clear();
-    console.log('Usuario deslogueado, token y role eliminados.');
-    this.router.navigate(['/login']);
+    this.authService.logout();
   }
-
-
 }
