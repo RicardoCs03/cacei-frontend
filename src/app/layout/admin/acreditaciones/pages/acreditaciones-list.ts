@@ -4,12 +4,14 @@ import { Observable } from 'rxjs';
 import { ProcesoAcreditacionResponse } from '../../../../core/models/procesoAcreditacion.model';
 import { ProcesoAcreditacionService } from '../../../../core/services/proceso-acreditacion.service';
 import { ListaBase } from '../../../../shared/lista-base';
+import { DefinicionFiltro } from '../../../../shared/filtros/filtro.model';
+import { FiltrosComponent } from '../../../../shared/filtros/filtros.component';
 import { EstadoPanelComponent } from '../../../../shared/estado-panel/estado-panel.component';
 
 @Component({
   selector: 'app-acreditaciones-list',
   standalone: true,
-  imports: [RouterModule, EstadoPanelComponent],
+  imports: [RouterModule, EstadoPanelComponent, FiltrosComponent],
   templateUrl: './acreditaciones-list.html',
   styleUrl: './acreditaciones-list.css',
 })
@@ -23,6 +25,23 @@ export class AcreditacionesList extends ListaBase<ProcesoAcreditacionResponse> i
 
   protected override consultar(): Observable<ProcesoAcreditacionResponse[]> {
     return this.service.findAll();
+  }
+
+  override get filtros(): DefinicionFiltro<ProcesoAcreditacionResponse>[] {
+    return [
+      // El programa educativo es una entidad de catálogo: desplegable.
+      { clave: 'programa', etiqueta: 'Programa educativo', tipo: 'seleccion',
+        valor: (p) => p.programaEducativoNombre },
+      { clave: 'ciclo', etiqueta: 'Ciclo de evaluación', tipo: 'texto', ejemplo: 'Ej. FEB 2026',
+        valor: (p) => p.cicloEvaluacion },
+      { clave: 'coordinador', etiqueta: 'Coordinador', tipo: 'texto', ejemplo: 'Nombre o apellidos',
+        valor: (p) => `${p.coordinadorCaceiNombre ?? ''} ${p.coordinadorCaceiApepallidoPaterno ?? ''} ${p.coordinadorCaceiApepallidoMaterno ?? ''}` },
+      // El estado es un conjunto cerrado de valores.
+      { clave: 'estado', etiqueta: 'Estado', tipo: 'seleccion',
+        opciones: ['INICIADO', 'EN_PROGRESO', 'COMPLETADO', 'EN_REVISION', 'CERRADO'],
+        valor: (p) => p.estado,
+        etiquetaOpcion: (v) => this.etiquetaEstado(v) },
+    ];
   }
 
   ngOnInit(): void {

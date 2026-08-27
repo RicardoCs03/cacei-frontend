@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Usuario } from '../../../../core/models/usuario.model';
 import { UsuarioService } from '../../../../core/services/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { mensajeDeError } from '../../../../core/interceptors/error-interceptor';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class UserFormComponent implements OnInit {
   user:Usuario = {
     email: '',
     password: '',
-    active: true,
+    isActive: true,
     nombre: '',
     apepat: '',
     apemat: '',
@@ -31,6 +32,10 @@ export class UserFormComponent implements OnInit {
 
   isEdit = false;
 
+  readonly cargando = signal(true);
+  readonly guardando = signal(false);
+  readonly error = signal<string | null>(null);
+
   constructor(
     private userService: UsuarioService,
     private router: Router,
@@ -40,12 +45,23 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.isEdit = true;
-      this.userService.findByIdorEmail(id).subscribe(user => {
-        this.user = user;
-      });
+    this.isEdit = !!id;
+
+    if (!id) {
+      this.cargando.set(false);
+      return;
     }
+
+    this.userService.findByIdorEmail(id).subscribe({
+      next: (user) => {
+        this.user = { ...this.user, ...user };
+        this.cargando.set(false);
+      },
+      error: (err) => {
+        this.error.set(mensajeDeError(err));
+        this.cargando.set(false);
+      },
+    });
   }
 
   saveUser(): void {

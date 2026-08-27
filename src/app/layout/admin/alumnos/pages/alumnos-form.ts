@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { forkJoin, of } from 'rxjs';
+import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alumno } from '../../../../core/models/alumno.model';
 import { ProgramaEducativo } from '../../../../core/models/programaEducativo.model';
@@ -6,6 +7,7 @@ import { AlumnoService } from '../../../../core/services/alumno.service';
 import { ProgramaEducativoService } from '../../../../core/services/programa-educativo.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { mensajeDeError } from '../../../../core/interceptors/error-interceptor';
 
 @Component({
   selector: 'app-alumnos-form',
@@ -27,6 +29,10 @@ export class AlumnosForm implements OnInit{
   programas: ProgramaEducativo[] = [];
   isEdit = false;
 
+  readonly cargando = signal(true);
+  readonly guardando = signal(false);
+  readonly error = signal<string | null>(null);
+
   constructor(
     private alumnoService: AlumnoService,
     private programaService: ProgramaEducativoService,
@@ -35,17 +41,28 @@ export class AlumnosForm implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.programaService.findAll().subscribe(data => {
-      this.programas = data;
-    });
-
     const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.isEdit = true;
-      this.alumnoService.findById(+id).subscribe(data => {
-        this.alumno = data;
-      });
-    }
+    this.isEdit = !!id;
+
+    // El catalogo y el registro se resuelven juntos: si el alumno se asignara
+    // antes de que el desplegable tenga opciones, no habria valor con el que
+    // emparejar y el campo saldria vacio.
+    forkJoin({
+      programas: this.programaService.findAll(),
+      alumno: id ? this.alumnoService.findById(+id) : of(null),
+    }).subscribe({
+      next: ({ programas, alumno }) => {
+        this.programas = programas ?? [];
+        if (alumno) {
+          this.alumno = { ...this.alumno, ...alumno };
+        }
+        this.cargando.set(false);
+      },
+      error: (err) => {
+        this.error.set(mensajeDeError(err));
+        this.cargando.set(false);
+      },
+    });
   }
 
   save(): void {

@@ -5,58 +5,102 @@
     {{ isEdit ? 'Editar' : 'Nuevo' }} Alumno
   </h3>
 
+  @if (error()) {
+    <p class="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">{{ error() }}</p>
+  }
+
+  @if (cargando()) {
+    <div class="flex flex-col items-center gap-3 py-12" role="status" aria-live="polite">
+      <span
+        class="h-8 w-8 rounded-full border-2 border-slate-200 border-t-primary animate-spin motion-reduce:animate-none"
+        aria-hidden="true"
+      ></span>
+      <p class="text-sm text-slate-500">Cargando…</p>
+    </div>
+  } @else {
+
+
+
   <!-- Datos del alumno -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-    <input
-      class="input"
-      [(ngModel)]="alumno.matricula"
-      name="matricula"
-      placeholder="Matrícula" />
+    <div>
+      <label for="al-matricula" class="form-label">Matrícula</label>
+      <input
+        id="al-matricula"
+        name="matricula"
+        type="text"
+        class="form-input"
+        [(ngModel)]="alumno.matricula"
+        placeholder="Ej. S22010001"
+      />
+    </div>
 
-    <input
-      class="input"
-      [(ngModel)]="alumno.nombre"
-      name="nombre"
-      placeholder="Nombre" />
+    <div>
+      <label for="al-nombre" class="form-label">Nombre(s)</label>
+      <input
+        id="al-nombre"
+        name="nombre"
+        type="text"
+        class="form-input"
+        [(ngModel)]="alumno.nombre"
+      />
+    </div>
 
-    <input
-      class="input"
-      [(ngModel)]="alumno.apepat"
-      name="apellidoPaterno"
-      placeholder="Apellido paterno" />
+    <div>
+      <label for="al-apepat" class="form-label">Apellido paterno</label>
+      <input
+        id="al-apepat"
+        name="apellidoPaterno"
+        type="text"
+        class="form-input"
+        [(ngModel)]="alumno.apepat"
+      />
+    </div>
 
-    <input
-      class="input"
-      [(ngModel)]="alumno.apemat"
-      name="apellidoMaterno"
-      placeholder="Apellido materno" />
+    <div>
+      <label for="al-apemat" class="form-label">Apellido materno</label>
+      <input
+        id="al-apemat"
+        name="apellidoMaterno"
+        type="text"
+        class="form-input"
+        [(ngModel)]="alumno.apemat"
+      />
+    </div>
 
-    <select
-      class="input md:col-span-2"
-      [(ngModel)]="alumno.programaEducativo"
-      name="programaEducativoId">
-
-      <option value="" disabled>
-        Seleccione programa educativo
-      </option>
-
-      <option *ngFor="let p of programas" [value]="p.nombre">
-        {{ p.nombre }}
-      </option>
-    </select>
+    <div class="md:col-span-2">
+      <label for="al-programa" class="form-label">Programa educativo</label>
+      <select
+        id="al-programa"
+        name="programaEducativoId"
+        class="form-input"
+        [(ngModel)]="alumno.programaEducativo"
+      >
+        <option value="" disabled>Seleccione programa educativo</option>
+        @for (p of programas; track p.id) {
+          <option [value]="p.nombre">{{ p.nombre }}</option>
+        }
+      </select>
+    </div>
 
   </div>
 
   <!-- Activo -->
-  <label class="flex items-center gap-2 text-sm text-slate-700">
-    <input
-      type="checkbox"
-      [(ngModel)]="alumno.isActive"
-      name="isActive"
-      class="accent-indigo-600" />
-    Activo
-  </label>
+  <div>
+    <label class="flex items-center gap-2 text-sm text-slate-700">
+      <input
+        type="checkbox"
+        name="isActive"
+        [(ngModel)]="alumno.isActive"
+        class="h-4 w-4 accent-primary"
+      />
+      Alumno activo
+    </label>
+    <p class="mt-1 text-xs text-slate-500">
+      Al desactivarlo deja de aparecer en los listados, pero se conserva el registro.
+    </p>
+  </div>
 
   <!-- Botones -->
   <div class="flex justify-end gap-3 pt-4">
@@ -76,5 +120,5 @@
     </button>
 
   </div>
-
+  }
 </section>

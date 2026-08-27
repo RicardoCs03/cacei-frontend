@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { forkJoin, of } from 'rxjs';
+import { Component, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ExperienciaEducativa } from '../../../../core/models/experienciaEducativa.model';
 import { ProgramaEducativo } from '../../../../core/models/programaEducativo.model';
@@ -6,6 +7,7 @@ import { ExperienciaEducativaService } from '../../../../core/services/experienc
 import { ProgramaEducativoService } from '../../../../core/services/programa-educativo.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { mensajeDeError } from '../../../../core/interceptors/error-interceptor';
 
 @Component({
   selector: 'app-experiencias-educativas-form',
@@ -36,21 +38,35 @@ export class ExperienciasEducativasForm {
   programas: ProgramaEducativo[] = [];
   isEdit = false;
 
+  readonly cargando = signal(true);
+  readonly guardando = signal(false);
+  readonly error = signal<string | null>(null);
+
   constructor(private service: ExperienciaEducativaService,private programaService: ProgramaEducativoService,private route: ActivatedRoute,private router: Router) {
   }
 
   ngOnInit(): void {
-    this.programaService.findAll().subscribe(data => {
-      this.programas = data;
-    });
-
     const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.isEdit = true;
-      this.service.findById(+id).subscribe(data => {
-        this.experiencia = data;
-      });
-    }
+    this.isEdit = !!id;
+
+    // El catalogo y el registro se resuelven juntos, para que los desplegables
+    // ya tengan opciones cuando se asigna la experiencia educativa.
+    forkJoin({
+      programas: this.programaService.findAll(),
+      experiencia: id ? this.service.findById(+id) : of(null),
+    }).subscribe({
+      next: ({ programas, experiencia }) => {
+        this.programas = programas ?? [];
+        if (experiencia) {
+          this.experiencia = { ...this.experiencia, ...experiencia };
+        }
+        this.cargando.set(false);
+      },
+      error: (err) => {
+        this.error.set(mensajeDeError(err));
+        this.cargando.set(false);
+      },
+    });
   }
 
   save(): void {

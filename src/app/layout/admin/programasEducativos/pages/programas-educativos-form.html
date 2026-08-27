@@ -5,10 +5,26 @@
     <h3 class="text-xl font-semibold text-slate-800">
       {{ isEdit ? 'Editar' : 'Nuevo' }} Programa Educativo
     </h3>
+
     <p class="text-sm text-slate-500 mt-1">
       Información general del programa de estudio
     </p>
   </div>
+
+  @if (error()) {
+    <p class="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">{{ error() }}</p>
+  }
+
+  @if (cargando()) {
+    <div class="flex flex-col items-center gap-3 py-12" role="status" aria-live="polite">
+      <span
+        class="h-8 w-8 rounded-full border-2 border-slate-200 border-t-primary animate-spin motion-reduce:animate-none"
+        aria-hidden="true"
+      ></span>
+      <p class="text-sm text-slate-500">Cargando…</p>
+    </div>
+  } @else {
+
 
   <!-- Card -->
   <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
@@ -17,8 +33,8 @@
 
       <!-- Nombre -->
       <div>
-        <label class="form-label">Nombre del programa</label>
-        <input
+        <label for="pro-nombre" class="form-label">Nombre del programa</label>
+        <input id="pro-nombre"
           type="text"
           [(ngModel)]="programaEducativo.nombre"
           name="nombre"
@@ -29,8 +45,8 @@
 
       <!-- Contracción -->
       <div>
-        <label class="form-label">Contracción</label>
-        <input
+        <label for="pro-contraccion" class="form-label">Contracción</label>
+        <input id="pro-contraccion"
           type="text"
           [(ngModel)]="programaEducativo.contraccion"
           name="contraccion"
@@ -40,8 +56,8 @@
 
       <!-- Total de créditos -->
       <div>
-        <label class="form-label">Total de créditos</label>
-        <input
+        <label for="pro-total-creditos" class="form-label">Total de créditos</label>
+        <input id="pro-total-creditos"
           type="number"
           [(ngModel)]="programaEducativo.totalCreditos"
           name="totalCreditos"
@@ -53,8 +69,8 @@
 
       <!-- Fecha de creación -->
       <div>
-        <label class="form-label">Fecha de creación</label>
-        <input
+        <label for="pro-fecha-creacion" class="form-label">Fecha de creación</label>
+        <input id="pro-fecha-creacion"
           type="date"
           [(ngModel)]="programaEducativo.fechaCreacion"
           name="fechaCreacion"
@@ -65,8 +81,8 @@
 
       <!-- Permanencia mínima -->
       <div>
-        <label class="form-label">Tiempo mínimo de permanencia</label>
-        <input
+        <label for="pro-t-permanencia-min" class="form-label">Tiempo mínimo de permanencia</label>
+        <input id="pro-t-permanencia-min"
           type="number"
           [(ngModel)]="programaEducativo.tPermanenciaMin"
           name="tPermanenciaMin"
@@ -78,8 +94,8 @@
 
       <!-- Permanencia máxima -->
       <div>
-        <label class="form-label">Tiempo máximo de permanencia</label>
-        <input
+        <label for="pro-t-permanencia-max" class="form-label">Tiempo máximo de permanencia</label>
+        <input id="pro-t-permanencia-max"
           type="number"
           [(ngModel)]="programaEducativo.tPermanenciaMax"
           name="tPermanenciaMax"
@@ -91,8 +107,8 @@
 
       <!-- Nivel de estudio -->
       <div>
-        <label class="form-label">Nivel de estudio</label>
-        <select
+        <label for="pro-nivel-estudio" class="form-label">Nivel de estudio</label>
+        <select id="pro-nivel-estudio"
           [(ngModel)]="programaEducativo.nivelEstudio"
           name="nivelEstudio"
           class="form-input"
@@ -109,8 +125,8 @@
 
       <!-- Modalidad -->
       <div>
-        <label class="form-label">Modalidad</label>
-        <select
+        <label for="pro-modalidad" class="form-label">Modalidad</label>
+        <select id="pro-modalidad"
           [(ngModel)]="programaEducativo.modalidad"
           name="modalidad"
           class="form-input"
@@ -157,5 +173,5 @@
     </div>
 
   </div>
-
+  }
 </section>

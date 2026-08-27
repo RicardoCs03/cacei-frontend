@@ -6,11 +6,15 @@ import { Rol } from '../models/auth.model';
 /**
  * Restringe una sección al rol indicado.
  *
- * Si el usuario tiene otro rol se le envía a su propio panel en lugar de dejar
- * la navegación bloqueada sin explicación.
+ * Con otro rol se muestra la pantalla de acceso denegado en vez de rebotar en
+ * silencio, pero sin detallar el rol de la cuenta ni la seccion solicitada.
+ *
+ * Es una comodidad de navegación, no una frontera de seguridad. Quien se salte
+ * el guard se topa igualmente con el 403 de la API, que es lo que protege de
+ * verdad los datos.
  */
 export const roleGuard = (rol: Rol): CanActivateFn => {
-  return () => {
+  return (_ruta, estado) => {
     const tokenService = inject(TokenService);
     const router = inject(Router);
     const rolActual = tokenService.getRole();
@@ -20,9 +24,10 @@ export const roleGuard = (rol: Rol): CanActivateFn => {
     }
 
     if (rolActual) {
-      return router.createUrlTree([rolActual === 'ADMINISTRADOR' ? '/admin' : '/profesor']);
+      // Sin la ruta solicitada en la URL: no hace falta dejarla a la vista.
+      return router.createUrlTree(['/acceso-denegado']);
     }
 
-    return router.createUrlTree(['/login']);
+    return router.createUrlTree(['/login'], { queryParams: { returnUrl: estado.url } });
   };
 };

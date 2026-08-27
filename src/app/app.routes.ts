@@ -5,6 +5,14 @@ import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
+
+    // Fuera del layout a proposito: la pantalla ocupa todo, sin menu ni cabecera.
+    {
+        path: 'acceso-denegado',
+        loadComponent: () =>
+            import('./shared/acceso-denegado/acceso-denegado.component')
+                .then(m => m.AccesoDenegadoComponent),
+    },
     { path: '', 
         component:MainLayoutComponent,
         canActivate: [authGuard],

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProgramasEducativosForm } from './programas-educativos-form';
+import { ProgramaEducativoFormComponent } from './programas-educativos-form';
 
-describe('ProgramasEducativosForm', () => {
-  let component: ProgramasEducativosForm;
-  let fixture: ComponentFixture<ProgramasEducativosForm>;
+describe('ProgramaEducativoFormComponent', () => {
+  let component: ProgramaEducativoFormComponent;
+  let fixture: ComponentFixture<ProgramaEducativoFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProgramasEducativosForm]
+      imports: [ProgramaEducativoFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ProgramasEducativosForm);
+    fixture = TestBed.createComponent(ProgramaEducativoFormComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

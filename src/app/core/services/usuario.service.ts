@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';  
-import { Usuario } from '../models/usuario.model';
+import { Usuario, ProfesorOpcion } from '../models/usuario.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -29,8 +29,9 @@ export class UsuarioService {
     
   }
 
-  findProfesores(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(`${this.API_URL}/profesores`);
+  findProfesores(): Observable<ProfesorOpcion[]> {
+    // El catalogo de profesores vive en su propio recurso, no bajo /usuarios.
+    return this.http.get<ProfesorOpcion[]>(`${environment.apiUrl}/profesores`);
   }
 
   fin(parametro:string): Observable<Usuario> {

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ProgramaEducativoService } from '../../../../core/services/programa-educativo.service';
 import { ProgramaEducativo } from '../../../../core/models/programaEducativo.model';
+import { mensajeDeError } from '../../../../core/interceptors/error-interceptor';
 
 @Component({
   selector: 'app-programas-educativos-form',
@@ -28,6 +29,10 @@ export class ProgramaEducativoFormComponent implements OnInit {
 
   isEdit = false;
 
+  readonly cargando = signal(true);
+  readonly guardando = signal(false);
+  readonly error = signal<string | null>(null);
+
   constructor(
     private programaEducativoService: ProgramaEducativoService,
     private route: ActivatedRoute,
@@ -36,13 +41,23 @@ export class ProgramaEducativoFormComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
+    this.isEdit = !!id;
 
-    if (id) {
-      this.isEdit = true;
-      this.programaEducativoService.findById(+id).subscribe(programaEducativo => {
-        this.programaEducativo = programaEducativo;
-      });
+    if (!id) {
+      this.cargando.set(false);
+      return;
     }
+
+    this.programaEducativoService.findById(+id).subscribe({
+      next: (programaEducativo) => {
+        this.programaEducativo = { ...this.programaEducativo, ...programaEducativo };
+        this.cargando.set(false);
+      },
+      error: (err) => {
+        this.error.set(mensajeDeError(err));
+        this.cargando.set(false);
+      },
+    });
   }
 
   save(): void {

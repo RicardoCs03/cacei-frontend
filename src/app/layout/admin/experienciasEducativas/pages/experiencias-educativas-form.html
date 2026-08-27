@@ -4,103 +4,230 @@
     {{ isEdit ? 'Editar' : 'Nueva' }} Experiencia Educativa
   </h3>
 
+  @if (error()) {
+    <p class="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">{{ error() }}</p>
+  }
+
+  @if (cargando()) {
+    <div class="flex flex-col items-center gap-3 py-12" role="status" aria-live="polite">
+      <span
+        class="h-8 w-8 rounded-full border-2 border-slate-200 border-t-primary animate-spin motion-reduce:animate-none"
+        aria-hidden="true"
+      ></span>
+      <p class="text-sm text-slate-500">Cargando…</p>
+    </div>
+  } @else {
+
   <!-- Datos generales -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-    <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
-             focus:outline-none focus:ring-2 focus:ring-indigo-500" type="text" [(ngModel)]="experiencia.nombre"
-      name="nombre" placeholder="Nombre de la experiencia" />
+    <div>
+      <label for="ee-nombre" class="form-label">Nombre de la experiencia educativa</label>
+      <input
+        id="ee-nombre"
+        name="nombre"
+        type="text"
+        class="form-input"
+        [(ngModel)]="experiencia.nombre"
+        placeholder="Ej. Matemáticas Discretas"
+      />
+    </div>
 
-    <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
-             focus:outline-none focus:ring-2 focus:ring-indigo-500" type="text" [(ngModel)]="experiencia.nrc"
-      name="nrc" placeholder="NRC" />
+    <div>
+      <label for="ee-nrc" class="form-label">NRC</label>
+      <input
+        id="ee-nrc"
+        name="nrc"
+        type="text"
+        class="form-input"
+        [(ngModel)]="experiencia.nrc"
+        placeholder="Ej. 44587"
+      />
+    </div>
 
-    <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm md:col-span-2
-             focus:outline-none focus:ring-2 focus:ring-indigo-500" type="text"
-      [(ngModel)]="experiencia.areaExperienciaEducativa" name="areaExperienciaEducativa"
-      placeholder="Área de la experiencia educativa" />
+    <div class="md:col-span-2">
+      <label for="ee-area" class="form-label">Área de formación</label>
+      <input
+        id="ee-area"
+        name="areaExperienciaEducativa"
+        type="text"
+        class="form-input"
+        [(ngModel)]="experiencia.areaExperienciaEducativa"
+        placeholder="Ej. AREA DE FORMACION DISCIPLINAR"
+      />
+      <p class="mt-1 text-xs text-slate-500">
+        «AREA DE FORMACION TERMINAL OPTATIVA» hace que la cédula marque el curso como optativo.
+      </p>
+    </div>
 
   </div>
 
-  <textarea class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm min-h-[100px]
-           focus:outline-none focus:ring-2 focus:ring-indigo-500" [(ngModel)]="experiencia.objetivoGeneral"
-    name="objetivoGeneral" placeholder="Objetivo general">
-  </textarea>
+  <div>
+    <label for="ee-objetivo" class="form-label">Objetivo general</label>
+    <textarea
+      id="ee-objetivo"
+      name="objetivoGeneral"
+      class="form-input min-h-[100px]"
+      [(ngModel)]="experiencia.objetivoGeneral"
+      placeholder="Qué se espera que el estudiante logre al concluir la experiencia educativa"
+    ></textarea>
+  </div>
 
   <!-- Horas por área -->
-  <div class="space-y-4">
-    <h4 class="font-medium text-slate-700">
-      Horas por área
-    </h4>
+  <fieldset class="space-y-4">
+    <legend class="font-medium text-slate-700">Horas por área CACEI</legend>
+    <p class="text-xs text-slate-500 -mt-2">
+      Alimentan el apartado «Ejes» de la Cédula 3.3.2.
+    </p>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-      <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm" type="number"
-        [(ngModel)]="experiencia.horasCienciasBasicas" placeholder="Ciencias Básicas" />
+      <div>
+        <label for="ee-h-basicas" class="form-label">Ciencias Básicas</label>
+        <input
+          id="ee-h-basicas"
+          name="horasCienciasBasicas"
+          type="number"
+          min="0"
+          class="form-input tabular-nums"
+          [(ngModel)]="experiencia.horasCienciasBasicas"
+        />
+      </div>
 
-      <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm" type="number"
-        [(ngModel)]="experiencia.horasCienciasIngenieria" placeholder="Ciencias de Ingeniería" />
+      <div>
+        <label for="ee-h-ingenieria" class="form-label">Ciencias de la Ingeniería</label>
+        <input
+          id="ee-h-ingenieria"
+          name="horasCienciasIngenieria"
+          type="number"
+          min="0"
+          class="form-input tabular-nums"
+          [(ngModel)]="experiencia.horasCienciasIngenieria"
+        />
+      </div>
 
-      <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm" type="number"
-        [(ngModel)]="experiencia.horasDisenoIngenieria" placeholder="Diseño de Ingeniería" />
+      <div>
+        <label for="ee-h-diseno" class="form-label">Diseño en Ingeniería</label>
+        <input
+          id="ee-h-diseno"
+          name="horasDisenoIngenieria"
+          type="number"
+          min="0"
+          class="form-input tabular-nums"
+          [(ngModel)]="experiencia.horasDisenoIngenieria"
+        />
+      </div>
 
-      <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm" type="number"
-        [(ngModel)]="experiencia.horasCSociales" placeholder="Ciencias Sociales" />
+      <div>
+        <label for="ee-h-sociales" class="form-label">Ciencias Sociales</label>
+        <input
+          id="ee-h-sociales"
+          name="horasCSociales"
+          type="number"
+          min="0"
+          class="form-input tabular-nums"
+          [(ngModel)]="experiencia.horasCSociales"
+        />
+      </div>
 
-      <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm" type="number"
-        [(ngModel)]="experiencia.horasCEconomicas" placeholder="Ciencias Económicas" />
+      <div>
+        <label for="ee-h-economicas" class="form-label">Ciencias Económicas</label>
+        <input
+          id="ee-h-economicas"
+          name="horasCEconomicas"
+          type="number"
+          min="0"
+          class="form-input tabular-nums"
+          [(ngModel)]="experiencia.horasCEconomicas"
+        />
+      </div>
 
-      <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm" type="number"
-        [(ngModel)]="experiencia.horasOtros" placeholder="Otras horas" />
+      <div>
+        <label for="ee-h-otros" class="form-label">Otros cursos</label>
+        <input
+          id="ee-h-otros"
+          name="horasOtros"
+          type="number"
+          min="0"
+          class="form-input tabular-nums"
+          [(ngModel)]="experiencia.horasOtros"
+        />
+      </div>
 
     </div>
-  </div>
+  </fieldset>
 
   <!-- Créditos y programa -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-    <input class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm" type="number"
-      [(ngModel)]="experiencia.creditos" placeholder="Créditos" />
+    <div>
+      <label for="ee-creditos" class="form-label">Créditos</label>
+      <input
+        id="ee-creditos"
+        name="creditos"
+        type="number"
+        min="0"
+        class="form-input tabular-nums"
+        [(ngModel)]="experiencia.creditos"
+      />
+    </div>
 
-    <select class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm bg-white"
-      [(ngModel)]="experiencia.programaEducativo" required>
-
-      <option value="" disabled>
-        Seleccione un programa educativo
-      </option>
-
-      <option *ngFor="let p of programas" [value]="p.nombre">
-        {{ p.nombre }}
-      </option>
-
-    </select>
+    <div>
+      <label for="ee-programa" class="form-label">Programa educativo</label>
+      <select
+        id="ee-programa"
+        name="programaEducativo"
+        class="form-input"
+        [(ngModel)]="experiencia.programaEducativo"
+        required
+      >
+        <option value="" disabled>Seleccione un programa educativo</option>
+        @for (p of programas; track p.id) {
+          <option [value]="p.nombre">{{ p.nombre }}</option>
+        }
+      </select>
+    </div>
 
   </div>
 
   <!-- Activo -->
-  <label class="flex items-center gap-2 text-sm text-slate-700">
-    <input type="checkbox" [(ngModel)]="experiencia.isActive" class="accent-indigo-600" />
-    Activo
-  </label>
+  <div>
+    <label class="flex items-center gap-2 text-sm text-slate-700">
+      <input
+        type="checkbox"
+        name="isActive"
+        [(ngModel)]="experiencia.isActive"
+        class="h-4 w-4 accent-primary"
+      />
+      Experiencia educativa activa
+    </label>
+    <p class="mt-1 text-xs text-slate-500">
+      Al desactivarla deja de aparecer en los listados, pero se conserva el registro.
+    </p>
+  </div>
 
   <!-- Botones -->
   <div class="flex justify-end gap-3 pt-4">
 
-    <button type="button" (click)="cancel()" class="px-4 py-2 rounded-lg text-sm font-medium
-             bg-slate-100 text-slate-700 hover:bg-slate-200">
+    <button type="button" (click)="cancel()" class="btn-outline">
       Cancelar
     </button>
 
-    <button *ngIf="isEdit" type="button" [routerLink]="['atributos-egreso']" class="px-4 py-2 rounded-lg text-sm font-medium
-         border border-indigo-600 text-indigo-600 hover:bg-indigo-50">
-      Atributos de Egreso
-    </button>
+    @if (isEdit) {
+      <button type="button" [routerLink]="['atributos-egreso']" class="btn-edit">
+        Atributos de Egreso
+      </button>
+    }
 
-    <button type="button" (click)="save()" class="px-4 py-2 rounded-lg text-sm font-medium
-             bg-indigo-600 text-white hover:bg-indigo-700">
-      Guardar
+    <button
+      type="button"
+      (click)="save()"
+      class="btn-primary disabled:opacity-60 disabled:cursor-not-allowed"
+      [disabled]="guardando()"
+    >
+      {{ guardando() ? 'Guardando…' : 'Guardar' }}
     </button>
 
   </div>
-
+  }
 </section>

@@ -5,15 +5,31 @@
     {{ isEdit ? 'Editar' : 'Nuevo' }} Proceso de Acreditación
   </h3>
 
+  @if (error()) {
+    <p class="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">{{ error() }}</p>
+  }
+
+  @if (cargando()) {
+    <div class="flex flex-col items-center gap-3 py-12" role="status" aria-live="polite">
+      <span
+        class="h-8 w-8 rounded-full border-2 border-slate-200 border-t-primary animate-spin motion-reduce:animate-none"
+        aria-hidden="true"
+      ></span>
+      <p class="text-sm text-slate-500">Cargando…</p>
+    </div>
+  } @else {
+
+
+
   <!-- Datos identificativos (solo lectura al editar) -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4" *ngIf="isEdit && proceso">
     <div>
-      <label class="block text-sm font-medium text-slate-600 mb-1">Programa Educativo</label>
+      <span class="block text-sm font-medium text-slate-600 mb-1">Programa Educativo</span>
       <p class="text-sm text-slate-800">{{ proceso.programaEducativoNombre }}</p>
     </div>
 
     <div>
-      <label class="block text-sm font-medium text-slate-600 mb-1">Coordinador CACEI</label>
+      <span class="block text-sm font-medium text-slate-600 mb-1">Coordinador CACEI</span>
       <p class="text-sm text-slate-800">
         {{ proceso.coordinadorCaceiNombre }} {{ proceso.coordinadorCaceiApepallidoPaterno }} {{ proceso.coordinadorCaceiApepallidoMaterno }}
       </p>
@@ -23,8 +39,8 @@
   <!-- Selección de programa y coordinador (solo al crear) -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4" *ngIf="!isEdit">
     <div>
-      <label class="block text-sm font-medium text-slate-600 mb-1">Programa Educativo</label>
-      <select
+      <label for="acr-programa-educativofk" class="block text-sm font-medium text-slate-600 mb-1">Programa Educativo</label>
+      <select id="acr-programa-educativofk"
         class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm bg-white
                focus:outline-none focus:ring-2 focus:ring-primary"
         [(ngModel)]="data.programaEducativofk"
@@ -35,8 +51,8 @@
     </div>
 
     <div>
-      <label class="block text-sm font-medium text-slate-600 mb-1">Coordinador CACEI</label>
-      <select
+      <label for="acr-coordinador-caceifk" class="block text-sm font-medium text-slate-600 mb-1">Coordinador CACEI</label>
+      <select id="acr-coordinador-caceifk"
         class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm bg-white
                focus:outline-none focus:ring-2 focus:ring-primary"
         [(ngModel)]="data.coordinadorCaceifk"
@@ -53,8 +69,8 @@
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
     <div>
-      <label class="block text-sm font-medium text-slate-600 mb-1">Ciclo de evaluación</label>
-      <input
+      <label for="acr-ciclo-evaluacion" class="block text-sm font-medium text-slate-600 mb-1">Ciclo de evaluación</label>
+      <input id="acr-ciclo-evaluacion"
         class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
                focus:outline-none focus:ring-2 focus:ring-primary"
         type="text"
@@ -63,8 +79,8 @@
     </div>
 
     <div>
-      <label class="block text-sm font-medium text-slate-600 mb-1">Estado</label>
-      <select
+      <label for="acr-estado" class="block text-sm font-medium text-slate-600 mb-1">Estado</label>
+      <select id="acr-estado"
         class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm bg-white
                focus:outline-none focus:ring-2 focus:ring-primary"
         [(ngModel)]="data.estado">
@@ -78,8 +94,8 @@
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
     <div>
-      <label class="block text-sm font-medium text-slate-600 mb-1">Fecha de inicio</label>
-      <input
+      <label for="acr-fecha-inicio" class="block text-sm font-medium text-slate-600 mb-1">Fecha de inicio</label>
+      <input id="acr-fecha-inicio"
         class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
                focus:outline-none focus:ring-2 focus:ring-primary"
         type="date"
@@ -87,8 +103,8 @@
     </div>
 
     <div>
-      <label class="block text-sm font-medium text-slate-600 mb-1">Fecha del proceso (fin)</label>
-      <input
+      <label for="acr-fecha-fin" class="block text-sm font-medium text-slate-600 mb-1">Fecha del proceso (fin)</label>
+      <input id="acr-fecha-fin"
         class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
                focus:outline-none focus:ring-2 focus:ring-primary"
         type="date"
@@ -122,5 +138,5 @@
     </button>
 
   </div>
-
+  }
 </section>

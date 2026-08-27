@@ -3,6 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Curso } from '../models/cursos.model';
 import { CursoInscripcionesDTO } from '../models/curso.inscripciones.model';
+import {
+  ActualizarCalificacionRequest,
+  AlumnoElegible,
+  InscribirAlumnoRequest,
+  InscripcionDetalleDTO,
+} from '../models/inscripcion.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -44,4 +50,29 @@ export class CursoService {
     return this.http.delete<void>(`${this.API_URL}/eliminar-curso/${id}`);
   }
 
+  // ---------- Gestion del grupo desde el panel del profesor ----------
+
+  /** Alumnos del programa educativo del curso que aun no estan inscritos. */
+  alumnosElegibles(cursoId: number): Observable<AlumnoElegible[]> {
+    return this.http.get<AlumnoElegible[]>(`${this.API_URL}/${cursoId}/alumnos-elegibles`);
+  }
+
+  inscribirAlumno(cursoId: number, data: InscribirAlumnoRequest): Observable<InscripcionDetalleDTO> {
+    return this.http.post<InscripcionDetalleDTO>(`${this.API_URL}/${cursoId}/inscripciones`, data);
+  }
+
+  actualizarCalificacion(
+    cursoId: number,
+    inscripcionId: number,
+    data: ActualizarCalificacionRequest,
+  ): Observable<InscripcionDetalleDTO> {
+    return this.http.patch<InscripcionDetalleDTO>(
+      `${this.API_URL}/${cursoId}/inscripciones/${inscripcionId}`,
+      data,
+    );
+  }
+
+  darDeBaja(cursoId: number, inscripcionId: number): Observable<void> {
+    return this.http.delete<void>(`${this.API_URL}/${cursoId}/inscripciones/${inscripcionId}`);
+  }
 }

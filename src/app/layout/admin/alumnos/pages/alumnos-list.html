@@ -4,6 +4,13 @@
   <div class="flex items-center justify-between">
     <h1 class="text-xl font-semibold text-slate-800">
       Alumnos
+      <span class="text-sm font-normal text-slate-500">
+        @if (filtroActivo()) {
+          ({{ datosFiltrados().length }} de {{ datos().length }})
+        } @else if (datos().length) {
+          ({{ datos().length }})
+        }
+      </span>
     </h1>
 
     <button
@@ -15,7 +22,21 @@
     </button>
   </div>
 
-    @if (sinContenido) {
+  <!-- Filtros -->
+  @if (!sinContenido) {
+    <app-filtros
+      [definiciones]="filtros"
+      [textos]="valoresTexto()"
+      [rangos]="valoresRango()"
+      [opciones]="opcionesFiltros()"
+      [activo]="filtroActivo()"
+      (texto)="cambiarFiltroTexto($event.clave, $event.valor)"
+      (rango)="cambiarFiltroRango($event.clave, $event.extremo, $event.valor)"
+      (limpiar)="limpiarFiltros()"
+    />
+  }
+
+  @if (sinContenido) {
     <app-estado-panel
       [cargando]="cargando()"
       [error]="error()"
@@ -24,6 +45,11 @@
       (reintentar)="cargar()"
       (accion)="create()"
     />
+  } @else if (sinCoincidencias) {
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm px-6 py-12 text-center space-y-3">
+      <p class="text-sm text-slate-600">Ningún registro coincide con los filtros aplicados.</p>
+      <button type="button" class="btn-outline" (click)="limpiarFiltros()">Quitar filtros</button>
+    </div>
   } @else {
   <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
       <table class="min-w-full divide-y divide-slate-200">
@@ -47,7 +73,7 @@
 
         <tbody class="divide-y divide-slate-100">
 
-          @for (a of datos(); track a.id) {
+          @for (a of datosFiltrados(); track a.id) {
 
             <tr class="hover:bg-slate-50">
             <!-- Matrícula -->

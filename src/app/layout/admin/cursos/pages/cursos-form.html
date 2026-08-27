@@ -4,46 +4,40 @@
     {{ isEdit ? 'Editar' : 'Nuevo' }} Curso
   </h3>
 
+  @if (cargando()) {
+    <div class="flex flex-col items-center gap-3 py-12" role="status" aria-live="polite">
+      <span
+        class="h-8 w-8 rounded-full border-2 border-slate-200 border-t-primary animate-spin motion-reduce:animate-none"
+        aria-hidden="true"
+      ></span>
+      <p class="text-sm text-slate-500">Cargando datos del curso…</p>
+    </div>
+  } @else {
+
   <!-- Experiencia Educativa y Profesor -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-    <select
-      class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm bg-white
-             focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      [(ngModel)]="curso.idEE"
-      name="idEE"
-      required
-    >
-      <option [ngValue]="null" disabled>
-        Seleccione experiencia educativa
-      </option>
+    <div>
+      <label for="cur-ee" class="form-label">Experiencia educativa</label>
+      <select id="cur-ee" name="idEE" class="form-input" [(ngModel)]="curso.idEE" required>
+        <option [ngValue]="null" disabled>Seleccione experiencia educativa</option>
+        @for (e of experiencias; track e.id) {
+          <option [ngValue]="e.id">{{ e.nombre }} — NRC {{ e.nrc }}</option>
+        }
+      </select>
+    </div>
 
-      <option
-        *ngFor="let e of experiencias"
-        [ngValue]="e.id"
-      >
-        {{ e.nombre }}
-      </option>
-    </select>
-
-    <select
-      class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm bg-white
-             focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      [(ngModel)]="curso.idProfesor"
-      name="idProfesor"
-      required
-    >
-      <option [ngValue]="null" disabled>
-        Seleccione profesor
-      </option>
-
-      <option
-        *ngFor="let p of profesores"
-        [ngValue]="p.id"
-      >
-        {{ p.nombre }}
-      </option>
-    </select>
+    <div>
+      <label for="cur-profesor" class="form-label">Profesor</label>
+      <select id="cur-profesor" name="idProfesor" class="form-input" [(ngModel)]="curso.idProfesor" required>
+        <option [ngValue]="null" disabled>Seleccione profesor</option>
+        @for (p of profesores; track p.id) {
+          <option [ngValue]="p.id">
+            {{ p.nombre }} {{ p.apepat }} {{ p.apemat }} — {{ p.matricula }}
+          </option>
+        }
+      </select>
+    </div>
 
   </div>
 
@@ -51,10 +45,10 @@
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
     <div>
-      <label class="block text-xs font-medium text-slate-600 mb-1">
+      <label for="cur-fecha-asignacion" class="form-label">
         Fecha de asignación
       </label>
-      <input
+      <input id="cur-fecha-asignacion"
         type="date"
         [(ngModel)]="curso.fechaAsignacion"
         name="fechaAsignacion"
@@ -64,10 +58,10 @@
     </div>
 
     <div>
-      <label class="block text-xs font-medium text-slate-600 mb-1">
+      <label for="cur-fecha-inicio" class="form-label">
         Fecha inicio
       </label>
-      <input
+      <input id="cur-fecha-inicio"
         type="date"
         [(ngModel)]="curso.fechaInicio"
         name="fechaInicio"
@@ -77,10 +71,10 @@
     </div>
 
     <div>
-      <label class="block text-xs font-medium text-slate-600 mb-1">
+      <label for="cur-fecha-fin" class="form-label">
         Fecha fin
       </label>
-      <input
+      <input id="cur-fecha-fin"
         type="date"
         [(ngModel)]="curso.fechaFin"
         name="fechaFin"
@@ -94,54 +88,42 @@
   <!-- Datos del curso -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-    <input
-      class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
-             focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      type="text"
-      [(ngModel)]="curso.periodo"
-      name="periodo"
-      placeholder="Periodo (ej. 2025-1)"
-    />
+    <div>
+      <label for="cur-periodo" class="form-label">Periodo</label>
+      <input id="cur-periodo" name="periodo" type="text" class="form-input"
+        [(ngModel)]="curso.periodo" placeholder="Ej. FEB 2026 - JUN 2026" />
+    </div>
 
-    <input
-      class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
-             focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      type="number"
-      [(ngModel)]="curso.horasSemana"
-      name="horasSemana"
-      placeholder="Horas por semana"
-    />
+    <div>
+      <label for="cur-horas" class="form-label">Horas por semana</label>
+      <input id="cur-horas" name="horasSemana" type="number" min="0" class="form-input tabular-nums"
+        [(ngModel)]="curso.horasSemana" />
+    </div>
 
-    <input
-      class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
-             focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      type="text"
-      [(ngModel)]="curso.hora"
-      name="hora"
-      placeholder="Horario (ej. 07:00 - 09:00)"
-    />
+    <div>
+      <label for="cur-hora" class="form-label">Horario</label>
+      <input id="cur-hora" name="hora" type="text" class="form-input"
+        [(ngModel)]="curso.hora" placeholder="Ej. 07:00-09:00" />
+    </div>
 
-    <input
-      class="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm
-             focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      type="text"
-      [(ngModel)]="curso.salon"
-      name="salon"
-      placeholder="Salón"
-    />
+    <div>
+      <label for="cur-salon" class="form-label">Salón</label>
+      <input id="cur-salon" name="salon" type="text" class="form-input"
+        [(ngModel)]="curso.salon" placeholder="Ej. FIEE-A101" />
+    </div>
 
   </div>
 
   <!-- Activo -->
-  <label class="flex items-center gap-2 text-sm text-slate-700">
-    <input
-      type="checkbox"
-      [(ngModel)]="curso.isActive"
-      name="isActive"
-      class="accent-indigo-600"
-    />
-    Activo
-  </label>
+  <div>
+    <label class="flex items-center gap-2 text-sm text-slate-700">
+      <input type="checkbox" name="isActive" [(ngModel)]="curso.isActive" class="h-4 w-4 accent-primary" />
+      Curso activo
+    </label>
+    <p class="mt-1 text-xs text-slate-500">
+      Al desactivarlo deja de aparecer en los listados, pero se conserva el registro.
+    </p>
+  </div>
 
   <!-- Botones -->
   <div class="flex justify-end gap-3 pt-4">
@@ -161,9 +143,10 @@
       class="px-4 py-2 rounded-lg text-sm font-medium
              bg-indigo-600 text-white hover:bg-indigo-700"
     >
-      Guardar
+      {{ guardando() ? 'Guardando…' : 'Guardar' }}
     </button>
 
   </div>
 
+  }
 </section>

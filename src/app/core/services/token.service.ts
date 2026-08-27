@@ -29,8 +29,44 @@ export class TokenService {
     return localStorage.getItem(this.ROL) as Rol | null;
   }
 
+  /**
+   * Nombre completo del usuario (nombre y apellidos).
+   * <p>
+   * Se lee del propio token, que es la fuente autorizada de la sesión activa.
+   * La copia en el almacenamiento local solo sirve de respaldo: si quedara
+   * desfasada respecto al token, mandaría el token.
+   * </p>
+   */
   getNombre(): string | null {
-    return localStorage.getItem(this.NOMBRE);
+    const delToken = this.leerClaim('nombre');
+    if (delToken) {
+      return delToken;
+    }
+
+    const guardado = localStorage.getItem(this.NOMBRE);
+    if (guardado) {
+      return guardado;
+    }
+
+    // Último recurso: la parte del correo anterior a la arroba.
+    const correo = this.leerClaim('sub');
+    return correo ? correo.split('@')[0] : null;
+  }
+
+  /** Lee un dato del token sin validar la firma; eso lo hace siempre el backend. */
+  private leerClaim(nombre: string): string | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const valor = payload[nombre];
+      return typeof valor === 'string' && valor.trim() !== '' ? valor : null;
+    } catch {
+      return null;
+    }
   }
 
   /** Hay sesión si el token existe y aún no ha expirado. */

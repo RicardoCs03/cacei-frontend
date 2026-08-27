@@ -13,6 +13,10 @@ export class ProcesoAcreditacionService {
 
   constructor(private http: HttpClient) {}
 
+  findById(id: number): Observable<ProcesoAcreditacionResponse> {
+    return this.http.get<ProcesoAcreditacionResponse>(`${this.API_URL}/${id}`);
+  }
+
   findAll(): Observable<ProcesoAcreditacionResponse[]> {
     return this.http.get<ProcesoAcreditacionResponse[]>(`${this.API_URL}/`);
   }

@@ -1,3 +1,4 @@
+import { forkJoin, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +22,7 @@ export class AcreditacionesForm implements OnInit {
   proceso: ProcesoAcreditacionResponse | null = null;
   isEdit = false;
 
+  readonly cargando = signal(true);
   readonly error = signal<string | null>(null);
   readonly guardando = signal(false);
 
@@ -47,27 +49,44 @@ export class AcreditacionesForm implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.programaService.findAll().subscribe(d => this.programas = d);
-    this.coordinadorService.findAll().subscribe(d => this.coordinadores = d);
-
     const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
-      this.isEdit = true;
-      this.id = +idParam;
-      this.service.findAll().subscribe(data => {
-        const proceso = data.find(p => p.id === this.id);
+    this.isEdit = !!idParam;
+    this.id = idParam ? +idParam : 0;
+
+    // Los catalogos y el proceso se resuelven juntos: si el proceso se asignara
+    // antes, los desplegables no tendrian opciones con las que emparejar y
+    // quedarian en blanco.
+    forkJoin({
+      programas: this.programaService.findAll(),
+      coordinadores: this.coordinadorService.findAll(),
+      proceso: idParam ? this.service.findById(+idParam) : of(null),
+    }).subscribe({
+      next: ({ programas, coordinadores, proceso }) => {
+        this.programas = programas ?? [];
+        this.coordinadores = coordinadores ?? [];
+
         if (proceso) {
           this.proceso = proceso;
           this.data = {
+            // Los ids vienen del backend: son los que preseleccionan los combos.
+            programaEducativofk: proceso.programaEducativofk,
+            coordinadorCaceifk: proceso.coordinadorCaceifk,
             cicloEvaluacion: proceso.cicloEvaluacion,
             fechaInicio: proceso.fechaInicio,
             fechaFin: proceso.fechaFin ?? undefined,
             estado: proceso.estado,
           };
         }
-      });
-    }
+
+        this.cargando.set(false);
+      },
+      error: (err) => {
+        this.error.set(mensajeDeError(err));
+        this.cargando.set(false);
+      },
+    });
   }
+
 
   save(): void {
     // Sin este candado se puede pulsar "Guardar" dos veces y duplicar el registro.

@@ -5,10 +5,26 @@
     <h3 class="text-xl font-semibold text-slate-800">
       {{ isEdit ? 'Editar' : 'Nuevo' }} Usuario
     </h3>
+
     <p class="text-sm text-slate-500 mt-1">
       Completa la información del usuario
     </p>
   </div>
+
+  @if (error()) {
+    <p class="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">{{ error() }}</p>
+  }
+
+  @if (cargando()) {
+    <div class="flex flex-col items-center gap-3 py-12" role="status" aria-live="polite">
+      <span
+        class="h-8 w-8 rounded-full border-2 border-slate-200 border-t-primary animate-spin motion-reduce:animate-none"
+        aria-hidden="true"
+      ></span>
+      <p class="text-sm text-slate-500">Cargando…</p>
+    </div>
+  } @else {
+
 
   <!-- Formulario -->
   <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
@@ -16,8 +32,8 @@
 
       <!-- Nombre -->
       <div>
-        <label class="form-label">Nombre</label>
-        <input
+        <label for="usu-nombre" class="form-label">Nombre</label>
+        <input id="usu-nombre"
           type="text"
           [(ngModel)]="user.nombre"
           class="form-input"
@@ -26,8 +42,8 @@
 
       <!-- Apellido paterno -->
       <div>
-        <label class="form-label">Apellido paterno</label>
-        <input
+        <label for="usu-apepat" class="form-label">Apellido paterno</label>
+        <input id="usu-apepat"
           type="text"
           [(ngModel)]="user.apepat"
           class="form-input"
@@ -36,8 +52,8 @@
 
       <!-- Apellido materno -->
       <div>
-        <label class="form-label">Apellido materno</label>
-        <input
+        <label for="usu-apemat" class="form-label">Apellido materno</label>
+        <input id="usu-apemat"
           type="text"
           [(ngModel)]="user.apemat"
           class="form-input"
@@ -46,8 +62,8 @@
 
       <!-- Email -->
       <div>
-        <label class="form-label">Correo electrónico</label>
-        <input
+        <label for="usu-email" class="form-label">Correo electrónico</label>
+        <input id="usu-email"
           type="email"
           [(ngModel)]="user.email"
           class="form-input"
@@ -57,8 +73,8 @@
       <!-- Password -->
       @if (!isEdit) {
         <div>
-          <label class="form-label">Contraseña</label>
-          <input
+          <label for="usu-password" class="form-label">Contraseña</label>
+          <input id="usu-password"
             type="password"
             [(ngModel)]="user.password"
             class="form-input"
@@ -68,8 +84,8 @@
 
       <!-- Fecha de nacimiento -->
       <div>
-        <label class="form-label">Fecha de nacimiento</label>
-        <input
+        <label for="usu-fecnac" class="form-label">Fecha de nacimiento</label>
+        <input id="usu-fecnac"
           type="date"
           [(ngModel)]="user.fecnac"
           class="form-input"
@@ -78,8 +94,8 @@
 
       <!-- Género -->
       <div>
-        <label class="form-label">Género</label>
-        <select [(ngModel)]="user.genero" class="form-input">
+        <label for="usu-genero" class="form-label">Género</label>
+        <select id="usu-genero" [(ngModel)]="user.genero" class="form-input">
           <option value="">Seleccione género</option>
           <option value="M">Masculino</option>
           <option value="F">Femenino</option>
@@ -89,8 +105,8 @@
 
       <!-- Celular -->
       <div>
-        <label class="form-label">Celular</label>
-        <input
+        <label for="usu-celular" class="form-label">Celular</label>
+        <input id="usu-celular"
           type="tel"
           [(ngModel)]="user.celular"
           class="form-input"
@@ -99,8 +115,8 @@
 
       <!-- Rol -->
       <div>
-        <label class="form-label">Rol</label>
-        <select [(ngModel)]="user.rol" class="form-input">
+        <label for="usu-rol" class="form-label">Rol</label>
+        <select id="usu-rol" [(ngModel)]="user.rol" class="form-input">
           <option value="">Seleccione rol</option>
           <option value="ADMINISTRADOR">Administrador</option>
           <option value="PROFESOR">Profesor</option>
@@ -111,7 +127,7 @@
       <div class="flex items-center gap-2 mt-6">
         <input
           type="checkbox"
-          [(ngModel)]="user.active"
+          [(ngModel)]="user.isActive"
           class="h-4 w-4 text-indigo-600"
         />
         <span class="text-sm text-slate-700">Activo</span>
@@ -137,5 +153,5 @@
     </div>
 
   </div>
-
+  }
 </section>

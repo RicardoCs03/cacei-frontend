@@ -54,11 +54,23 @@
     <!-- Botón -->
     <button
       type="submit"
-      class="btn-primary w-full disabled:opacity-60 disabled:cursor-not-allowed"
+      class="btn-primary w-full gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
       [disabled]="formulario.invalid || enviando()"
+      [attr.aria-busy]="enviando()"
     >
+      @if (enviando()) {
+        <span
+          class="h-4 w-4 rounded-full border-2 border-white/40 border-t-white animate-spin motion-reduce:animate-none"
+          aria-hidden="true"
+        ></span>
+      }
       {{ enviando() ? 'Entrando…' : 'Entrar' }}
     </button>
+
+    <!-- Lo anuncia quien navega con lector de pantalla, que no ve el giro. -->
+    @if (enviando()) {
+      <p class="sr-only" role="status" aria-live="polite">Verificando credenciales…</p>
+    }
 
     <!-- Error -->
     @if (error()) {

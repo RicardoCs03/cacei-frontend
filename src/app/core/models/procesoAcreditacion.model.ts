@@ -11,6 +11,9 @@ export interface ProcesoAcreditacionRequest {
 
 export interface ProcesoAcreditacionResponse {
   id: number;
+  // Ids que preseleccionan los desplegables del formulario de edicion.
+  programaEducativofk: number;
+  coordinadorCaceifk: number;
   programaEducativoNombre: string;
   cicloEvaluacion: string;
   coordinadorCaceiNombre: string;
